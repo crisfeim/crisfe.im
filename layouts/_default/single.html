@@ -1,6 +1,16 @@
 {{ define "main" }}
 <article>
     <h1>{{ .Title }}</h1>
+    <time>{{ .Date.Format "January 2006" }}</time>
     {{ .Content }}
 </article>
+<style>
+    article time {
+        font-size: 0.875rem;
+        font-weight: bold;
+        display: block;
+        color: gray;
+        margin-bottom: 2rem;
+    }
+</style>
 {{ end }}
