@@ -1,0 +1,74 @@
+<style>
+    html {
+        font-size: 16px;
+    }
+    * {
+        margin: 0;
+    }
+    ul,
+    ol {
+        margin-block-start: 0;
+        margin-block-end: 0;
+        padding-inline-start: 1rem;
+    }
+
+    ul {
+        list-style-type: "- ";
+    }
+
+    body {
+        max-width: 70ch;
+        margin: auto;
+        padding: 48px 24px;
+        color: #303336;
+        -webkit-font-smoothing: antialiased;
+        font-family:
+            ui-sans-serif,
+            -apple-system,
+            BlinkMacSystemFont,
+            "Segoe UI",
+            Roboto,
+            sans-serif;
+    }
+    h1,
+    h2,
+    h3,
+    h4,
+    h5,
+    h6 {
+        font-size: 1rem;
+        margin-bottom: 0.5rem;
+    }
+
+    p,
+    hr,
+    ul,
+    ol,
+    pre {
+        margin-bottom: 1.5rem;
+    }
+
+    img {
+        max-width: 100%;
+    }
+    pre {
+        overflow-x: hidden;
+        font-size: 0.85rem;
+        font-family:
+            ui-monospace, SFMono-Regular, Menlo, "Andale Mono", Consolas,
+            Monaco, monospace;
+    }
+
+    blockquote {
+        border-left: 1px solid black;
+        padding: 0 12px;
+        font-style: italic;
+    }
+    .footnotes hr {
+        opacity: 0.25;
+    }
+    .footnotes p {
+        margin-bottom: 8;
+    }
+</style>
+{{ block "main" . }} baseof.html {{ end }}

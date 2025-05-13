@@ -1,0 +1,11 @@
+baseURL = 'https://crisfe.im/'
+languageCode = 'en-us'
+title = 'crife.im'
+
+[markup]
+[markup.goldmark]
+[markup.goldmark.renderer]
+unsafe = true
+[markup.highlight]
+noClasses = true
+codeFences = false
