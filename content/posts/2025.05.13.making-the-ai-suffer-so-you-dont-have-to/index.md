@@ -14,39 +14,35 @@ En este artículo quiero compartir los resultados.
 
 ## Idea
 
-Mis interacciones con la *IA* se pueden reducir siguiente un bucle:
+Como desarrollador, mis interacciones con la *IA* se pueden reducir a un bucle:
 
-A partir de un prompt inicial *(1)*, el modelo genera código *(2)* que pruebo en un entorno de dev *(3)*.
+A partir de un prompt inicial, pido al modelo que genere código *(1)*.<br>Lo pruebo en un entorno de dev *(2)*[^nosiempre]. Si falla *(3)*, doy feedback al modelo.
 
-Si falla *(4)*, envío ese *output* al modelo para que regenere código (5).
+[^nosiempre]: Esto no es siempre necesario, la mayoría de las veces puedes ver de un vistazo la validez del código.
 
-Repito el proceso hasta que el código funcione.
+Repito hasta que el código generado funcione.
 
-```
-👨‍💻 → 🤖
-🤖 → 👨‍💻
-👨‍💻 → ⚙️
-⚙️ → 🔴
- ↪︎ Repeat
-```
+<pre style="font-size: 1.5rem">
+     ╭─ 👨‍💻 ─╮
+👨‍💻 → 🤖     ⚙️
+     ╰─ 👨‍💻 ─╯
+</pre>
 
-El prompt inicial sigue siendo el mismo, lo único que cambia es la adición del *output* del paso *4*, que uso como feedback para regenerar código.
+Me di cuenta de que podía eliminarme de la ecuación, concretamente, de los pasos 2 y 3:
 
-Me vino la idea a la cabeza (y las ganas) de eliminarme de la ecuación, concretamente, de los pasos 2 y 3:
+<pre style="font-size: 1.5rem">
+     ╭─────╮
+👨‍💻 → 🤖    ⚙️
+     ╰─────╯
+</pre>
 
+Mi fantasía era lograr un flujo en el que mi trabajo se convirtiese en escribir *specs*, darle al botón de ejecución, irme a tomar un café y a vivir la vida y volver 3 horas después para encontrarme el trabajo hecho.
 
-<video id="v2" autoplay muted loop playsinline  style="width: 100%; height: auto;">
-  <source src="video.mov" type="video/mp4">
-  Tu navegador no soporta el video HTML5.
-</video>
+Se me ocurrió[^1] una idea sencilla: un bucle automatizado basado en un enfoque *test driven*.
 
-El sueño era lograr un flujo en el que mi trabajo se convirtiese en escribir *specs*, darle al botón de ejecución, irme a tomar un café y volver 3 horas después para encontrarme el trabajo hecho.
+Usando una prueba initaria como *prompt*, puedo pedirle al modelo que infiera la implementación del *SUT* sin implementar.
 
-Para ello, se me ocurrió[^1] una idea sencilla: un bucle automatizado basado en un enfoque TDD.
-
-A partir de una prueba unitaria inicial, cuyo sistema sea un *SUT* inexistente, pediría al modelo la generación de ese *SUT*.
-
-Para que quede más claro, este es un ejemplo sencillo de *spec*:
+Por ejemplo, usando este test como prompt:
 
 ```swift
 func test_adder() {
@@ -55,7 +51,7 @@ func test_adder() {
 }
 ```
 
-Si le pedimos al modelo que implemente el *SUT*, querremos que nos devuelva:
+El modelo puede generar algo como esto:
 
 ```swift
 struct Adder {
@@ -66,9 +62,9 @@ struct Adder {
 }
 ```
 
-Usar una prueba unitaria como prompt permite que el modelo (🤖) se conecte directamente con el entorno de ejecución (⚙️), automatizando la verificación del código y el envío de feedback.
+Este formato de *prompt* permite que el modelo (🤖) se "hable" directamente con el entorno de ejecución (⚙️), automatizando la verificación del código y el envío de feedback.
 
-Si la compilación o el test fallan, el ciclo se repite. Si no, rompemos el bucle:
+Si la compilación o el test fallan, el ciclo se repite. Si no, podemos salir del bucle:
 
 <video id="v1" autoplay muted loop playsinline  style="width: 100%; height: auto;">
   <source src="flow.mp4" type="video/mp4">
@@ -76,24 +72,54 @@ Si la compilación o el test fallan, el ciclo se repite. Si no, rompemos el bucl
 </video>
 
 
-## Ejecución de código
+## Automatización
 
-Para mi primer prototipo, usé Swift y un enfoque *naive* que consistió en usar el método `assert(Bool)` como *framework* de testing[^3].
+El enfoque *naive* que usé consistió en usar el método `assert` de *Swift*, como *framework* de testing. Es decir:
 
-Para ejecutar el código generado con su test, simplemente los concatenamos en una única cadena y se la pasamos al compilador:
+```swift
+func test_adder() {
+  let sut = Adder(1,3)
+  assert(sut.result == 4)
+}
+```
 
-```bash
-// Ejemplo de una posible implementación
+*Assert* lanza un trap en tiempo de ejecución cuando la condición es falsa, generando salida por *stderr* [^debug], lo que lo hace útil como señal de error para este sistema.
+
+[^debug]: En *builds* de *debug*
+
+Para invocar los tests unitarios tampoco utilizo algún mecanismo complejo de análisis de síntaxis, parsing, AST, etc..., simplemente los llamo en la propia *spec*:
+
+```swift
+func test_adder() { ... }
+func test_substractor() { ... }
+...
+test_adder()
+test_substractor()
+```
+
+Para verificar el código generado contra su test, concateno ambos en una única cadenal que almaceno en un archivo temporal[^8] y paso al compilador[^process].
+
+```swift
 let concatenated = generatedCode + " " + unitTestsSpecs
 let tmpFileURL = tmFileURLWithTimestamp("generated.swift")
 swiftRunner.runCode(at: tmpFileURL)
 ```
 
-El código del *runner* está disponible [aquí](@todo)
+[^process]: Invocado con `Procress`. [Implementación](https://github.com/crisfeim/cli-tddbuddy/blob/main/Sources/Core/Infrastructure/SwiftRunner.swift).
 
-## Diseño y componentes del sistema
+Si el *exit code* es distinto de cero, significa que la ejecución del código generado falló. En ese caso, repetimos el ciclo hasta que el código sea cero.
 
-Para este sistema, inicialmente me planteé tres componentes:
+```swift
+var output = swiftRunner.runCode(at: tmpFileURL)
+while output.processResult.exitCode != 0 {
+    let regeneratedCodeFileURL = ...
+    output = swiftRunner.runCode(at: regeneratedCodeFileURL)
+}
+```
+
+## Diseño
+
+Inicialmente planteé tres componentes:
 
 1. 🤖 Cliente LLM: Genera código a partir de las specs.
 2. 🪢 *Concatenator*: Concatena el *output* del modelo con el test inicial.
@@ -109,9 +135,18 @@ System.generateCodeFrom(specs) → (GeneratedCode, Stdout/Stderr)
   → Exit
 ```
 
-Al final terminé con algunos componentes de más. Concretamente, un iterador (para romper el bucle después de "N" iteraciones) y *helpers* de gestión de archivos:
+Aunque terminé con algunos componentes de más. Concretamente, un iterador (para cortar el bucle tras "N" intentos fallidos), *helpers* de gestión de archivos y un almacenador de contexto:
 
 <a href="system.png"><img src="system.png" alt="system diagram"></a>
+
+## Uso
+
+```shell
+$ tddbuddy \
+  --input spec.swift |
+  --ouptput specs.output.swift
+  --iterations 5
+```
 
 ## Limitaciones
 
@@ -142,7 +177,7 @@ func fail(_ description: String, function: String = #function) {
 }
 ```
 
-A pesar de algunas dificultades iniciales, *Codestral* fue capaz de generar un cliente **funcional**:
+*Codestral* fue capaz de generar un cliente **funcional**, a pesar de algunas dificultades iniciales:
 
 ```swift
 struct Repository: Decodable {
@@ -165,13 +200,13 @@ struct SearchResults<T: Decodable>: Decodable {
 }
 ```
 
-Tuve que insistir en que hiciese una petición real [^5], porque el modelo se empeñaba en generarme cosas de este tipo:
+Tuve que insistir en que hiciese una petición real [^5], porque el modelo se empeñaba en generarme código de este tipo:
 
 ```swift
 class GithubClient {
   func fetchRepositories(minStars: Int) async throws -> [Repository] {
-/* YOUR IMPLEMENTATION HERE */
-  return ...
+  /* YOUR IMPLEMENTATION HERE */
+  return []
   }
 }
 ```
@@ -180,7 +215,7 @@ class GithubClient {
 
 ### Cuando el modelo no resuelve el problema... porque ya sabe la respuesta
 
-Aunque poco frecuente, otro caso que me encontré ocasionalmente, fue el de *outputs hardcodeados*. Ej:
+Aunque poco frecuente, otro caso que me encontré ocasionalmente, fue el de *resultados hardcodeados*. Ej:
 
 ```swift
 func test_adder() {
@@ -198,7 +233,7 @@ struct Adder {
 }
 ```
 
-Esto se soluciona fácilmente añadiendo más aserciones al test, [para obligar al modelo a generalizar.](hardcode-again.jpg)
+Estos casos solucionan fácilmente añadiendo más aserciones al test [para obligar al modelo a generalizar.](hardcode-again.jpg)
 
 ```swift
 func test_adder() {
@@ -219,9 +254,9 @@ En [mi system prompt](system-prompt.txt), el siguiente apartado es importante pa
 
 > Provide ONLY runnable Swift code. No explanations, comments, or formatting (no code blocks, markdown, symbols, or text).
 
-Algunos modelos, ~ejem ejem *Codestral*~, tenían dificultades entendiendo el contexto y se empeñaban en encapsular el código en bloques de código de markdown, acompañándolo además de comentarios explicativos.
+Aún con este *prompt*, algunos modelos, ~~ejem ejem *Codestral*~~, tenían dificultades entendiendo el contexto y se empeñaban en encapsular el código en bloques de código de markdown, acompañándolo además de comentarios explicativos.
 
-Y aunque se agradece el entusiasmo por la pedagogía, hubiera preferido que no me obligara a escribir una función de preprocessing para limpiar los artefactos de su output.
+Y aunque se agradece el entusiasmo por la pedagogía, hubiera preferido no tener que escribir una función de preprocessing para limpiar artefactos de output.
 
 En la [reescritura del proyecto](https://github.com/crisfeim/cli-tddbuddy), he usado sólo *Llama 3.2*. Por el momento ~~no he tenido que ponerle cinta adhesiva en la boca.~~ no me he encontrado con este problema.
 
@@ -229,11 +264,11 @@ En la [reescritura del proyecto](https://github.com/crisfeim/cli-tddbuddy), he u
 
 A pesar de las limitaciones descritas y de que mis pruebas han sido bastante modestas, intuyo que es un enfoque prometedor y que se hará un hueco en la industria a medida de que las herramientas se sofistiquen y las empresas inviertan en este enfoque.
 
-¿Quién sabe? Puede que algún día nuestro cotidiano como ingenieros de software se reduzca a escribir *specs*.
+¿Quién sabe? Puede que llegue el día en que nuestra profesión como ingenieros de software se reduzca a escribir *specs*.
 
 Creo que el reto real es integrar esta metodología en un *tooling* existente (*Xcode, por ejemplo*). Dada la simplicidad del enfoque, diría que es más bien un reto de experiencia de usuario, que de implementación.
 
-Por otro lado, me hubiera gustado integrar un framework de testing real [^2] y recabar datos cuantitativos (número de iteraciones necesarias para resolver "X" problema, problemas más complejos, comparación entre modelos, etc), pero preferí centrarme primero en tener una prueba de concepto funcional. Queda como tarea pendiente.
+Por otro lado, me hubiera gustado integrar un framework de testing real [^2] y recabar datos cuantitativos (número de iteraciones necesarias para resolver "X" problema, problemas más complejos, comparación entre modelos, etc), pero en esta primera iteración, preferí centrarme en una prueba de concepto funcional.
 
 ## Demo en línea
 
@@ -243,6 +278,5 @@ Por otro lado, me hubiera gustado integrar un framework de testing real [^2] y r
 
 [^1]: A mí y [a otro puñado de gente](https://github.com/crisfeim/cli-tddbuddy/search?q=tdd&type=code).
 [^2]: *XCTest* / *Swift Testing*
-[^3]: El método assert lanza un trap en tiempo de ejecución cuando la condición es falsa, generando salida por *stderr* (en *builds* de *debug*), lo que lo hace útil como señal de error para este sistema
 [^5]: De ahí el comentario desesperado en mayúsculas dentro del código: *"This MUST PERFORM A REAL CALL TO THE GITHUB API"*
 [^8]: El compilador no acepta un *string* como entrada.
