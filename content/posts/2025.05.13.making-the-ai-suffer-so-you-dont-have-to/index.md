@@ -132,7 +132,7 @@ Inicialmente planteé tres componentes:
 
 ### Pseudo-código
 
-```
+```shell
 System.generateCodeFrom(specs) → (GeneratedCode, Stdout/Stderr)
   → LLM.send(specs) → GeneratedCode
   → Concatenator.concatenate(GeneratedCode, Specs) → Concatenated
@@ -148,7 +148,7 @@ Al final, terminé con algunos componentes de más. Concretamente:
 
 <a href="system.png"><img src="system.png" alt="system diagram"></a>
 
-## CLI
+### CLI
 
 ```shell
 $ tddbuddy \
@@ -166,23 +166,12 @@ Aunque no he tenido la oportunidad de probar exhaustivamente este enfoque como m
 Partiendo de estas *specs*:
 
 ```swift
-func test_fetch_repositories_with_minimum_stars_from_real_api() async throws {
+func test_fetch_reposWithMinimumStarsFromRealApi() async throws {
   let sut = GithubClient()
   // This MUST PERFORM A REAL CALL TO THE GITHUB API
   let repos = try await sut.fetchRepositories(minStars: 100)
-  if repos.count == 0 {
-  fail("List should not be empty")
-  }
-
-  if !repos.allSatisfy { $0.stars >= 100 } {
-    fail("Fetched repositories should have at least 100 hundred stars")
-  }
-}
-
-try await test_fetch_repositories_with_minimum_stars_from_real_api()
-
-func fail(_ description: String, function: String = #function) {
-  print("❌ — \(function), \(description)")
+  assert(!repos.isEmpty)
+  assert(repos.allSatisfy { $0.stars >= 100 })
 }
 ```
 
