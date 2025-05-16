@@ -7,5 +7,4 @@ title = 'crife.im'
 [markup.goldmark.renderer]
 unsafe = true
 [markup.highlight]
-noClasses = true
-codeFences = false
+style = "solarized-light"

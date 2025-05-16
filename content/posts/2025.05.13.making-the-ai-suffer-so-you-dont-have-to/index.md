@@ -22,15 +22,15 @@ A partir de un prompt inicial, pido al modelo que genere código *(1)*.<br>Lo pr
 
 Repito hasta que el código generado funcione.
 
-<pre style="font-size: 1.5rem">
-     ╭─› 👨‍💻 ─╮
-👨‍💻 → 🤖     ⚙️
-     ╰─ 👨‍💻 ‹─╯
+<pre class="emoji-diagram">
+     ╭─› 👨‍💻  ─╮
+👨‍💻 → 🤖       ⚙️
+     ╰─  👨‍💻 ‹─╯
 </pre>
 
 Me di cuenta de que podía eliminarme de la ecuación, concretamente, de los pasos 2 y 3:
 
-<pre style="font-size: 1.5rem">
+<pre class="emoji-diagram">
      ╭─────╮
 👨‍💻 → 🤖    ⚙️
      ╰─────╯

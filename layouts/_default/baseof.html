@@ -62,7 +62,7 @@
         }
         pre {
             overflow-x: scroll;
-            font-size: 0.85rem;
+            font-size: 0.9rem;
             font-family:
                 ui-monospace, SFMono-Regular, Menlo, "Andale Mono", Consolas,
                 Monaco, monospace;
@@ -84,6 +84,17 @@
         }
         a:hover {
             filter: grayscale(0);
+        }
+
+        pre.emoji-diagram {
+            font-size: 1.5rem;
+        }
+
+        @media screen and (max-width: 768px) {
+            pre code > span {
+                display: inline !important;
+                font-size: inherit !important;
+            }
         }
     </style>
     {{ block "main" . }} baseof.html {{ end }}
