@@ -1,8 +1,23 @@
+{{ define "meta" }}
+<meta property="og:title" content="{{ .Title }}" />
+<meta property="og:url" content="{{ .Permalink }}" />
+<meta property="og:description" content="{{ .Summary | plainify | htmlEscape }}" />
+
+{{ $permalink := .Permalink }}
+{{ with index .Params "og-image" }}
+    {{ with $.Resources.Get . }}
+    <meta property="og:image" content="{{ .Permalink }}" />
+   {{ end }}
+{{ end }}
+
+{{ end }}
+
 {{ define "main" }}
 {{ $isServer := .Site.IsServer }}
 
 {{ partial "asset" (dict "isServer" $isServer "name" "single.css") }}
 {{ partial "postcss" . }}
+
 
 <article>
     <h1>{{ .Title }}</h1>

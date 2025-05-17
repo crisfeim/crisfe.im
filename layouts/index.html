@@ -1,3 +1,10 @@
+{{ define "meta" }}
+  <meta property="og:title" content="{{ .Title | htmlEscape }}" />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="{{ .Permalink }}" />
+  <meta property="og:description" content="{{ site.Params.description | htmlEscape }}" />
+{{ end }}
+
 {{ define "main" }}
 <ul style="margin-top: 64px; list-style: none; padding: 0">
     {{ range where .Site.RegularPages "Section" "posts" }}

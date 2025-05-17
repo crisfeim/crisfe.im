@@ -2,6 +2,9 @@ baseURL = 'https://crisfe.im/'
 languageCode = 'en-us'
 title = 'crife.im'
 
+[params]
+description = "Technical blog and projects by Cristian Rojas. AI, development, and custom tools."
+
 [markup]
 [markup.goldmark]
 [markup.goldmark.renderer]

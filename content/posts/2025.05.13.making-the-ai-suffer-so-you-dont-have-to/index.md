@@ -2,6 +2,7 @@
 title: Haciendo sufrir a la inteligencia artificial en tu lugar
 date: 2025-05-13
 slug: making-the-ai-suffer-so-you-dont-have-to
+og-image: images/system.png
 ---
 
 Hace poco [reescribí](https://github.com/crisfeim/cli-tddbuddy) un mini-experimento que tenía empolvado desde hace unos meses.
