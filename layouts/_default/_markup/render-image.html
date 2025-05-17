@@ -1,5 +1,15 @@
-{{- $src := .Destination | safeURL -}}
-<a href="{{ $src }}" target="_blank">
-  <img src="{{ $src }}" alt="{{ .Text }}" loading="lazy"
-    {{ with .Title }} title="{{ . }}"{{ end }} />
+{{ with .Page.Resources.GetMatch (.Destination | urlize) }}
+<a href="{{ .Permalink }}">
+    <img
+        src="{{ .Permalink }}"
+        alt="{{ $.Text }}"
+        width="{{ .Width }}"
+        height="{{ .Height }}"
+        style="width: 100%; height: auto;"
+        loading="lazy"
+        decoding="async"
+    >
 </a>
+{{ else }}
+  <img src="{{ .Destination | safeURL }}" alt="{{ .Text }}">
+{{ end }}
