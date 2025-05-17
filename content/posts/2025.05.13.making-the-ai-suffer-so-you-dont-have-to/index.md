@@ -71,7 +71,7 @@ Este formato de *prompt* permite que el modelo (🤖) "comunique" directamente c
 
 Si el código generado es inválido o no pasa la prueba, el ciclo se repite. Si el código es válido, salimos del ciclo.
 
-<video id="v1" autoplay muted loop playsinline  style="width: 100%; height: auto;">
+<video id="v1" autoplay muted loop playsinline  style="width: 100%; height: auto;" aria-hidden="true">
   <source src="videos/flow.mp4" type="video/mp4">
   Tu navegador no soporta el video HTML5.
 </video>
