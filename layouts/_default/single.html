@@ -2,6 +2,7 @@
 {{ $isServer := .Site.IsServer }}
 
 {{ partial "asset" (dict "isServer" $isServer "name" "single.css") }}
+{{ partial "postcss" . }}
 
 <article>
     <h1>{{ .Title }}</h1>

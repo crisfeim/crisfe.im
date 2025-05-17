@@ -1,0 +1,21 @@
+{{- $page := . -}}
+
+{{ if $page.Site.IsServer }}
+  {{ $path := path.Join $page.Page.File.Dir "main.css" }}
+  {{ if fileExists $path }}
+    <style id="server-postcss">
+      {{ readFile $path | safeCSS }}
+    </style>
+  {{ else }}
+    <!-- ⚠️ main.css not found in {{ $path }} -->
+  {{ end }}
+{{ else }}
+  {{ with $page.Page.Resources.GetMatch "main.css" }}
+    {{ $min := . | resources.Minify }}
+    <style>
+      {{ $min.Content | safeCSS }}
+    </style>
+  {{ else }}
+    <!-- ⚠️ main.css not found as Page Resource -->
+  {{ end }}
+{{ end }}
