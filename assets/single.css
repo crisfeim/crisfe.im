@@ -55,10 +55,6 @@ time {
     margin-bottom: 2rem;
 }
 
-pre.emoji-diagram {
-    font-size: 1.5rem;
-}
-
 @media screen and (max-width: 768px) {
     pre code > span {
         display: inline !important;
