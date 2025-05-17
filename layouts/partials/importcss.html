@@ -1,0 +1,9 @@
+{{ if .isServer }}
+<style id="server">
+    {{ readFile .name | safeCSS }}
+</style>
+{{ else }}
+    <style>
+        {{ readFile .name | safeCSS }}
+    </style>
+{{ end }}

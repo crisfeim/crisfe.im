@@ -1,11 +1,10 @@
+{{ $isServer := .Site.IsServer }}
 <html>
     <head>
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <title>{{ .Title }}</title>
     </head>
-    {{ with resources.Get "baseof.css" }} {{ $css := . | resources.Minify }}
-    <style>
-        {{ $css.Content | safeCSS }}
-    </style>
-    {{ end }} {{ block "main" . }} baseof.html {{ end }}
+
+    {{ partial "importcss.html" (dict "isServer" $isServer "name" "assets/baseof.css") }}
+    {{ block "main" . }} baseof.html {{ end }}
 </html>

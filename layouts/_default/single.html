@@ -1,18 +1,9 @@
-{{ define "main" }} {{ with resources.Get "single.css" }} {{ $min := . |
-resources.Minify }} {{ $fp := $min | resources.Fingerprint }}
-<style>
-    {{ $fp.Content | safeCSS }}
-</style>
-{{ end }} {{ if .Site.IsServer }}
-<style>
-    {{ readFile (path.Join .Page.File.Dir "main.css") | safeCSS }}
-</style>
-{{ else }} {{ with .Resources.GetMatch "main.css" }} {{ $min := . |
-resources.Minify }} {{ $fp := $min | resources.Fingerprint }}
-<style>
-    {{ $fp.Content | safeCSS }}
-</style>
-{{ end }} {{ end }}
+{{ define "main" }}
+{{ $isServer := .Site.IsServer }}
+
+{{ partial "importcss.html" (dict "isServer" $isServer "name" "assets/single.css") }}
+{{ partial "importcss.html" (dict "isServer" $isServer "name" (path.Join .Page.File.Dir "main.css")) }}
+
 <article>
     <h1>{{ .Title }}</h1>
     <time>{{ .Date.Format "January 2006" }}</time>
