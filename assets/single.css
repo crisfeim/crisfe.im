@@ -59,8 +59,8 @@ time {
 }
 
 pre {
-    padding: 8;
-    border-radius: 4px;
+    padding: 0.5rem;
+    border-radius: 0.25rem;
     background-color: white !important;
     overflow-x: scroll;
     font-size: 0.9rem;
