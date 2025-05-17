@@ -5,6 +5,6 @@
         <title>{{ .Title }}</title>
     </head>
 
-    {{ partial "importcss.html" (dict "isServer" $isServer "name" "assets/baseof.css") }}
+    {{ partial "asset" (dict "isServer" $isServer "name" "baseof.css") }}
     {{ block "main" . }} baseof.html {{ end }}
 </html>

@@ -1,0 +1,14 @@
+{{ if .isServer }}
+<style id="server">
+{{ readFile (printf "assets/%s" .name) | safeCSS }}
+</style>
+{{ else }}
+    {{ with resources.Get .name }}
+        {{ $min := . | resources.Minify }}
+        <style>
+            {{ $min.Content | safeCSS }}
+        </style>
+    {{ else }}
+        <p>Error: CSS file not found</p>
+    {{ end }}
+{{ end }}

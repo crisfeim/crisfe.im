@@ -1,8 +1,7 @@
 {{ define "main" }}
 {{ $isServer := .Site.IsServer }}
 
-{{ partial "importcss.html" (dict "isServer" $isServer "name" "assets/single.css") }}
-{{ partial "importcss.html" (dict "isServer" $isServer "name" (path.Join .Page.File.Dir "main.css")) }}
+{{ partial "asset" (dict "isServer" $isServer "name" "single.css") }}
 
 <article>
     <h1>{{ .Title }}</h1>
