@@ -3,8 +3,9 @@
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <title>{{ .Title }}</title>
     </head>
+    {{ with resources.Get "baseof.css" }} {{ $css := . | resources.Minify }}
     <style>
-        {{ readFile "assets/baseof.css" | safeCSS }}
+        {{ $css.Content | safeCSS }}
     </style>
-    {{ block "main" . }} baseof.html {{ end }}
+    {{ end }} {{ block "main" . }} baseof.html {{ end }}
 </html>

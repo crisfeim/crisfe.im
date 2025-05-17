@@ -1,7 +1,9 @@
-{{ define "main" }}
+{{ define "main" }} {{ with resources.Get "single.css" }} {{ $css := . |
+resources.Minify }}
 <style>
-    {{ readFile "assets/single.css" | safeCSS }}
+    {{ $css.Content | safeCSS }}
 </style>
+{{ end }}
 <article>
     <h1>{{ .Title }}</h1>
     <time>{{ .Date.Format "January 2006" }}</time>
