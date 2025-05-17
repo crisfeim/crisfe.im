@@ -232,7 +232,7 @@ struct Adder {
 }
 ```
 
-Estos casos se solucionan fácilmente añadiendo más aserciones a la prueba [indicarle amablemente al modelo que generalice](hardcode-again.jpg).
+Estos casos se solucionan fácilmente añadiendo más aserciones a la prueba [indicarle amablemente al modelo que generalice](images/hardcode-again.jpg).
 
 ```swift
 func test_adder() {
