@@ -146,7 +146,7 @@ Al final, terminé con algunos componentes de más. Concretamente:
 - Algunos *helpers* de gestión de archivos
 - Un almacenador de contexto (para enviar los resultados fallidos al modelo)
 
-<a href="system.png"><img src="images/system.png" alt="system diagram"></a>
+![system diagram](images/system.png)
 
 ### CLI
 

@@ -1,0 +1,5 @@
+{{- $src := .Destination | safeURL -}}
+<a href="{{ $src }}" target="_blank">
+  <img src="{{ $src }}" alt="{{ .Text }}" loading="lazy"
+    {{ with .Title }} title="{{ . }}"{{ end }} />
+</a>
