@@ -71,7 +71,7 @@ Este formato de *prompt* permite que el modelo (🤖) "comunique" directamente c
 Si el código generado es inválido o no pasa la prueba, el ciclo se repite. Si el código es válido, salimos del ciclo.
 
 <video id="v1" autoplay muted loop playsinline  style="width: 100%; height: auto;">
-  <source src="flow.mp4" type="video/mp4">
+  <source src="videos/flow.mp4" type="video/mp4">
   Tu navegador no soporta el video HTML5.
 </video>
 
@@ -146,7 +146,7 @@ Al final, terminé con algunos componentes de más. Concretamente:
 - Algunos *helpers* de gestión de archivos
 - Un almacenador de contexto (para enviar los resultados fallidos al modelo)
 
-<a href="system.png"><img src="system.png" alt="system diagram"></a>
+<a href="system.png"><img src="images/system.png" alt="system diagram"></a>
 
 ### CLI
 
@@ -248,7 +248,7 @@ func test_adder() {
 
 ### Cuando *Gemini* quiere ser tu profe, pero tú solo quieres compilar
 
-En [mi system prompt](system-prompt.txt), el siguiente apartado es importante para que el código pueda compilar correctamente:
+En [mi system prompt](sysprompt.txt), el siguiente apartado es importante para que el código pueda compilar correctamente:
 
 > Provide ONLY runnable Swift code. No explanations, comments, or formatting (no code blocks, markdown, symbols, or text).
 
