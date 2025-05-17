@@ -1,7 +1,7 @@
 {{ define "meta" }}
 <meta property="og:title" content="{{ .Title }}" />
 <meta property="og:url" content="{{ .Permalink }}" />
-<meta property="og:description" content="{{ .Summary | plainify | htmlEscape }}" />
+<meta property="og:description" content="{{ .Summary | plainify | truncate 300 | htmlEscape }}" />
 <meta name="description" content="{{ .Summary | plainify | truncate 150 |  htmlEscape }}" />
 {{ $permalink := .Permalink }}
 {{ with index .Params "og-image" }}
