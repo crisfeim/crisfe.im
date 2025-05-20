@@ -275,7 +275,7 @@ Por otro lado, me hubiera gustado integrar un framework de testing real [^2] y r
 
 {{< fragment "codegen-demo/public/index.html" >}}
 
-[Código fuente del playground](https://github.com/crisfeim/app-web-tddbuddy)
+[Código fuente del playground](https://github.com/crisfeim/crisfe.im/tree/main/content/posts/2025.05.13.making-the-ai-suffer-so-you-dont-have-to/codegen-demo/dev)
 
 [^1]: A mí y [a otro puñado de gente](https://github.com/crisfeim/cli-tddbuddy/search?q=tdd&type=code).
 [^2]: *XCTest* / *Swift Testing*
