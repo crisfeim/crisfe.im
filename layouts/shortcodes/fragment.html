@@ -1,0 +1,5 @@
+{{ $path := .Get 0 }}
+{{ $base := .Page.File.Dir }}
+{{ $full := path.Join $base $path }}
+{{ $file := readFile $full }}
+{{ $file | safeHTML }}

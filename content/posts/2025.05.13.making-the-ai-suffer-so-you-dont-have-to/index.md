@@ -5,8 +5,6 @@ slug: making-the-ai-suffer-so-you-dont-have-to
 og-image: images/system.png
 ---
 
- <script type="module" src="./components/codegen-demo.js"></script>
- 
 Hace poco [reescribí](https://github.com/crisfeim/cli-tddbuddy) un mini-experimento que tenía empolvado desde hace unos meses.
 
 Se trata de un esfuerzo por implementar un mecanismo de generación de código con control de calidad automatizado.
@@ -275,7 +273,7 @@ Por otro lado, me hubiera gustado integrar un framework de testing real [^2] y r
 
 > Un playground vale más que mil palabras.
 
-<codegen-demo></codegen-demo>
+{{< fragment "codegen-demo/public/index.html" >}}
 
 [Código fuente del playground](https://github.com/crisfeim/app-web-tddbuddy)
 

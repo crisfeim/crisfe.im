@@ -1,0 +1,24 @@
+generated/generated.swift:44: Assertion failed
+Stack dump:
+0.	Program arguments: /Library/Developer/CommandLineTools/usr/bin/swift-frontend -frontend -interpret "/Users/cristian/Library/Mobile Documents/com~apple~CloudDocs/Documents/\360\237\222\273/\360\237\233\240\357\270\217/apple/grounds/\360\237\223\245/Publicable/AICodeGenerator/output/main.CodestralClient/codelineappender/generated.swift" -Xllvm -aarch64-use-tbi -enable-objc-interop -stack-check -sdk /Library/Developer/CommandLineTools/SDKs/MacOSX.sdk -new-driver-path /Library/Developer/CommandLineTools/usr/bin/swift-driver -empty-abi-descriptor -resource-dir /Library/Developer/CommandLineTools/usr/lib/swift -module-name generated -disable-clang-spi -target-sdk-version 15.0 -target-sdk-name macosx15.0 -external-plugin-path /Library/Developer/Developer/usr/lib/swift/host/plugins#/Library/Developer/Developer/usr/bin/swift-plugin-server -external-plugin-path /Library/Developer/Developer/usr/local/lib/swift/host/plugins#/Library/Developer/Developer/usr/bin/swift-plugin-server -plugin-path /Library/Developer/CommandLineTools/usr/lib/swift/host/plugins -plugin-path /Library/Developer/CommandLineTools/usr/local/lib/swift/host/plugins
+1.	Apple Swift version 6.0 (swiftlang-6.0.0.9.10 clang-1600.0.26.2)
+2.	Compiling with effective version 5.10
+3.	While running user code "/Users/cristian/Library/Mobile Documents/com~apple~CloudDocs/Documents/💻/🛠️/apple/grounds/📥/Publicable/AICodeGenerator/output/main.CodestralClient/codelineappender/generated.swift"
+Stack dump without symbol names (ensure you have llvm-symbolizer in your PATH or set the environment var `LLVM_SYMBOLIZER_PATH` to point to it):
+0  swift-frontend           0x00000001062e30fc llvm::sys::PrintStackTrace(llvm::raw_ostream&, int) + 56
+1  swift-frontend           0x00000001062e1350 llvm::sys::RunSignalHandlers() + 112
+2  swift-frontend           0x00000001062e36c8 SignalHandler(int) + 292
+3  libsystem_platform.dylib 0x0000000192f20184 _sigtramp + 56
+4  libswiftCore.dylib       0x00000001a3b292f4 $ss17_assertionFailure__4file4line5flagss5NeverOs12StaticStringV_SSAHSus6UInt32VtF + 592
+5  libswiftCore.dylib       0x000000010e21429c $ss17_assertionFailure__4file4line5flagss5NeverOs12StaticStringV_SSAHSus6UInt32VtF + 18446744071200223736
+6  libswiftCore.dylib       0x000000010e214010 $ss17_assertionFailure__4file4line5flagss5NeverOs12StaticStringV_SSAHSus6UInt32VtF + 18446744071200223084
+7  swift-frontend           0x0000000100ddcc20 llvm::orc::runAsMain(int (*)(int, char**), llvm::ArrayRef<std::__1::basic_string<char, std::__1::char_traits<char>, std::__1::allocator<char>>>, std::__1::optional<llvm::StringRef>) + 1940
+8  swift-frontend           0x0000000100cf05f4 swift::SwiftJIT::runMain(llvm::ArrayRef<std::__1::basic_string<char, std::__1::char_traits<char>, std::__1::allocator<char>>>) + 172
+9  swift-frontend           0x0000000100cfe000 swift::RunImmediately(swift::CompilerInstance&, std::__1::vector<std::__1::basic_string<char, std::__1::char_traits<char>, std::__1::allocator<char>>, std::__1::allocator<std::__1::basic_string<char, std::__1::char_traits<char>, std::__1::allocator<char>>>> const&, swift::IRGenOptions const&, swift::SILOptions const&, std::__1::unique_ptr<swift::SILModule, std::__1::default_delete<swift::SILModule>>&&) + 1028
+10 swift-frontend           0x0000000100c9259c processCommandLineAndRunImmediately(swift::CompilerInstance&, std::__1::unique_ptr<swift::SILModule, std::__1::default_delete<swift::SILModule>>&&, llvm::PointerUnion<swift::ModuleDecl*, swift::SourceFile*>, swift::FrontendObserver*, int&) + 536
+11 swift-frontend           0x0000000100c8e004 performCompileStepsPostSILGen(swift::CompilerInstance&, std::__1::unique_ptr<swift::SILModule, std::__1::default_delete<swift::SILModule>>, llvm::PointerUnion<swift::ModuleDecl*, swift::SourceFile*>, swift::PrimarySpecificPaths const&, int&, swift::FrontendObserver*) + 2044
+12 swift-frontend           0x0000000100c8d6e4 swift::performCompileStepsPostSema(swift::CompilerInstance&, int&, swift::FrontendObserver*) + 2888
+13 swift-frontend           0x0000000100c90714 performCompile(swift::CompilerInstance&, int&, swift::FrontendObserver*) + 2940
+14 swift-frontend           0x0000000100c8ef58 swift::performFrontend(llvm::ArrayRef<char const*>, char const*, void*, swift::FrontendObserver*) + 3572
+15 swift-frontend           0x0000000100c1601c swift::mainEntry(int, char const**) + 3680
+16 dyld                     0x0000000192b68274 start + 2840

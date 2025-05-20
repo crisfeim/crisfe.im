@@ -1,0 +1,7 @@
+/Users/cristian/Library/Mobile Documents/com~apple~CloudDocs/Documents/💻/🛠️/🍎/👨‍🔬/[0] 📥 en 🧑‍🔬/CodeAIImplementer/output/main.CodestralClient/codeblockparser/generated.swift:4:12: error: cannot find 'parseFunction' in scope
+ 2 | 
+ 3 | func test() {
+ 4 | 	let sut = parseFunction
+   |            `- error: cannot find 'parseFunction' in scope
+ 5 | 	let textwithcodeblock = """
+ 6 | 	This is some swift code

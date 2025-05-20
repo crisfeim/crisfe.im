@@ -2,6 +2,13 @@ baseURL = 'https://crisfe.im/'
 languageCode = 'en-us'
 title = 'crife.im'
 
+
+[module]
+[[module.mounts]]
+source = 'content'
+target = 'content'
+excludeFiles = ['node_modules/a.*']
+
 [params]
 description = "Technical blog and projects by Cristian Rojas. AI, development, and custom tools."
 
