@@ -1,6 +1,6 @@
-import { Message } from "./coordinator.ts";
+import { Message } from "../coordinator.ts";
 import { assertStringIncludes } from "https://deno.land/std/assert/mod.ts";
-import { OllamaClient } from "./ollamaclient.ts";
+import { OllamaClient } from "../ollamaclient.ts";
 
 Deno.test("OllamaClient: send", async () => {
   const client = new OllamaClient();
