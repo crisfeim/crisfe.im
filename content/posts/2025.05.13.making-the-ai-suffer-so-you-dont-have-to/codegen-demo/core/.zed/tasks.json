@@ -1,7 +1,19 @@
 [
   {
-    "label": "Test",
-    "command": "deno test --allow-net",
+    "label": "Tests",
+    "command": "deno test tests",
+    "use_new_terminal": false,
+    "allow_concurrent_runs": false,
+    "reveal": "always",
+    "hide": "never",
+    "shell": "system",
+    "show_summary": true,
+    "show_output": true,
+    "tags": []
+  },
+  {
+    "label": "E2E Tests",
+    "command": "deno test e2eTests --allow-net",
     "use_new_terminal": false,
     "allow_concurrent_runs": false,
     "reveal": "always",
