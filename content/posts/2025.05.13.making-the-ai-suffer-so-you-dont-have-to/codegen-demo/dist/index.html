@@ -211,7 +211,10 @@ spacer {flex: 1;}
             <textarea id="specs" x-model="specification"></textarea>
         </vstack>
 
-        <vstack class="right grid-background">
+        <vstack
+            class="right"
+            :class="{ 'grid-background': status === null && isRunning === false }"
+        >
         <hstack class="header">
              <div id="activity-indicator" class="ispinner" x-show="isRunning">
    <div class="ispinner-blade"></div>
