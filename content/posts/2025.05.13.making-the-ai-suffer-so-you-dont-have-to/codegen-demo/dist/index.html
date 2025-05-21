@@ -336,9 +336,9 @@ spacer {flex: 1;}
 
         <textarea id="generated-code" class="jet" readonly x-model="generatedCode"></textarea>
 
-        <hstack id="count">
+        <hstack id="count" x-bind:style="status !== null ? 'opacity: 1' : 'opacity: 0'">
             <spacer></spacer>
-            <span id="iteration-count" x-show="status !== null" x-text="`${currentIteration} of 5`"></span>
+            <span id="iteration-count" x-text="`${currentIteration} of 5`"></span>
         </hstack>
         </vstack>
 
