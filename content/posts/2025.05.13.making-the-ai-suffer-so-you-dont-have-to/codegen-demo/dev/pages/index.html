@@ -5,7 +5,13 @@
     <vstack class="left">
         <hstack class="header">
             <spacer></spacer>
-            @import(run-button.html)
+            <button id="run-button"
+             @click="run"
+             :disabled="isRunning"
+             :class="{ 'canRun': !isRunning }">
+                 @import(play-button.svg)
+             </button>
+
         </hstack>
         <textarea id="specs" class="jet" x-model="specification"></textarea>
     </vstack>
