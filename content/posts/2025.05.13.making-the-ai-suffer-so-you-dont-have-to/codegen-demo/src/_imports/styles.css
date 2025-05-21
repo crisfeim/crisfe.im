@@ -65,23 +65,23 @@ codegen-demo vstack.right {
 background-color: #F9F9F9;
 }
 
-codegen-demo button#run-button {
+codegen-demo button #run-button {
 cursor: not-allowed;
 opacity: 0.5;
 will-change: opacity;
 transition: opacity 0.2s ease;
 }
 
-codegen-demo button#run-button.canRun {
+codegen-demo button #run-button.canRun {
 opacity: 1;
 cursor: pointer;
 }
 
-codegen-demo button#run-button.canRun:hover {
+codegen-demo button #run-button.canRun:hover {
 opacity: 0.5;
 }
 
-codegen-demo button#clear {
+codegen-demo button #clear {
 font-size: 16px;
 width:32px;
 border-radius: 2px;
@@ -89,11 +89,11 @@ transition: background-color 0.2s ease;
 cursor: pointer;
 }
 
-codegen-demo button#clear:hover {
+codegen-demo button #clear:hover {
 background-color: #E3E3E3;
 }
 
-codegen-demo#count {
+codegen-demo #count {
 font-size: 13px;
 font-weight: bold;
 padding: 16px;
