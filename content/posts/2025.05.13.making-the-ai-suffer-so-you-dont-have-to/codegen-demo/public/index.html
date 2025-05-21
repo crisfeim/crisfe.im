@@ -177,7 +177,7 @@ spacer {
 flex: 1;
 }
 </style>
-<div id="demo-app" x-data="makeState()">
+<div id="demo-app" x-data="appStore()">
 <hstack id="regular-version" class="container">
     <vstack class="left">
         <hstack class="header">
@@ -347,7 +347,7 @@ flex: 1;
 </div>
 
 <script>
-const makeState = () => ({
+const appStore = () => ({
   isRunning: false,
   specification: initSpecs(),
   generatedCode: '',
@@ -382,4 +382,5 @@ function testAdder() {
 }
 
 testAdder();`;
+
 </script>
