@@ -25,29 +25,27 @@ class Coordinator {
 Deno.test("generateAndEvaluateCode delivers error on client error", async () => {
   const anyError = Error("any error")
   const client = new ClientStub(anyError)
-  const sut = new Coordinator(client, new RunnerStub(anySuccessRunnerResult))
+  const sut = makeSUT({client})
   await assertRejects(()=>sut.generateAndEvaluateCode(), Error, "any error")
 });
 
 Deno.test("generateAndEvaluateCode delivers code on client succes", async () => {
   const client = new ClientStub("any code")
-  const sut = new Coordinator(client, new RunnerStub(anySuccessRunnerResult))
+  const sut = makeSUT({client})
   const result = await sut.generateAndEvaluateCode()
   assertEquals(result, "any code")
 })
 
 Deno.test("generateAndEvaluateCode delivers error on runner error", async () => {
   const anyError = Error("any error")
-  const client = new ClientStub("any code")
   const runner = new RunnerStub(anyError)
-  const sut = new Coordinator(client, runner)
+  const sut = makeSUT({runner})
   await assertRejects(()=>sut.generateAndEvaluateCode(), Error, "any error")
 })
 
 Deno.test("generateAndEvaluateCode delivers generated code on runner success", async () => {
-  const client = new ClientStub("any code")
   const runner = new RunnerStub(anySuccessRunnerResult)
-  const sut = new Coordinator(client, runner)
+  const sut = makeSUT({runner})
   const result = await sut.generateAndEvaluateCode()
   assertEquals(result, "any code")
 })
@@ -79,6 +77,7 @@ class RunnerStub implements Runner {
 const anySuccesfulClient = new ClientStub("any code")
 const anySuccesfulRunner = new RunnerStub(anySuccessRunnerResult)
 
-const makeSUT = (client: Client = anySuccesfulClient, runner: Runner = anySuccesfulRunner): Coordinator => {
-  return new Coordinator(client, runner);
-}
+const makeSUT = ({ client = anySuccesfulClient, runner = anySuccesfulRunner }: {
+  client?: Client,
+  runner?: Runner
+}): Coordinator => new Coordinator(client, runner);
