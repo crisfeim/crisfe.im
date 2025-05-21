@@ -1,6 +1,6 @@
 import { assertEquals, assertRejects } from "https://deno.land/std/assert/mod.ts";
-import { Coordinator, Client, Runner, RunResult, Message } from "./coordinator.ts";
-import { Iterator } from "./iterator.ts";
+import { Coordinator, Client, Runner, RunResult, Message } from "../coordinator.ts";
+import { Iterator } from "../iterator.ts";
 
 Deno.test("generate appends run feedback as assistant message on each iteration", async () => {
 

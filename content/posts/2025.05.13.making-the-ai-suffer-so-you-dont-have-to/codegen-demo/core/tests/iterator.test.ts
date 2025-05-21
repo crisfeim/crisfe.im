@@ -1,5 +1,5 @@
 import {assertEquals} from "https://deno.land/std/assert/mod.ts";
-import { Iterator } from "./iterator.ts";
+import { Iterator } from "../iterator.ts";
 
 Deno.test("iterates N times if condition is never fullfilled", async () => {
   const sut = new Iterator()
