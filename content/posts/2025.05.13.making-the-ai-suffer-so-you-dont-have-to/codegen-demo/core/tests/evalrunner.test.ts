@@ -1,5 +1,5 @@
 import { EvalRunner } from "../evalrunner.ts";
-import { assert } from "https://deno.land/std/assert/mod.ts";
+import { assert, assertEquals } from "https://deno.land/std/assert/mod.ts";
 
 
 Deno.test("EvalRunner runs valid code", () => {
@@ -13,4 +13,25 @@ Deno.test("EvalRunner fails on invalid code", () => {
   const result = runner.run("const = no;");
   assert(result.isValid === false);
   assert(typeof result.stdErr === "string");
+});
+
+Deno.test("EvalRunner assertEqual throws on different values", () => {
+  const runner = new EvalRunner();
+  const code = `
+    class Adder {
+      constructor(a, b) {
+        this.result = a + b;
+      }
+    }
+
+    function testAdder() {
+      const sut = new Adder(1, 2);
+      assertEqual(sut.result, 4);
+    }
+
+    testAdder();
+  `
+  const result = runner.run(code);
+  assertEquals(result.stdErr, "Error: Assertion failed: expected 4, but got 3")
+  assert(result.isValid === false);
 });
