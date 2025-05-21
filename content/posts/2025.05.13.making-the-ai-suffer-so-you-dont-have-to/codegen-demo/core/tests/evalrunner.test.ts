@@ -1,19 +1,6 @@
-import { Runner, RunResult } from "../coordinator.ts";
+import { EvalRunner } from "../evalrunner.ts";
 import { assert } from "https://deno.land/std/assert/mod.ts";
 
-export class EvalRunner implements Runner {
-  run(code: string): RunResult {
-    try {
-      eval(code);
-      return { isValid: true };
-    } catch (error) {
-      return {
-        isValid: false,
-        stdErr: String(error),
-      };
-    }
-  }
-}
 
 Deno.test("EvalRunner runs valid code", () => {
   const runner = new EvalRunner();
