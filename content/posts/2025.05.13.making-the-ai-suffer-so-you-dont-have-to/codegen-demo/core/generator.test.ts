@@ -1,7 +1,7 @@
 import { assertEquals, assertRejects } from "https://deno.land/std/assert/mod.ts";
 
 interface Client {
-   generateCode(): Promise<string>;
+   generateCode(specs: string): Promise<string>;
 }
 
 type RunResult = boolean
@@ -15,8 +15,8 @@ class Coordinator {
     this.runner = runner
   }
 
-  async generateAndEvaluateCode(): Promise<string> {
-    const generated = await this.client.generateCode()
+  async generateAndEvaluateCode(specs: string): Promise<string> {
+    const generated = await this.client.generateCode(specs)
     this.runner.run(generated)
     return generated
   }
@@ -25,31 +25,48 @@ class Coordinator {
 Deno.test("generateAndEvaluateCode delivers error on client error", async () => {
   const client = new ClientStub(anyError())
   const sut = makeSUT({client})
-  await assertRejects(()=>sut.generateAndEvaluateCode(), Error, "any error")
+  await assertRejects(()=>sut.generateAndEvaluateCode(anySpecs()), Error, "any error")
 });
 
 Deno.test("generateAndEvaluateCode delivers code on client succes", async () => {
   const client = new ClientStub("any code")
   const sut = makeSUT({client})
-  const result = await sut.generateAndEvaluateCode()
+  const result = await sut.generateAndEvaluateCode(anySpecs())
   assertEquals(result, "any code")
 })
 
 Deno.test("generateAndEvaluateCode delivers error on runner error", async () => {
   const runner = new RunnerStub(anyError())
   const sut = makeSUT({runner})
-  await assertRejects(()=>sut.generateAndEvaluateCode(), Error, "any error")
+  await assertRejects(()=>sut.generateAndEvaluateCode(anySpecs()), Error, "any error")
 })
 
 Deno.test("generateAndEvaluateCode delivers generated code on runner success", async () => {
   const runner = new RunnerStub(anySuccessRunnerResult)
   const sut = makeSUT({runner})
-  const result = await sut.generateAndEvaluateCode()
+  const result = await sut.generateAndEvaluateCode(anySpecs())
   assertEquals(result, "any code")
+})
+
+Deno.test("generateAndEvaluateCode sends code to client", async () => {
+  class ClientSpy implements Client {
+    received: string[] = []
+    constructor() {}
+    async generateCode(specs: string): Promise<string> {
+      this.received.push(specs)
+      return "any generated code"
+    }
+  }
+
+  const client = new ClientSpy()
+  const sut = makeSUT({client})
+  await sut.generateAndEvaluateCode(anySpecs())
+  assertEquals(client.received, [anySpecs()])
 })
 
 const anySuccessRunnerResult = true
 const anyError = () => Error("any error")
+const anySpecs = () => "any specs"
 
 // Stubs
 
