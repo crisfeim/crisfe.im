@@ -1,7 +1,7 @@
 [
   {
     "label": "Test",
-    "command": "deno test",
+    "command": "deno test --allow-net",
     "use_new_terminal": false,
     "allow_concurrent_runs": false,
     "reveal": "always",
