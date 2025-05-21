@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <svg width="20px" height="20px" viewBox="0 0 20 20" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
-<title>192x192 copia@1x</title>
-<g id="192x192-copia" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+<title>successs-indicator</title>
+<g id="success-indicator" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
     <circle id="Óvalo" stroke="#81B284" fill="#CEF6D1" cx="10" cy="10" r="8"></circle>
     <line x1="6" y1="10.4615385" x2="8.46153846" y2="12.9230769" id="Línea-3" stroke="#0D4A11" stroke-width="1.5" stroke-linecap="square"></line>
     <line x1="8.46153846" y1="12.9230769" x2="13.3846154" y2="8" id="Línea-4" stroke="#0D4A11" stroke-width="1.5" stroke-linecap="square"></line>
