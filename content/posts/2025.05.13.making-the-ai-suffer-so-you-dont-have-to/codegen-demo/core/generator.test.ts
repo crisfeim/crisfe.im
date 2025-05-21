@@ -17,7 +17,8 @@ class Coordinator {
 
   async generateAndEvaluateCode(specs: string): Promise<string> {
     const generated = await this.client.generateCode(specs)
-    this.runner.run(generated)
+    const concatenated = `${specs}\n${generated}`
+    this.runner.run(concatenated)
     return generated
   }
 }
@@ -63,6 +64,23 @@ Deno.test("generateAndEvaluateCode sends code to client", async () => {
   await sut.generateAndEvaluateCode(anySpecs())
   assertEquals(client.received, [anySpecs()])
 })
+
+Deno.test("generateAndEvaluateCode sends concatenated code to runner", async () => {
+  class RunnerSpy implements Runner {
+    received: string[] = []
+    constructor() { }
+    run(code: string): RunResult {
+      this.received.push(code)
+      return true
+    }
+  }
+
+  const client = new ClientStub("any generated code")
+  const runner = new RunnerSpy()
+  const sut = makeSUT({ client, runner })
+  await sut.generateAndEvaluateCode(anySpecs())
+  assertEquals(runner.received, ["any specs\nany generated code"])
+});
 
 const anySuccessRunnerResult = true
 const anyError = () => Error("any error")
