@@ -1,6 +1,7 @@
 import { Coordinator, Client, Runner, RunResult, Message } from "./coordinator.ts";
 import { Iterator } from "./iterator.ts";
 
+
 export type Status = "success" | "failure";
 
 interface AppState {
@@ -80,4 +81,14 @@ export function makeViewModel(client: Client, runner: Runner): ViewModel {
   }
 
   return viewModel
+}
+
+
+import { OllamaClient } from "./ollamaclient.ts"
+import { EvalRunner } from "./evalrunner.ts"
+
+export function makeDefaultViewModel(): ViewModel {
+  const client = new OllamaClient()
+  const runner = new EvalRunner()
+  return makeViewModel(client, runner)
 }
