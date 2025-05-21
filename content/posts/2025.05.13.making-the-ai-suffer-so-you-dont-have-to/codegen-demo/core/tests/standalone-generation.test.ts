@@ -1,5 +1,5 @@
 import { assertEquals, assertRejects } from "https://deno.land/std/assert/mod.ts";
-import { Coordinator, Client, Runner, RunResult, Message } from "./coordinator.ts";
+import { Coordinator, Client, Runner, RunResult, Message } from "../coordinator.ts";
 
 Deno.test("generateCodeFromSpecs delivers error on client error", async () => {
   const client = new ClientStub(anyError())
@@ -106,7 +106,7 @@ class RunnerStub implements Runner {
 const anySuccesfulClient = new ClientStub("any code")
 const anySuccesfulRunner = new RunnerStub(anySuccessRunnerResult)
 
-import { Iterator } from "./iterator.ts";
+import { Iterator } from "../iterator.ts";
 const anyIterator = new Iterator()
 const makeSUT = ({ client = anySuccesfulClient, runner = anySuccesfulRunner }: {
   client?: Client,
