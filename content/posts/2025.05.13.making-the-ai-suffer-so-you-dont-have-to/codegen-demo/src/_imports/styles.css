@@ -122,6 +122,10 @@ codegen-demo .status-indicator {
     height: 20px;
 }
 
+codegen-demo #activity-indicator {
+    transition: opacity 1s ease;
+}
+
 @media (min-width: 480px) {
     codegen-demo#regular-version {
         display: flex;

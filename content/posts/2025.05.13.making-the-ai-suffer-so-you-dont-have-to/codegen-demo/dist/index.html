@@ -123,6 +123,10 @@ codegen-demo .status-indicator {
     height: 20px;
 }
 
+codegen-demo #activity-indicator {
+    transition: opacity 1s ease;
+}
+
 @media (min-width: 480px) {
     codegen-demo#regular-version {
         display: flex;
@@ -216,7 +220,7 @@ spacer {flex: 1;}
             :class="{ 'grid-background': status === null && isRunning === false }"
         >
         <hstack class="header">
-             <div id="activity-indicator" class="ispinner" x-show="isRunning">
+             <div id="activity-indicator" class="ispinner" x-bind:style="isRunning ? 'opacity: 1' : 'opacity: 0'">
    <div class="ispinner-blade"></div>
    <div class="ispinner-blade"></div>
    <div class="ispinner-blade"></div>
