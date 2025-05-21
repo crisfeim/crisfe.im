@@ -37,7 +37,7 @@ Deno.test("generate iterates until valid code", async () => {
 // Mocks
 class ClientStub implements Client {
   constructor(private readonly code: string) {}
-  async generateCode(specs: string): Promise<string> {
+  async send(specs: string): Promise<string> {
     return this.code
   }
 }

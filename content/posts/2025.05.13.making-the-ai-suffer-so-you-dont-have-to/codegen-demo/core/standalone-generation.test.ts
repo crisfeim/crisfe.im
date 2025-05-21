@@ -31,7 +31,7 @@ Deno.test("generateCodeFromSpecs sends code to client", async () => {
   class ClientSpy implements Client {
     received: string[] = []
     constructor() {}
-    async generateCode(specs: string): Promise<string> {
+    async send(specs: string): Promise<string> {
       this.received.push(specs)
       return "any generated code"
     }
@@ -80,7 +80,7 @@ const anySpecs = () => "any specs"
 
 class ClientStub implements Client {
   constructor(private result: string | Error) {}
-  async generateCode(): Promise<string> {
+  async send(): Promise<string> {
     if (this.result instanceof Error) {
       throw this.result
     }
