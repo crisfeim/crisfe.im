@@ -1,10 +1,7 @@
-<!DOCTYPE html>
-<head>
 <script src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js" defer></script>
 <style>@import(styles.css)</style>
-</head>
-<body>
-<hstack id="regular-version" class="container" x-data="makeState()">
+<div id="demo-app" x-data="makeState()">
+<hstack id="regular-version" class="container">
     <vstack class="left">
         <hstack class="header">
             <spacer></spacer>
@@ -29,6 +26,7 @@
     </vstack>
 
 </hstack>
+</div>
 
 <script>
 const makeState = () => ({
@@ -59,12 +57,11 @@ const makeState = () => ({
   }
 });
 
-const initSpecs = () => `function testAdder() {
-    const sut = new Adder(1, 2);
-    assert(sut.result === 3);
-    }
+const initSpecs = () => `
+function testAdder() {
+  const sut = new Adder(1, 2);
+  assert(sut.result === 3);
+}
 
-    testAdder();`;
+testAdder();`;
 </script>
-</body>
-</html>
