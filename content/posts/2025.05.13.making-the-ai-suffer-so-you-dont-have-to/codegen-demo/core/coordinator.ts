@@ -15,6 +15,14 @@ export class Coordinator {
     this.iterator = iterator
   }
 
+  async generate(specs: string, maxIterations: number): Promise<Coordinator.Result> {
+    return await this.iterator.iterate(
+      maxIterations,
+      async () => await this.generateCodeFromSpecs(specs),
+      (result) => false)
+  }
+
+
   async generateCodeFromSpecs(specs: string): Promise<Coordinator.Result> {
     const generated = await this.client.generateCode(specs)
     const concatenated = `${specs}\n${generated}`
