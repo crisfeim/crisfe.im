@@ -1,38 +1,38 @@
 <script src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js" defer></script>
 <style>@import(styles.css)</style>
-<div id="demo-app" x-data="appStore()">
-<hstack id="regular-version" class="container">
-    <vstack class="left">
+<codegen-demo x-data="appStore()">
+    <hstack id="regular-version" class="container">
+        <vstack class="left">
+            <hstack class="header">
+                <spacer></spacer>
+                <button id="run-button"
+                @click="run"
+                :disabled="isRunning"
+                :class="{ 'canRun': !isRunning }">
+                    @import(play-button.svg)
+                </button>
+
+            </hstack>
+            <textarea id="specs" class="jet" x-model="specification"></textarea>
+        </vstack>
+
+        <vstack class="right grid-background">
         <hstack class="header">
+            @import(activity-indicator.html)
             <spacer></spacer>
-            <button id="run-button"
-             @click="run"
-             :disabled="isRunning"
-             :class="{ 'canRun': !isRunning }">
-                 @import(play-button.svg)
-             </button>
-
+            @import(status-indicator.html)
         </hstack>
-        <textarea id="specs" class="jet" x-model="specification"></textarea>
-    </vstack>
 
-    <vstack class="right grid-background">
-    <hstack class="header">
-        @import(activity-indicator.html)
-        <spacer></spacer>
-        @import(status-indicator.html)
+        <textarea id="generated-code" class="jet" readonly x-model="generatedCode"></textarea>
+
+        <hstack id="count">
+            <spacer></spacer>
+            <span id="iteration-count" x-show="status !== null" x-text="`${currentIteration} of 5`"></span>
+        </hstack>
+        </vstack>
+
     </hstack>
-
-    <textarea id="generated-code" class="jet" readonly x-model="generatedCode"></textarea>
-
-    <hstack id="count">
-        <spacer></spacer>
-        <span id="iteration-count" x-show="status !== null" x-text="`${currentIteration} of 5`"></span>
-    </hstack>
-    </vstack>
-
-</hstack>
-</div>
+</codegen-demo>
 
 <script>
 @import(store.js)
