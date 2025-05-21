@@ -54,7 +54,7 @@ Deno.test("generateAndEvaluateCode sends concatenated code to runner", async () 
     constructor() { }
     run(code: string): RunResult {
       this.received.push(code)
-      return true
+      return {isValid: true}
     }
   }
 
@@ -67,7 +67,7 @@ Deno.test("generateAndEvaluateCode sends concatenated code to runner", async () 
 
 Deno.test("generateAndEvaluatedCode delivers expected result on client and runner success", async () => {
   const client = new ClientStub("any code")
-  const runner = new RunnerStub(false)
+  const runner = new RunnerStub({isValid: false})
   const sut = makeSUT({client, runner})
   const result = await sut.generateCodeFromSpecs("any system prompt", anySpecs())
   const expectedResult: Coordinator.Result = {
@@ -77,7 +77,7 @@ Deno.test("generateAndEvaluatedCode delivers expected result on client and runne
   assertEquals(result, expectedResult)
 })
 
-const anySuccessRunnerResult = true
+const anySuccessRunnerResult = { isValid: true}
 const anyError = () => Error("any error")
 const anySpecs = () => "any specs"
 
