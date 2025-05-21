@@ -11,8 +11,6 @@ Se trata de un esfuerzo por implementar un mecanismo de generación de código c
 
 En este artículo quiero compartir los resultados.
 
-{{< toc >}}
-
 ## Idea
 
 Como desarrollador, mis interacciones con la *IA* se pueden reducir a un bucle:
