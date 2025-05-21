@@ -15,7 +15,7 @@ class Coordinator {
     this.runner = runner
   }
 
-  async generateAndEvaluateCode(specs: string): Promise<Coordinator.Result> {
+  async generateCodeFromSpecs(specs: string): Promise<Coordinator.Result> {
     const generated = await this.client.generateCode(specs)
     const concatenated = `${specs}\n${generated}`
     const isValid = this.runner.run(concatenated)
@@ -30,33 +30,33 @@ namespace Coordinator {
   };
 }
 
-Deno.test("generateAndEvaluateCode delivers error on client error", async () => {
+Deno.test("generateCodeFromSpecs delivers error on client error", async () => {
   const client = new ClientStub(anyError())
   const sut = makeSUT({client})
-  await assertRejects(()=>sut.generateAndEvaluateCode(anySpecs()), Error, "any error")
+  await assertRejects(()=>sut.generateCodeFromSpecs(anySpecs()), Error, "any error")
 });
 
-Deno.test("generateAndEvaluateCode delivers code on client succes", async () => {
+Deno.test("generateCodeFromSpecs delivers code on client succes", async () => {
   const client = new ClientStub("any code")
   const sut = makeSUT({client})
-  const result = await sut.generateAndEvaluateCode(anySpecs())
+  const result = await sut.generateCodeFromSpecs(anySpecs())
   assertEquals(result.generatedCode, "any code")
 })
 
-Deno.test("generateAndEvaluateCode delivers error on runner error", async () => {
+Deno.test("generateCodeFromSpecs delivers error on runner error", async () => {
   const runner = new RunnerStub(anyError())
   const sut = makeSUT({runner})
-  await assertRejects(()=>sut.generateAndEvaluateCode(anySpecs()), Error, "any error")
+  await assertRejects(()=>sut.generateCodeFromSpecs(anySpecs()), Error, "any error")
 })
 
-Deno.test("generateAndEvaluateCode delivers generated code on runner success", async () => {
+Deno.test("generateCodeFromSpecs delivers generated code on runner success", async () => {
   const runner = new RunnerStub(anySuccessRunnerResult)
   const sut = makeSUT({runner})
-  const result = await sut.generateAndEvaluateCode(anySpecs())
+  const result = await sut.generateCodeFromSpecs(anySpecs())
   assertEquals(result.generatedCode, "any code")
 })
 
-Deno.test("generateAndEvaluateCode sends code to client", async () => {
+Deno.test("generateCodeFromSpecs sends code to client", async () => {
   class ClientSpy implements Client {
     received: string[] = []
     constructor() {}
@@ -68,7 +68,7 @@ Deno.test("generateAndEvaluateCode sends code to client", async () => {
 
   const client = new ClientSpy()
   const sut = makeSUT({client})
-  await sut.generateAndEvaluateCode(anySpecs())
+  await sut.generateCodeFromSpecs(anySpecs())
   assertEquals(client.received, [anySpecs()])
 })
 
@@ -85,7 +85,7 @@ Deno.test("generateAndEvaluateCode sends concatenated code to runner", async () 
   const client = new ClientStub("any generated code")
   const runner = new RunnerSpy()
   const sut = makeSUT({ client, runner })
-  await sut.generateAndEvaluateCode(anySpecs())
+  await sut.generateCodeFromSpecs(anySpecs())
   assertEquals(runner.received, ["any specs\nany generated code"])
 });
 
@@ -93,7 +93,7 @@ Deno.test("generateAndEvaluatedCode delivers expected result on client and runne
   const client = new ClientStub("any code")
   const runner = new RunnerStub(false)
   const sut = makeSUT({client, runner})
-  const result = await sut.generateAndEvaluateCode(anySpecs())
+  const result = await sut.generateCodeFromSpecs(anySpecs())
   const expectedResult: Coordinator.Result = {
     generatedCode: "any code",
     isValid: false
