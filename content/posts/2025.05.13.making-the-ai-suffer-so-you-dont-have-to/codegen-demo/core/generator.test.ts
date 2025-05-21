@@ -4,8 +4,9 @@ interface Client {
    generateCode(): Promise<string>;
 }
 
+type RunResult = boolean
 interface Runner {
-  run(code: string): void
+  run(code: string): RunResult
 }
 
 class ClientStub implements Client {
@@ -19,11 +20,12 @@ class ClientStub implements Client {
 }
 
 class RunnerStub implements Runner {
-  constructor(private result: void | Error) {}
-  run(code: string): void {
+  constructor(private result: RunResult | Error) {}
+  run(code: string): RunResult {
     if (this.result instanceof Error) {
       throw this.result
     }
+    return this.result
   }
 }
 
@@ -43,13 +45,13 @@ class Coordinator {
 Deno.test("generateAndEvaluateCode delivers error on client error", async () => {
   const anyError = Error("any error")
   const client = new ClientStub(anyError)
-  const sut = new Coordinator(client, new RunnerStub())
+  const sut = new Coordinator(client, new RunnerStub(anySuccessRunnerResult))
   await assertRejects(()=>sut.generateAndEvaluateCode(), Error, "any error")
 });
 
 Deno.test("generateAndEvaluateCode delivers code on client succes", async () => {
   const client = new ClientStub("any code")
-  const sut = new Coordinator(client, new RunnerStub())
+  const sut = new Coordinator(client, new RunnerStub(anySuccessRunnerResult))
   const result = await sut.generateAndEvaluateCode()
   assertEquals(result, "any code")
 })
@@ -61,3 +63,13 @@ Deno.test("generateAndEvaluateCode delivers error on runner error", async () => 
   const sut = new Coordinator(client, runner)
   await assertRejects(()=>sut.generateAndEvaluateCode(), Error, "any error")
 })
+
+Deno.test("generateAndEvaluateCode delivers generated code on runner success", async () => {
+  const client = new ClientStub("any code")
+  const runner = new RunnerStub(anySuccessRunnerResult)
+  const sut = new Coordinator(client, runner)
+  const result = await sut.generateAndEvaluateCode()
+  assertEquals(result, "any code")
+})
+
+const anySuccessRunnerResult = true
