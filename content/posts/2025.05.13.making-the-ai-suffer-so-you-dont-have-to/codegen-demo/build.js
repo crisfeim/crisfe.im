@@ -9,7 +9,7 @@ const dir = {
     layout: "./dev/_layouts",
     import: "./dev/_imports",
     component: "./dev/_components",
-    public: "./public"
+    public: "./dist"
 };
 
 const patterns = {
@@ -35,7 +35,7 @@ function runSSG() {
     });
 
     // Static folder
-    copyFolderRecursiveSync(dir.static, './public/');
+    copyFolderRecursiveSync(dir.static, './dist/');
     console.log('Static files copied successfully!');
 
     function generateFile(item, fileName) {
@@ -56,13 +56,13 @@ function runSSG() {
 
             // Except index, no folder.
             if (folder != 'index') {
-                createFolderIfNone('./public/' + folder);
+                createFolderIfNone('./dist/' + folder);
                 fileName = folder + '/index.html';
             }
         }
 
         // Save to new directory
-        fs.writeFileSync(`./public/${fileName}`, content);
+        fs.writeFileSync(`./dist/${fileName}`, content);
         return;
     }
 
@@ -70,7 +70,7 @@ function runSSG() {
         let subFolder = item.replace('./dev/pages/', '');
 
         const subPages = fs.readdirSync(item);
-        createFolderIfNone(`./public/${subFolder}`);
+        createFolderIfNone(`./dist/${subFolder}`);
 
         subPages.forEach(function (page) {
             generateFile(`${dir.pages}/${subFolder}/${page}`, `${subFolder}/${page}`);
