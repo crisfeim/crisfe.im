@@ -9,26 +9,6 @@ interface Runner {
   run(code: string): RunResult
 }
 
-class ClientStub implements Client {
-  constructor(private result: string | Error) {}
-  async generateCode(): Promise<string> {
-    if (this.result instanceof Error) {
-      throw this.result
-    }
-    return this.result
-  }
-}
-
-class RunnerStub implements Runner {
-  constructor(private result: RunResult | Error) {}
-  run(code: string): RunResult {
-    if (this.result instanceof Error) {
-      throw this.result
-    }
-    return this.result
-  }
-}
-
 class Coordinator {
   constructor(private client: Client, private runner: Runner) {
     this.client = client
@@ -73,3 +53,25 @@ Deno.test("generateAndEvaluateCode delivers generated code on runner success", a
 })
 
 const anySuccessRunnerResult = true
+
+// Stubs
+
+class ClientStub implements Client {
+  constructor(private result: string | Error) {}
+  async generateCode(): Promise<string> {
+    if (this.result instanceof Error) {
+      throw this.result
+    }
+    return this.result
+  }
+}
+
+class RunnerStub implements Runner {
+  constructor(private result: RunResult | Error) {}
+  run(code: string): RunResult {
+    if (this.result instanceof Error) {
+      throw this.result
+    }
+    return this.result
+  }
+}
