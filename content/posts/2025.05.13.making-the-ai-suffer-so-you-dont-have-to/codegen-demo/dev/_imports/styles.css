@@ -1,13 +1,17 @@
 @import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono&display=swap');
-button {
-border: 0;
-background: none;
-cursor: pointer;
+
+codegen-demo { display: block }
+codegen-demo button {
+    border: 0;
+    background: none;
+    cursor: pointer;
 }
+
 *, *::before, *::after {
 box-sizing: border-box;
 }
-.container {
+
+codegen-demo .container {
 border: 1px solid #D9D9D9;
 font-size: 16px;
 position: relative;
@@ -22,20 +26,20 @@ BlinkMacSystemFont,
 Roboto,
 sans-serif;
 }
-.header {
+codegen-demo .header {
 height: 48px;
 padding: 0px 16px;
 }
 
-.border-bottom {
+codegen-demo .border-bottom {
 border-bottom: 1px solid #D9D9D9;
 }
 
-.jet {
+codegen-demo .jet {
 font-family: 'JetBrains Mono', monospace;
 font-size: 13px;
 }
-textarea {
+codegen-demo textarea {
 padding: 0;
 margin: 0;
 width: 100%;
@@ -45,38 +49,39 @@ padding: 0 16px;
 resize: none;
 background: none;
 }
-textarea:focus {
+
+codegen-demo textarea:focus {
 outline: none;
 }
 
-.grid-background {
+codegen-demo .grid-background {
 background-color: #f9f9f9;
 background-image: radial-gradient(rgba(0, 0, 0, 0.05) 1.2px, transparent 0);
 background-size: 12px 12px;
 }
 
-.body,
-vstack.right {
+codegen-demo .body,
+codegen-demo vstack.right {
 background-color: #F9F9F9;
 }
 
-button#run-button {
+codegen-demo button#run-button {
 cursor: not-allowed;
 opacity: 0.5;
 will-change: opacity;
 transition: opacity 0.2s ease;
 }
 
-button#run-button.canRun {
+codegen-demo button#run-button.canRun {
 opacity: 1;
 cursor: pointer;
 }
 
-button#run-button.canRun:hover {
+codegen-demo button#run-button.canRun:hover {
 opacity: 0.5;
 }
 
-button#clear {
+codegen-demo button#clear {
 font-size: 16px;
 width:32px;
 border-radius: 2px;
@@ -84,21 +89,21 @@ transition: background-color 0.2s ease;
 cursor: pointer;
 }
 
-button#clear:hover {
+codegen-demo button#clear:hover {
 background-color: #E3E3E3;
 }
 
-#count {
+codegen-demo#count {
 font-size: 13px;
 font-weight: bold;
 padding: 16px;
 }
 
-#mobile-version {
+codegen-demo #mobile-version {
 display: block;
 }
 
-.footer {
+codegen-demo .footer {
 position: absolute;
 padding: 0px 12px;
 bottom: 0;
@@ -106,56 +111,52 @@ left: 0;
 right: 0;
 }
 
-.body {
+codegen-demo .body {
 position: relative;
 height: 300px;
 }
 
-
-
-.status-indicator * {
+codegen-demo .status-indicator * {
 transition: opacity 0.2s ease;
 }
-.status-indicator {
+codegen-demo .status-indicator {
     width: 20px;
     height: 20px;
 }
 
 @media (min-width: 480px) {
-    #regular-version {
+    codegen-demo#regular-version {
         display: flex;
     }
 
-    vstack.left {
+    codegen-demo vstack.left {
         border-right: 1px solid #D9D9D9;
     }
 }
 
 @media (max-width: 480px) {
-    #regular-version {
+    codegen-demo #regular-version {
         flex-direction: column;
     }
 
-    vstack.left {
+    codegen-demo vstack.left {
         border-bottom: 1px solid #D9D9D9;
     }
 
-    textarea {
+    codegen-demo textarea {
         height: 140px;
     }
 }
 
 /* Layout Primitives */
-zstack {
- position: relative;
-}
+zstack { position: relative; }
 
 zstack * {
-    position: absolute;
-    left: 0;
-    right: 0;
-    top: 0;
-    bottom: 0;
+position: absolute;
+left: 0;
+right: 0;
+top: 0;
+bottom: 0;
 }
 
 hstack {
@@ -172,6 +173,4 @@ flex: 1 1 auto;
 flex-direction: column;
 }
 
-spacer {
-flex: 1;
-}
+spacer {flex: 1;}
