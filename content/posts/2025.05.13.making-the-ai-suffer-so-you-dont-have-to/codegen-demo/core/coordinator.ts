@@ -1,6 +1,6 @@
 import { Iterator } from "./iterator.ts";
 export interface Client {
-   generateCode(specs: string): Promise<string>;
+   send(specs: string): Promise<string>;
 }
 
 export type RunResult = boolean
@@ -23,7 +23,7 @@ export class Coordinator {
   }
 
   async generateCodeFromSpecs(specs: string): Promise<Coordinator.Result> {
-    const generated = await this.client.generateCode(specs)
+    const generated = await this.client.send(specs)
     const concatenated = `${specs}\n${generated}`
     const isValid = this.runner.run(concatenated)
     return { generatedCode: generated, isValid }
