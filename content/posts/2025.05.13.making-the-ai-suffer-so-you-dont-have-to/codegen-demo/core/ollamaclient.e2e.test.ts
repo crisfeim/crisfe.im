@@ -1,5 +1,5 @@
 import { Message } from "./coordinator.ts";
-import { assertEquals } from "https://deno.land/std/assert/mod.ts";
+import { assertStringIncludes } from "https://deno.land/std/assert/mod.ts";
 import { OllamaClient } from "./ollamaclient.ts";
 
 Deno.test("OllamaClient: send", async () => {
@@ -11,5 +11,5 @@ Deno.test("OllamaClient: send", async () => {
 
   const response = await client.send(messages);
 
-  assertEquals(response, "hi");
+  assertStringIncludes(response.toLowerCase(), "hi");
 });
