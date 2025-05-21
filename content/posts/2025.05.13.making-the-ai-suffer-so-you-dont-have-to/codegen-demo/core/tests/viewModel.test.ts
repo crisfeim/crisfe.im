@@ -82,28 +82,31 @@ class AlwaysFailingRunner implements Runner {
 Deno.test("ViewModel state updates during code generation", async () => {
   const client = new ClientStub("gencode")
   const runner = new AlwaysFailingRunner();
-  const iterator = new ObservableIterator(new Iterator())
-  const coordinator = new Coordinator(client, runner, iterator);
-  const viewModel = new ViewModel(coordinator);
-
-
-  iterator.onIterationChange = (iteration: number) => {
-    viewModel.currentIteration = iteration
-  }
-
-
-  iterator.onStatusChange = (status: Status) => {
-    viewModel.statuses.push(status)
-  }
-
-
-  iterator.onGeneratedCode = (code: string) => {
-    viewModel.generatedCodes.push(code)
-  }
-
+  const viewModel = makeViewModel(client, runner)
   await viewModel.load()
 
   assertEquals(viewModel.currentIteration, 5)
   assertEquals(viewModel.statuses, ['failure', 'failure', 'failure', 'failure', 'failure'])
   assertEquals(viewModel.generatedCodes, ['gencode', 'gencode', 'gencode', 'gencode', 'gencode'])
 });
+
+
+function makeViewModel(client: Client, runner: Runner): ViewModel {
+  const iterator = new ObservableIterator(new Iterator())
+  const coordinator = new Coordinator(client, runner, iterator);
+  const viewModel = new ViewModel(coordinator);
+
+  iterator.onIterationChange = (iteration: number) => {
+    viewModel.currentIteration = iteration
+  }
+
+  iterator.onStatusChange = (status: Status) => {
+    viewModel.statuses.push(status)
+  }
+
+  iterator.onGeneratedCode = (code: string) => {
+    viewModel.generatedCodes.push(code)
+  }
+
+  return viewModel
+}
