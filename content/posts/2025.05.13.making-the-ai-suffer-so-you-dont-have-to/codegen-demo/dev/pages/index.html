@@ -5,16 +5,16 @@
     <vstack class="left">
         <hstack class="header">
             <spacer></spacer>
-            @import(run-button)
+            @import(run-button.html)
         </hstack>
         <textarea id="specs" class="jet" x-model="specification"></textarea>
     </vstack>
 
     <vstack class="right grid-background">
     <hstack class="header">
-        @import(activity-indicator)
+        @import(activity-indicator.html)
         <spacer></spacer>
-        @import(status-indicator)
+        @import(status-indicator.html)
     </hstack>
 
     <textarea id="generated-code" class="jet" readonly x-model="generatedCode"></textarea>
