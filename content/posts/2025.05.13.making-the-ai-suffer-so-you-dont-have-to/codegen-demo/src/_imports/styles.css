@@ -1,38 +1,14 @@
 @import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono&display=swap');
+/* CSS Primitives */
+*, *::before, *::after {
+box-sizing: border-box;
+}
 
 codegen-demo { display: block }
 codegen-demo button {
     border: 0;
     background: none;
     cursor: pointer;
-}
-
-*, *::before, *::after {
-box-sizing: border-box;
-}
-
-codegen-demo .container {
-border: 1px solid #D9D9D9;
-font-size: 16px;
-position: relative;
-border-radius: 4px;
-overflow: hidden;
-box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.05);
-font-family:
-ui-sans-serif,
--apple-system,
-BlinkMacSystemFont,
-"Segoe UI",
-Roboto,
-sans-serif;
-}
-codegen-demo .header {
-height: 48px;
-padding: 0px 16px;
-}
-
-codegen-demo .border-bottom {
-border-bottom: 1px solid #D9D9D9;
 }
 
 codegen-demo textarea {
@@ -52,20 +28,49 @@ codegen-demo textarea:focus {
 outline: none;
 }
 
+/* Main layout */
+codegen-demo .container {
+border: 1px solid #D9D9D9;
+font-size: 16px;
+position: relative;
+border-radius: 4px;
+overflow: hidden;
+box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.05);
+font-family:
+ui-sans-serif,
+-apple-system,
+BlinkMacSystemFont,
+"Segoe UI",
+Roboto,
+sans-serif;
+}
+
+codegen-demo .body,
+codegen-demo vstack.right {
+    background-color: #F9F9F9;
+}
+
+/* Utility classes*/
+
+codegen-demo .header {
+height: 48px;
+padding: 0px 16px;
+}
+
+codegen-demo .border-bottom {
+border-bottom: 1px solid #D9D9D9;
+}
+
 codegen-demo .grid-background {
 background-color: #f9f9f9;
 background-image: radial-gradient(rgba(0, 0, 0, 0.05) 1.2px, transparent 0);
 background-size: 12px 12px;
 }
 
-codegen-demo .body,
-codegen-demo vstack.right {
-background-color: #F9F9F9;
-}
-
+/* Right side (specs, run button) */
 codegen-demo button #run-button {
 cursor: not-allowed;
-opacity: 0.5;
+opacity: 0;
 will-change: opacity;
 transition: opacity 0.2s ease;
 }
@@ -91,6 +96,7 @@ codegen-demo button #clear:hover {
 background-color: #E3E3E3;
 }
 
+/* Left side (generated code, loader, runResult, etc...) */
 codegen-demo #count {
 font-size: 13px;
 font-weight: bold;
@@ -126,6 +132,7 @@ codegen-demo #activity-indicator {
     transition: opacity 1s ease;
 }
 
+/* Media queries */
 @media (min-width: 480px) {
     codegen-demo#regular-version {
         display: flex;
