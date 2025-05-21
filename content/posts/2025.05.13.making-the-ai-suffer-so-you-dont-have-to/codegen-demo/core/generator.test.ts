@@ -1,34 +1,5 @@
 import { assertEquals, assertRejects } from "https://deno.land/std/assert/mod.ts";
-
-interface Client {
-   generateCode(specs: string): Promise<string>;
-}
-
-type RunResult = boolean
-interface Runner {
-  run(code: string): RunResult
-}
-
-class Coordinator {
-  constructor(private client: Client, private runner: Runner) {
-    this.client = client
-    this.runner = runner
-  }
-
-  async generateCodeFromSpecs(specs: string): Promise<Coordinator.Result> {
-    const generated = await this.client.generateCode(specs)
-    const concatenated = `${specs}\n${generated}`
-    const isValid = this.runner.run(concatenated)
-    return { generatedCode: generated, isValid }
-  }
-}
-
-namespace Coordinator {
-  export type Result = {
-    generatedCode: string;
-    isValid: boolean;
-  };
-}
+import { Coordinator, Client, Runner, RunResult } from "./coordinator.ts";
 
 Deno.test("generateCodeFromSpecs delivers error on client error", async () => {
   const client = new ClientStub(anyError())
