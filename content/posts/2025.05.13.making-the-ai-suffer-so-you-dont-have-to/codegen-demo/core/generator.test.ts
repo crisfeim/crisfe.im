@@ -23,8 +23,7 @@ class Coordinator {
 }
 
 Deno.test("generateAndEvaluateCode delivers error on client error", async () => {
-  const anyError = Error("any error")
-  const client = new ClientStub(anyError)
+  const client = new ClientStub(anyError())
   const sut = makeSUT({client})
   await assertRejects(()=>sut.generateAndEvaluateCode(), Error, "any error")
 });
@@ -37,8 +36,7 @@ Deno.test("generateAndEvaluateCode delivers code on client succes", async () => 
 })
 
 Deno.test("generateAndEvaluateCode delivers error on runner error", async () => {
-  const anyError = Error("any error")
-  const runner = new RunnerStub(anyError)
+  const runner = new RunnerStub(anyError())
   const sut = makeSUT({runner})
   await assertRejects(()=>sut.generateAndEvaluateCode(), Error, "any error")
 })
@@ -51,6 +49,7 @@ Deno.test("generateAndEvaluateCode delivers generated code on runner success", a
 })
 
 const anySuccessRunnerResult = true
+const anyError = () => Error("any error")
 
 // Stubs
 
