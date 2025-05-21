@@ -1,6 +1,12 @@
 import { Iterator } from "./iterator.ts";
+
+export type Message = {
+  role: "user" | "system";
+  content: string
+}
+
 export interface Client {
-   send(specs: string): Promise<string>;
+   send(messages: Message[]): Promise<string>;
 }
 
 export type RunResult = boolean
@@ -23,7 +29,8 @@ export class Coordinator {
   }
 
   async generateCodeFromSpecs(specs: string): Promise<Coordinator.Result> {
-    const generated = await this.client.send(specs)
+    const message: Message = { role: "user", content: specs }
+    const generated = await this.client.send([message])
     const concatenated = `${specs}\n${generated}`
     const isValid = this.runner.run(concatenated)
     return { generatedCode: generated, isValid }

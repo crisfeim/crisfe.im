@@ -1,5 +1,5 @@
 import { assertEquals, assertRejects } from "https://deno.land/std/assert/mod.ts";
-import { Coordinator, Client, Runner, RunResult } from "./coordinator.ts";
+import { Coordinator, Client, Runner, RunResult, Message } from "./coordinator.ts";
 import { Iterator } from "./iterator.ts";
 
 Deno.test("generate iterates N times on always invalid code", async () => {
@@ -37,7 +37,7 @@ Deno.test("generate iterates until valid code", async () => {
 // Mocks
 class ClientStub implements Client {
   constructor(private readonly code: string) {}
-  async send(specs: string): Promise<string> {
+  async send(messages: Message[]): Promise<string> {
     return this.code
   }
 }

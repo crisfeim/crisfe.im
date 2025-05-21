@@ -1,5 +1,5 @@
 import { assertEquals, assertRejects } from "https://deno.land/std/assert/mod.ts";
-import { Coordinator, Client, Runner, RunResult } from "./coordinator.ts";
+import { Coordinator, Client, Runner, RunResult, Message } from "./coordinator.ts";
 
 Deno.test("generateCodeFromSpecs delivers error on client error", async () => {
   const client = new ClientStub(anyError())
@@ -29,10 +29,10 @@ Deno.test("generateCodeFromSpecs delivers generated code on runner success", asy
 
 Deno.test("generateCodeFromSpecs sends code to client", async () => {
   class ClientSpy implements Client {
-    received: string[] = []
+    received: Message[] = []
     constructor() {}
-    async send(specs: string): Promise<string> {
-      this.received.push(specs)
+    async send(messages: Message[]): Promise<string> {
+      this.received = messages
       return "any generated code"
     }
   }
@@ -40,7 +40,8 @@ Deno.test("generateCodeFromSpecs sends code to client", async () => {
   const client = new ClientSpy()
   const sut = makeSUT({client})
   await sut.generateCodeFromSpecs(anySpecs())
-  assertEquals(client.received, [anySpecs()])
+  const expectedMessage: Message = { role: "user", content: anySpecs() }
+  assertEquals(client.received, [expectedMessage])
 })
 
 Deno.test("generateAndEvaluateCode sends concatenated code to runner", async () => {
