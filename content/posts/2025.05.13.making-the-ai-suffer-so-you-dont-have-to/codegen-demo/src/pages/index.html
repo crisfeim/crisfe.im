@@ -16,7 +16,10 @@
             <textarea id="specs" x-model="specification"></textarea>
         </vstack>
 
-        <vstack class="right grid-background">
+        <vstack
+            class="right"
+            :class="{ 'grid-background': status === null && isRunning === false }"
+        >
         <hstack class="header">
             @import(activity-indicator.html)
             <spacer></spacer>
