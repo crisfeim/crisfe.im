@@ -11,16 +11,6 @@ interface AppState {
   statuses: Status[]
 }
 
-class ClientStub implements Client {
-  response: string
-constructor(response: string) {
-  this.response = response
-}
- async send(messages: Message[]): Promise<string> {
-   return this.response;
- }
-}
-
 class ViewModel implements AppState {
   isRunning: boolean = false
   generatedCodes: string[] = []
@@ -71,13 +61,6 @@ class ObservableIterator extends Iterator {
   }
 }
 
-class AlwaysFailingRunner implements Runner {
-  run(code: string): RunResult {
-    return {
-      isValid: false
-    }
-  }
-}
 
 Deno.test("ViewModel state updates during code generation", async () => {
   const client = new ClientStub("gencode")
@@ -109,4 +92,26 @@ function makeViewModel(client: Client, runner: Runner): ViewModel {
   }
 
   return viewModel
+}
+
+
+// Stubs
+
+class AlwaysFailingRunner implements Runner {
+  run(code: string): RunResult {
+    return {
+      isValid: false
+    }
+  }
+}
+
+
+class ClientStub implements Client {
+  response: string
+constructor(response: string) {
+  this.response = response
+}
+ async send(messages: Message[]): Promise<string> {
+   return this.response;
+ }
 }
