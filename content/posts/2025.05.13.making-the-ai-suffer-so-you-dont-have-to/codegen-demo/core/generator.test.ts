@@ -75,3 +75,10 @@ class RunnerStub implements Runner {
     return this.result
   }
 }
+
+const anySuccesfulClient = new ClientStub("any code")
+const anySuccesfulRunner = new RunnerStub(anySuccessRunnerResult)
+
+const makeSUT = (client: Client = anySuccesfulClient, runner: Runner = anySuccesfulRunner): Coordinator => {
+  return new Coordinator(client, runner);
+}
