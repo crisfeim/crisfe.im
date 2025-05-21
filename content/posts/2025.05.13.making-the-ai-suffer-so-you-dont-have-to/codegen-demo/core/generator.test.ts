@@ -15,12 +15,19 @@ class Coordinator {
     this.runner = runner
   }
 
-  async generateAndEvaluateCode(specs: string): Promise<string> {
+  async generateAndEvaluateCode(specs: string): Promise<Coordinator.Result> {
     const generated = await this.client.generateCode(specs)
     const concatenated = `${specs}\n${generated}`
-    this.runner.run(concatenated)
-    return generated
+    const isValid = this.runner.run(concatenated)
+    return { generatedCode: generated, isValid }
   }
+}
+
+namespace Coordinator {
+  export type Result = {
+    generatedCode: string;
+    isValid: boolean;
+  };
 }
 
 Deno.test("generateAndEvaluateCode delivers error on client error", async () => {
@@ -33,7 +40,7 @@ Deno.test("generateAndEvaluateCode delivers code on client succes", async () => 
   const client = new ClientStub("any code")
   const sut = makeSUT({client})
   const result = await sut.generateAndEvaluateCode(anySpecs())
-  assertEquals(result, "any code")
+  assertEquals(result.generatedCode, "any code")
 })
 
 Deno.test("generateAndEvaluateCode delivers error on runner error", async () => {
@@ -46,7 +53,7 @@ Deno.test("generateAndEvaluateCode delivers generated code on runner success", a
   const runner = new RunnerStub(anySuccessRunnerResult)
   const sut = makeSUT({runner})
   const result = await sut.generateAndEvaluateCode(anySpecs())
-  assertEquals(result, "any code")
+  assertEquals(result.generatedCode, "any code")
 })
 
 Deno.test("generateAndEvaluateCode sends code to client", async () => {
@@ -81,6 +88,18 @@ Deno.test("generateAndEvaluateCode sends concatenated code to runner", async () 
   await sut.generateAndEvaluateCode(anySpecs())
   assertEquals(runner.received, ["any specs\nany generated code"])
 });
+
+Deno.test("generateAndEvaluatedCode delivers expected result on client and runner success", async () => {
+  const client = new ClientStub("any code")
+  const runner = new RunnerStub(false)
+  const sut = makeSUT({client, runner})
+  const result = await sut.generateAndEvaluateCode(anySpecs())
+  const expectedResult: Coordinator.Result = {
+    generatedCode: "any code",
+    isValid: false
+  }
+  assertEquals(result, expectedResult)
+})
 
 const anySuccessRunnerResult = true
 const anyError = () => Error("any error")
