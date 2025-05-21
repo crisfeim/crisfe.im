@@ -24,13 +24,14 @@ export class Coordinator {
   async generate(specs: string, maxIterations: number): Promise<Coordinator.Result> {
     return await this.iterator.iterate(
       maxIterations,
-      async () => await this.generateCodeFromSpecs(specs),
+      async () => await this.generateCodeFromSpecs("", specs),
       (result) => result.isValid)
   }
 
-  async generateCodeFromSpecs(specs: string): Promise<Coordinator.Result> {
-    const message: Message = { role: "user", content: specs }
-    const generated = await this.client.send([message])
+  async generateCodeFromSpecs(systemPrompt: string, specs: string): Promise<Coordinator.Result> {
+    const systemPromptMessage: Message = { role: "system", content: systemPrompt }
+    const userMessage: Message = { role: "user", content: specs }
+    const generated = await this.client.send([systemPromptMessage, userMessage])
     const concatenated = `${specs}\n${generated}`
     const isValid = this.runner.run(concatenated)
     return { generatedCode: generated, isValid }

@@ -4,30 +4,30 @@ import { Coordinator, Client, Runner, RunResult, Message } from "./coordinator.t
 Deno.test("generateCodeFromSpecs delivers error on client error", async () => {
   const client = new ClientStub(anyError())
   const sut = makeSUT({client})
-  await assertRejects(()=>sut.generateCodeFromSpecs(anySpecs()), Error, "any error")
+  await assertRejects(()=>sut.generateCodeFromSpecs("any system prompt",anySpecs()), Error, "any error")
 });
 
 Deno.test("generateCodeFromSpecs delivers code on client succes", async () => {
   const client = new ClientStub("any code")
   const sut = makeSUT({client})
-  const result = await sut.generateCodeFromSpecs(anySpecs())
+  const result = await sut.generateCodeFromSpecs("any system prompt", anySpecs())
   assertEquals(result.generatedCode, "any code")
 })
 
 Deno.test("generateCodeFromSpecs delivers error on runner error", async () => {
   const runner = new RunnerStub(anyError())
   const sut = makeSUT({runner})
-  await assertRejects(()=>sut.generateCodeFromSpecs(anySpecs()), Error, "any error")
+  await assertRejects(()=>sut.generateCodeFromSpecs("any system prompt", anySpecs()), Error, "any error")
 })
 
 Deno.test("generateCodeFromSpecs delivers generated code on runner success", async () => {
   const runner = new RunnerStub(anySuccessRunnerResult)
   const sut = makeSUT({runner})
-  const result = await sut.generateCodeFromSpecs(anySpecs())
+  const result = await sut.generateCodeFromSpecs("any system prompt", anySpecs())
   assertEquals(result.generatedCode, "any code")
 })
 
-Deno.test("generateCodeFromSpecs sends code to client", async () => {
+Deno.test("generateCodeFromSpecs sends correct messages to client", async () => {
   class ClientSpy implements Client {
     received: Message[] = []
     constructor() {}
@@ -39,9 +39,13 @@ Deno.test("generateCodeFromSpecs sends code to client", async () => {
 
   const client = new ClientSpy()
   const sut = makeSUT({client})
-  await sut.generateCodeFromSpecs(anySpecs())
-  const expectedMessage: Message = { role: "user", content: anySpecs() }
-  assertEquals(client.received, [expectedMessage])
+  await sut.generateCodeFromSpecs("any system prompt", anySpecs())
+  const systemPromptMessage: Message = {
+    role: "system",
+    content: "any system prompt"
+  }
+  const userMessage: Message = { role: "user", content: anySpecs() }
+  assertEquals(client.received, [systemPromptMessage, userMessage])
 })
 
 Deno.test("generateAndEvaluateCode sends concatenated code to runner", async () => {
@@ -57,7 +61,7 @@ Deno.test("generateAndEvaluateCode sends concatenated code to runner", async () 
   const client = new ClientStub("any generated code")
   const runner = new RunnerSpy()
   const sut = makeSUT({ client, runner })
-  await sut.generateCodeFromSpecs(anySpecs())
+  await sut.generateCodeFromSpecs("any system prompt", anySpecs())
   assertEquals(runner.received, ["any specs\nany generated code"])
 });
 
@@ -65,7 +69,7 @@ Deno.test("generateAndEvaluatedCode delivers expected result on client and runne
   const client = new ClientStub("any code")
   const runner = new RunnerStub(false)
   const sut = makeSUT({client, runner})
-  const result = await sut.generateCodeFromSpecs(anySpecs())
+  const result = await sut.generateCodeFromSpecs("any system prompt", anySpecs())
   const expectedResult: Coordinator.Result = {
     generatedCode: "any code",
     isValid: false
