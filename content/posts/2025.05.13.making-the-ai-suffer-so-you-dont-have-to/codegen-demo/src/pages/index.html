@@ -13,7 +13,7 @@
                 </button>
 
             </hstack>
-            <textarea id="specs" class="jet" x-model="specification"></textarea>
+            <textarea id="specs" x-model="specification"></textarea>
         </vstack>
 
         <vstack class="right grid-background">
@@ -23,7 +23,7 @@
             @import(status-indicator.html)
         </hstack>
 
-        <textarea id="generated-code" class="jet" readonly x-model="generatedCode"></textarea>
+        <textarea id="generated-code" readonly x-model="generatedCode"></textarea>
 
         <hstack id="count" x-bind:style="status !== null ? 'opacity: 1' : 'opacity: 0'">
             <spacer></spacer>
