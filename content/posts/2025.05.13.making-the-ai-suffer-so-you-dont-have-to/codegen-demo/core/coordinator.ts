@@ -19,9 +19,8 @@ export class Coordinator {
     return await this.iterator.iterate(
       maxIterations,
       async () => await this.generateCodeFromSpecs(specs),
-      (result) => false)
+      (result) => result.isValid)
   }
-
 
   async generateCodeFromSpecs(specs: string): Promise<Coordinator.Result> {
     const generated = await this.client.generateCode(specs)
