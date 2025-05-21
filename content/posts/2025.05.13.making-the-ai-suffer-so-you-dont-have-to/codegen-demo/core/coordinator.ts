@@ -1,4 +1,4 @@
-
+import { Iterator } from "./iterator.ts";
 export interface Client {
    generateCode(specs: string): Promise<string>;
 }
@@ -9,9 +9,10 @@ export interface Runner {
 }
 
 export class Coordinator {
-  constructor(private client: Client, private runner: Runner) {
+  constructor(private client: Client, private runner: Runner, private iterator: Iterator) {
     this.client = client
     this.runner = runner
+    this.iterator = iterator
   }
 
   async generateCodeFromSpecs(specs: string): Promise<Coordinator.Result> {
