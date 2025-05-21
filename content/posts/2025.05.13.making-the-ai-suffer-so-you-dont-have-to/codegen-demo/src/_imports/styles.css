@@ -68,19 +68,19 @@ background-size: 12px 12px;
 }
 
 /* Right side (specs, run button) */
-codegen-demo button #run-button {
+codegen-demo button#run-button {
 cursor: not-allowed;
-opacity: 0;
+opacity: 0.5;
 will-change: opacity;
 transition: opacity 0.2s ease;
 }
 
-codegen-demo button #run-button.canRun {
+codegen-demo button#run-button.canRun {
 opacity: 1;
 cursor: pointer;
 }
 
-codegen-demo button #run-button.canRun:hover {
+codegen-demo button#run-button.canRun:hover {
 opacity: 0.5;
 }
 
