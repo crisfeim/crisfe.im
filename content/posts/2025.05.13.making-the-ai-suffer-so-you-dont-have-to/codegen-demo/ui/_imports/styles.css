@@ -21,6 +21,9 @@ padding: 0 16px;
 resize: none;
 background: none;
 font-size: 13px;
+font-weight: 400;
+ -webkit-font-smoothing: antialiased;
+ -moz-osx-font-smoothing: grayscale;
 font-family:
     ui-monospace, SFMono-Regular, Menlo, "Andale Mono", Consolas, Monaco,
     monospace;
