@@ -5,8 +5,8 @@ import {  makeReactiveViewModel } from "../viewModel.ts";
 
 Deno.test("ViewModel state updates during code generation", async () => {
   const client = new ClientStub("gencode")
-  const runner = new AlwaysFailingRunner();
-  const viewModel = makeReactiveViewModel(client, runner)
+  const alwaysFailingRunner = new RunnerStub({ isValid: false });
+  const viewModel = makeReactiveViewModel(client, alwaysFailingRunner)
   await viewModel.run()
 
   assertEquals(viewModel.currentIteration, 5)
@@ -14,21 +14,33 @@ Deno.test("ViewModel state updates during code generation", async () => {
   assertEquals(viewModel.generatedCodes, ['gencode', 'gencode', 'gencode', 'gencode', 'gencode'])
 });
 
+Deno.test("ViewModel delivers failure on client failure", async () => {
+  const anyError = new Error("any error")
+  const throwingErrorClient = new ClientStub(anyError)
+  const anyRunner = new RunnerStub({ isValid: true })
+  const viewModel = makeReactiveViewModel(throwingErrorClient, anyRunner)
+  await viewModel.run()
+
+  assertEquals(viewModel.status(), 'failure')
+})
+
 // Stubs
-class AlwaysFailingRunner implements Runner {
+class RunnerStub implements Runner {
+  constructor(private result: RunResult | Error) {}
   run(code: string): RunResult {
-    return {
-      isValid: false
+    if (this.result instanceof Error) {
+      throw this.result
     }
+    return this.result
   }
 }
 
 class ClientStub implements Client {
-  response: string
-constructor(response: string) {
-  this.response = response
-}
+constructor(private result: string | Error) {}
  async send(messages: Message[]): Promise<string> {
-   return this.response;
+   if (this.result instanceof Error) {
+     throw this.result
+   }
+   return this.result
  }
 }
