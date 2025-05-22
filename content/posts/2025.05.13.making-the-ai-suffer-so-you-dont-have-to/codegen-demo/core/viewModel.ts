@@ -3,7 +3,7 @@ import { Iterator } from "./iterator.ts";
 
 export type Status = "success" | "failure";
 
-export interface AppState {
+interface AppState {
   isRunning: boolean;
   generatedCodes: string[],
   currentIteration: number,
@@ -11,6 +11,15 @@ export interface AppState {
   specification: string,
   maxIterations: number,
   systemPrompt: string,
+}
+
+export interface ViewModel extends AppState {
+  run: () => Promise<void>;
+  status: () => Status | undefined;
+  generatedCode: () => string | undefined;
+  setIteration: (i: number) => void;
+  addStatus: (s: Status) => void;
+  addGeneratedCode: (c: string) => void;
 }
 
 class ObservableIterator extends Iterator {
@@ -36,7 +45,7 @@ class ObservableIterator extends Iterator {
   }
 }
 
-export function makeReactiveViewModel(client: Client, runner: Runner, maxIterations: number) {
+export function makeReactiveViewModel(client: Client, runner: Runner, maxIterations: number): ViewModel {
   const iterator = new ObservableIterator(new Iterator());
   const coordinator = new Coordinator(client, runner, iterator);
 
