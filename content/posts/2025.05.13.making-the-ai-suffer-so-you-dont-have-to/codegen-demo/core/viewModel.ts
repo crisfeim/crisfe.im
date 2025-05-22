@@ -114,7 +114,7 @@ const defaultSystemPrompt = () => `
 const initSpecs = () => `
 function testAdder() {
   const sut = new Adder(1, 2);
-  assert(sut.result === 3);
+  assertEqual(sut.result, 3);
 }
 
 testAdder();`;
