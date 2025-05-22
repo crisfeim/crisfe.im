@@ -4,11 +4,11 @@ const fs = require('fs');
 const path = require('path');
 
 const dir = {
-    static: "./src/static",
-    pages: "./src/pages",
-    layout: "./src/_layouts",
-    import: "./src/_imports",
-    component: "./src/_components",
+    static: "./ui/static",
+    pages: "./ui/pages",
+    layout: "./ui/_layouts",
+    import: "./ui/_imports",
+    component: "./ui/_components",
     public: "./dist"
 };
 
@@ -67,7 +67,7 @@ function runSSG() {
     }
 
     function generatePageSubFolder(item) {
-        let subFolder = item.replace('./src/pages/', '');
+        let subFolder = item.replace('./ui/pages/', '');
 
         const subPages = fs.readdirSync(item);
         createFolderIfNone(`./dist/${subFolder}`);
@@ -315,7 +315,7 @@ function runSSG() {
 
 runSSG();
 
-const watchDir = path.resolve('./src');
+const watchDir = path.resolve('./ui');
 
 fs.watch(watchDir, { recursive: true }, (eventType, filename) => {
     if (filename) {
