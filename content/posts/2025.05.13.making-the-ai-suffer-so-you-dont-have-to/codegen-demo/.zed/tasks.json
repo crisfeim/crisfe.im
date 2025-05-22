@@ -13,7 +13,7 @@
   },
   {
     "label": "Run E2E Tests",
-    "command": "deno test e2eTests --allow-net",
+    "command": "deno test ./core/e2eTests --allow-net",
     "use_new_terminal": false,
     "allow_concurrent_runs": false,
     "reveal": "always",
@@ -25,7 +25,7 @@
   },
   {
     "label": "Run Integration Tests",
-    "command": "deno test integrationTests --allow-net",
+    "command": "deno test ./core/integrationTests --allow-net",
     "use_new_terminal": false,
     "allow_concurrent_runs": false,
     "reveal": "always",
@@ -49,7 +49,7 @@
   },
   {
     "label": "Build",
-    "command": "esbuild entrypoint.ts --bundle --outfile=../src/_imports/core.js --platform=browser --format=iife --global-name=CodeGenCore",
+    "command": "esbuild ./core/entrypoint.ts --bundle --outfile=./ui/_imports/core.js --platform=browser --format=iife --global-name=CodeGenCore",
     "use_new_terminal": false,
     "allow_concurrent_runs": false,
     "reveal": "always",
