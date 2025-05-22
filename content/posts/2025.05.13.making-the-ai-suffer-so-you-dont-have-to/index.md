@@ -269,9 +269,10 @@ Por otro lado, me hubiera gustado integrar un framework de testing real [^2] y r
 
 ## Demo en línea
 
-{{< fragment "codegen-demo/dist/index.html" >}}
+Escribe las pruebas unitarias a la derecha y dale a play. Puedes usar `assertEqual` como mini-framework de testing.
+[Código fuente del playground](https://github.com/crisfeim/crisfe.im/tree/main/content/posts/2025.05.13.making-the-ai-suffer-so-you-dont-have-to/codegen-demo)
 
-[Código fuente del playground](https://github.com/crisfeim/crisfe.im/tree/main/content/posts/2025.05.13.making-the-ai-suffer-so-you-dont-have-to/codegen-demo/dev)
+{{< fragment "codegen-demo/dist/index.html" >}}
 
 [^1]: A mí y [a otro puñado de gente](https://github.com/crisfeim/cli-tddbuddy/search?q=tdd&type=code).
 [^2]: *XCTest* / *Swift Testing*
