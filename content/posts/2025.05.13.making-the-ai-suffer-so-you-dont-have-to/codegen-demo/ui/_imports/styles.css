@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono&display=swap');
+/* @import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono&display=swap'); */
 /* CSS Primitives */
 *, *::before, *::after {
 box-sizing: border-box;
@@ -20,8 +20,10 @@ border: 0;
 padding: 0 16px;
 resize: none;
 background: none;
-font-family: 'JetBrains Mono', monospace;
 font-size: 13px;
+font-family:
+    ui-monospace, SFMono-Regular, Menlo, "Andale Mono", Consolas, Monaco,
+    monospace;
 }
 
 codegen-demo textarea:focus {
