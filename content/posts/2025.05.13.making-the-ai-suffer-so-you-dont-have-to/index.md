@@ -271,8 +271,6 @@ Por otro lado, me hubiera gustado integrar un framework de testing real [^2] y r
 
 ## Demo en línea
 
-> Un playground vale más que mil palabras.
-
 {{< fragment "codegen-demo/dist/index.html" >}}
 
 [Código fuente del playground](https://github.com/crisfeim/crisfe.im/tree/main/content/posts/2025.05.13.making-the-ai-suffer-so-you-dont-have-to/codegen-demo/dev)
