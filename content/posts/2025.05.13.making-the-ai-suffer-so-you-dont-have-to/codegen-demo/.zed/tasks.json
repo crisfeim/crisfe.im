@@ -48,7 +48,7 @@
     "tags": []
   },
   {
-    "label": "Build",
+    "label": "Build Core",
     "command": "esbuild ./core/entrypoint.ts --bundle --outfile=./ui/_imports/core.js --platform=browser --format=iife --global-name=CodeGenCore",
     "use_new_terminal": false,
     "allow_concurrent_runs": false,
