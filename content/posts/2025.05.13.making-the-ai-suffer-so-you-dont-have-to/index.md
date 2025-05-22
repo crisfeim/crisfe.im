@@ -121,6 +121,7 @@ while output.processResult.exitCode != 0 {
 }
 ```
 
+<!-- >
 ## Diseño
 
 Inicialmente planteé tres componentes:
@@ -155,6 +156,14 @@ $ tddbuddy \
   --ouptput specs.output.swift
   --iterations 5
 ```
+-->
+
+## Demo en línea
+
+Escribe las pruebas unitarias a la derecha y dale a play. Puedes usar `assertEqual` como mini-framework de testing.
+[Código fuente del playground](https://github.com/crisfeim/crisfe.im/tree/main/content/posts/2025.05.13.making-the-ai-suffer-so-you-dont-have-to/codegen-demo)
+
+{{< fragment "codegen-demo/dist/index.html" >}}
 
 ## Problemas
 
@@ -267,12 +276,6 @@ Creo que el reto real es integrar esta metodología en un *tooling* existente (*
 
 Por otro lado, me hubiera gustado integrar un framework de testing real [^2] y recabar datos cuantitativos (número de iteraciones necesarias para resolver "X" problema, problemas más complejos, comparación entre modelos, etc), pero en esta primera iteración, preferí centrarme en una prueba de concepto funcional.
 
-## Demo en línea
-
-Escribe las pruebas unitarias a la derecha y dale a play. Puedes usar `assertEqual` como mini-framework de testing.
-[Código fuente del playground](https://github.com/crisfeim/crisfe.im/tree/main/content/posts/2025.05.13.making-the-ai-suffer-so-you-dont-have-to/codegen-demo)
-
-{{< fragment "codegen-demo/dist/index.html" >}}
 
 [^1]: A mí y [a otro puñado de gente](https://github.com/crisfeim/cli-tddbuddy/search?q=tdd&type=code).
 [^2]: *XCTest* / *Swift Testing*
