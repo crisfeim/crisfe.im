@@ -1,6 +1,6 @@
 import { assertExists, assertNotEquals } from "https://deno.land/std/assert/mod.ts";
 import { makeReactiveViewModel } from "../viewModel.ts";
-import { EvalRunner } from "../evalRunner.ts"
+import { EvalRunner } from "../evalrunner.ts"
 
 const maxIterations = 1
 import { OllamaClient } from "../ollamaclient.ts"
