@@ -53,7 +53,11 @@ export function makeReactiveViewModel(client: Client, runner: Runner) {
     ...initialState,
     run: async function () {
       this.isRunning = true;
-      await coordinator.generate(this.systemPrompt, this.specification, this.maxIterations);
+      try {
+        await coordinator.generate(this.systemPrompt, this.specification, this.maxIterations);
+      } catch {
+        this.statuses.push('failure');
+      }
       this.isRunning = false;
     },
 
