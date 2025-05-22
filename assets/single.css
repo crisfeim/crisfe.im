@@ -59,11 +59,13 @@ time {
 }
 
 pre {
-    padding: 0.5rem;
+    padding: 0.8rem;
     border-radius: 0.25rem;
     background-color: white !important;
     overflow-x: scroll;
-    font-size: 0.9rem;
+    font-size: 0.8125rem;
+    border: 1px solid #D9D9D9;
+    box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.05);
     font-family:
         ui-monospace, SFMono-Regular, Menlo, "Andale Mono", Consolas, Monaco,
         monospace;
