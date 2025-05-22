@@ -17,9 +17,6 @@ export interface ViewModel extends AppState {
   run: () => Promise<void>;
   status?: Status;
   generatedCode?: string;
-  setIteration: (i: number) => void;
-  addStatus: (s: Status) => void;
-  addGeneratedCode: (c: string) => void;
 }
 
 class ObservableIterator extends Iterator {
@@ -49,7 +46,7 @@ export function makeReactiveViewModel(client: Client, runner: Runner, maxIterati
   const baseIterator = new Iterator()
   const observedIterator = new ObservableIterator(baseIterator);
   const withLogsIterator = new ObservableIterator(observedIterator);
-  const coordinator = new Coordinator(client, runner, withLogsIterator);
+  const coordinator = new Coordinator(client, runner, observedIterator);
 
   const initialState: AppState = {
     isRunning: false,
@@ -62,54 +59,29 @@ export function makeReactiveViewModel(client: Client, runner: Runner, maxIterati
   }
   const vm: ViewModel = {
     ...initialState,
-    status: undefined,
     run: async function () {
+      observedIterator.onIterationChange = (i) => this.currentIteration = i
+      observedIterator.onStatusChange = (s) => this.statuses.push(s)
+      observedIterator.onGeneratedCode = (c) => this.generatedCodes.push(c)
+      this.generatedCodes.splice(0);
+      this.statuses.splice(0);
+      this.currentIteration = 0;
       this.isRunning = true;
       try {
         await coordinator.generate(this.systemPrompt, this.specification, this.maxIterations);
       } catch {
-        this.status = 'failure';
         this.statuses.push('failure');
       }
       this.isRunning = false;
     },
 
+    get status(): Status | undefined {
+      return this.statuses[this.statuses.length - 1];
+    },
     get generatedCode(): string | undefined {
       return this.generatedCodes[this.generatedCodes.length - 1];
-    },
-
-    setIteration(i: number) {
-      this.currentIteration = i;
-    },
-
-    addStatus(s: Status) {
-      this.status = s;
-      this.statuses.push(s);
-    },
-
-    addGeneratedCode(c: string) {
-      this.generatedCodes.push(c);
     }
   };
-
-  observedIterator.onIterationChange = (i) => vm.setIteration(i);
-  observedIterator.onStatusChange = (s) => vm.addStatus(s);
-  observedIterator.onGeneratedCode = (c) => vm.addGeneratedCode(c);
-
-  withLogsIterator.onIterationChange = (i) => {
-    console.log("Will iterate again", vm.currentIteration)
-    observedIterator.onIterationChange?.(i);
-  }
-
-  withLogsIterator.onStatusChange = (s) => {
-    console.log("Status changed", vm.status)
-    observedIterator.onStatusChange?.(s);
-  }
-
-  withLogsIterator.onGeneratedCode = (c) => {
-    console.log("Generated code", vm.generatedCode)
-    observedIterator.onGeneratedCode?.(c);
-  }
 
   return vm;
 }
