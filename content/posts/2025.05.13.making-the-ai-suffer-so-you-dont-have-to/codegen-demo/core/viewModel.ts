@@ -1,41 +1,16 @@
 import { Coordinator, Client, Runner, RunResult, Message } from "./coordinator.ts";
 import { Iterator } from "./iterator.ts";
 
-
 export type Status = "success" | "failure";
 
-interface AppState {
+export interface AppState {
   isRunning: boolean;
   generatedCodes: string[],
   currentIteration: number,
-  statuses: Status[]
-}
-
-export class ViewModel implements AppState {
-  isRunning: boolean = false
-  generatedCodes: string[] = []
-  currentIteration = 0;
-  statuses: Status[] = []
-
-  get lastStatus(): Status | undefined {
-    return this.statuses[this.statuses.length - 1];
-  }
-
-  get lastGeneratedCode(): string | undefined {
-    return this.generatedCodes[this.generatedCodes.length - 1];
-  }
-
-  systemPrompt: string = "default system prompt"
-  maxIterations = 5
-  specs: string = "default specs"
-
-  constructor(private coordinator: Coordinator) {}
-
-  async load() {
-    this.isRunning = true
-    const result = await this.coordinator.generate(this.systemPrompt, this.specs, this.maxIterations)
-    this.isRunning = false
-  }
+  statuses: Status[],
+  specification: string,
+  maxIterations: number,
+  systemPrompt: string,
 }
 
 class ObservableIterator extends Iterator {
@@ -61,34 +36,73 @@ class ObservableIterator extends Iterator {
   }
 }
 
-
-
-export function makeViewModel(client: Client, runner: Runner): ViewModel {
-  const iterator = new ObservableIterator(new Iterator())
+export function makeReactiveViewModel(client: Client, runner: Runner) {
+  const iterator = new ObservableIterator(new Iterator());
   const coordinator = new Coordinator(client, runner, iterator);
-  const viewModel = new ViewModel(coordinator);
 
-  iterator.onIterationChange = (iteration: number) => {
-    viewModel.currentIteration = iteration
+  const initialState: AppState = {
+    isRunning: false,
+    generatedCodes: [],
+    currentIteration: 0,
+    statuses: [],
+    specification: initSpecs(),
+    maxIterations: 5,
+    systemPrompt: defaultSystemPrompt(),
   }
+  const vm = {
+    ...initialState,
+    run: async function () {
+      this.isRunning = true;
+      await coordinator.generate(this.systemPrompt, this.specification, this.maxIterations);
+      this.isRunning = false;
+    },
 
-  iterator.onStatusChange = (status: Status) => {
-    viewModel.statuses.push(status)
-  }
+    status() {
+      return this.statuses[this.statuses.length - 1];
+    },
 
-  iterator.onGeneratedCode = (code: string) => {
-    viewModel.generatedCodes.push(code)
-  }
+    generatedCode() {
+      return this.generatedCodes[this.generatedCodes.length - 1];
+    },
 
-  return viewModel
+    setIteration(i: number) {
+      this.currentIteration = i;
+    },
+
+    addStatus(s: Status) {
+      this.statuses.push(s);
+    },
+
+    addGeneratedCode(c: string) {
+      this.generatedCodes.push(c);
+    }
+  };
+
+  iterator.onIterationChange = (i) => vm.setIteration(i);
+  iterator.onStatusChange = (s) => vm.addStatus(s);
+  iterator.onGeneratedCode = (c) => vm.addGeneratedCode(c);
+
+  return vm;
 }
 
+const defaultSystemPrompt = () => `
+  Imagine that you are a programmer and the user's responses are feedback from compiling your code in your development environment. Your responses are the code you write, and the user's responses represent the feedback, including any errors.
 
-import { OllamaClient } from "./ollamaclient.ts"
-import { EvalRunner } from "./evalrunner.ts"
+  Implement the SUT's code in javascript based on the provided specs (unit tests).
 
-export function makeDefaultViewModel(): ViewModel {
-  const client = new OllamaClient()
-  const runner = new EvalRunner()
-  return makeViewModel(client, runner)
+  Follow these strict guidelines:
+
+  1. Provide ONLY runnable javascript code. No explanations, comments, or formatting (no code blocks, markdown, symbols, or text).
+  2. DO NOT include unit tests or any test-related code.
+  3. ALWAYS IMPORT ONLY Foundation. No other imports are allowed.
+
+  If your code fails to compile, the user will provide the error output for you to make adjustments.
+  `
+
+const initSpecs = () => `
+function testAdder() {
+  const sut = new Adder(1, 2);
+  assert(sut.result === 3);
 }
+
+testAdder();`;
