@@ -67,7 +67,7 @@ background-image: radial-gradient(rgba(0, 0, 0, 0.05) 1.2px, transparent 0);
 background-size: 12px 12px;
 }
 
-/* Right side (specs, run button) */
+/* Left side (specs, run button) */
 codegen-demo button#run-button {
 cursor: not-allowed;
 opacity: 0.5;
@@ -96,7 +96,7 @@ codegen-demo button #clear:hover {
 background-color: #E3E3E3;
 }
 
-/* Left side (generated code, loader, runResult, etc...) */
+/*  Right side (generated code, loader, runResult, etc...) */
 codegen-demo #count {
 font-size: 13px;
 font-weight: bold;
