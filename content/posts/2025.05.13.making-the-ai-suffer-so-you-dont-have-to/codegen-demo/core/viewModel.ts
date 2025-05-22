@@ -46,8 +46,10 @@ class ObservableIterator extends Iterator {
 }
 
 export function makeReactiveViewModel(client: Client, runner: Runner, maxIterations: number): ViewModel {
-  const iterator = new ObservableIterator(new Iterator());
-  const coordinator = new Coordinator(client, runner, iterator);
+  const baseIterator = new Iterator()
+  const observedIterator = new ObservableIterator(baseIterator);
+  const withLogsIterator = new ObservableIterator(observedIterator);
+  const coordinator = new Coordinator(client, runner, withLogsIterator);
 
   const initialState: AppState = {
     isRunning: false,
@@ -91,9 +93,24 @@ export function makeReactiveViewModel(client: Client, runner: Runner, maxIterati
     }
   };
 
-  iterator.onIterationChange = (i) => vm.setIteration(i);
-  iterator.onStatusChange = (s) => vm.addStatus(s);
-  iterator.onGeneratedCode = (c) => vm.addGeneratedCode(c);
+  observedIterator.onIterationChange = (i) => vm.setIteration(i);
+  observedIterator.onStatusChange = (s) => vm.addStatus(s);
+  observedIterator.onGeneratedCode = (c) => vm.addGeneratedCode(c);
+
+  withLogsIterator.onIterationChange = (i) => {
+    console.log("Will iterate again", i)
+    observedIterator.onIterationChange?.(i);
+  }
+
+  withLogsIterator.onStatusChange = (s) => {
+    console.log("Status changed", s)
+    observedIterator.onStatusChange?.(s);
+  }
+
+  withLogsIterator.onGeneratedCode = (c) => {
+    console.log("Generated code", c)
+    observedIterator.onGeneratedCode?.(c);
+  }
 
   return vm;
 }
