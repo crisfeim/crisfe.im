@@ -15,8 +15,8 @@ interface AppState {
 
 export interface ViewModel extends AppState {
   run: () => Promise<void>;
-  readonly status: Status | undefined;
-  readonly generatedCode: string | undefined;
+  status?: Status;
+  generatedCode?: string;
   setIteration: (i: number) => void;
   addStatus: (s: Status) => void;
   addGeneratedCode: (c: string) => void;
