@@ -1,6 +1,6 @@
 <script src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js" defer></script>
 <style>@import(styles.css)</style>
-<codegen-demo x-data="Alpine.reactive(CodeGenCore.ollamaViewModel(5))">
+<codegen-demo x-data="CodeGenCore.fakeClientViewModel()">
     <hstack id="regular-version" class="container">
         <vstack class="left">
             <hstack class="header">
@@ -27,10 +27,10 @@
         </hstack>
 
         <textarea id="generated-code" readonly x-model="generatedCode"></textarea>
-
+<!-- <textarea readonly :value="generatedCodes[generatedCodes.length - 1]"></textarea> -->
         <hstack id="count" x-bind:style="status !== null ? 'opacity: 1' : 'opacity: 0'">
             <spacer></spacer>
-            <span id="iteration-count" x-text="`${currentIteration} of 5`"></span>
+            <span id="iteration-count" x-text="currentIteration"></span>
         </hstack>
         </vstack>
 

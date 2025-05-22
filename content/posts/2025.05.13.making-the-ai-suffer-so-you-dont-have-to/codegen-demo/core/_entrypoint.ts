@@ -15,3 +15,36 @@ export const geminiViewModel: (apiKey: string, maxIterations: number) => ViewMod
   const runner = new EvalRunner();
   return makeReactiveViewModel(client, runner, maxIterations);
 };
+
+import { Client, Runner, RunResult } from "./coordinator.ts";
+
+export const fakeClientViewModel: () => ViewModel = () => {
+  class FakeClient implements Client {
+    private base = [1, 2, 3];
+    private ids = [...this.base];
+
+    async send(): Promise<string> {
+      if (this.ids.length === 0) {
+        this.ids = [...this.base];
+      }
+      await new Promise((resolve) => setTimeout(resolve, 1000));
+      return `Generated code ${this.ids.shift()}`;
+    }
+  }
+
+  class FakeRunner implements Runner {
+    private base = [false, false, true];
+    private results = [...this.base];
+
+    run(code: string): RunResult {
+      if (this.results.length === 0) {
+        this.results = [...this.base];
+      }
+      return { isValid: this.results.shift()! };
+    }
+  }
+
+  const client = new FakeClient();
+  const runner = new FakeRunner();
+  return makeReactiveViewModel(client, runner, 3);
+};
