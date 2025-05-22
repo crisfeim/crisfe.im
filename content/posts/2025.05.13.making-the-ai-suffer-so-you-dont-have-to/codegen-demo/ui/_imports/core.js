@@ -7,10 +7,10 @@ var CodeGenCore = (() => {
     return mod || (0, cb[__getOwnPropNames(cb)[0]])((mod = { exports: {} }).exports, mod), mod.exports;
   };
 
-  // coordinator.ts
+  // core/coordinator.ts
   var Coordinator;
   var init_coordinator = __esm({
-    "coordinator.ts"() {
+    "core/coordinator.ts"() {
       Coordinator = class {
         constructor(client, runner, iterator) {
           this.client = client;
@@ -57,10 +57,10 @@ ${generated}`;
     }
   });
 
-  // iterator.ts
+  // core/iterator.ts
   var Iterator;
   var init_iterator = __esm({
-    "iterator.ts"() {
+    "core/iterator.ts"() {
       Iterator = class {
         async iterate(nTimes, action, until) {
           let currentIteration = 0;
@@ -78,10 +78,12 @@ ${generated}`;
     }
   });
 
-  // viewModel.ts
+  // core/viewModel.ts
   function makeReactiveViewModel(client, runner, maxIterations) {
-    const iterator = new ObservableIterator(new Iterator());
-    const coordinator = new Coordinator(client, runner, iterator);
+    const baseIterator = new Iterator();
+    const observedIterator = new ObservableIterator(baseIterator);
+    const withLogsIterator = new ObservableIterator(observedIterator);
+    const coordinator = new Coordinator(client, runner, observedIterator);
     const initialState = {
       isRunning: false,
       generatedCodes: [],
@@ -94,6 +96,12 @@ ${generated}`;
     const vm = {
       ...initialState,
       run: async function() {
+        observedIterator.onIterationChange = (i) => this.currentIteration = i;
+        observedIterator.onStatusChange = (s) => this.statuses.push(s);
+        observedIterator.onGeneratedCode = (c) => this.generatedCodes.push(c);
+        this.generatedCodes.splice(0);
+        this.statuses.splice(0);
+        this.currentIteration = 0;
         this.isRunning = true;
         try {
           await coordinator.generate(this.systemPrompt, this.specification, this.maxIterations);
@@ -107,25 +115,13 @@ ${generated}`;
       },
       get generatedCode() {
         return this.generatedCodes[this.generatedCodes.length - 1];
-      },
-      setIteration(i) {
-        this.currentIteration = i;
-      },
-      addStatus(s) {
-        this.statuses.push(s);
-      },
-      addGeneratedCode(c) {
-        this.generatedCodes.push(c);
       }
     };
-    iterator.onIterationChange = (i) => vm.setIteration(i);
-    iterator.onStatusChange = (s) => vm.addStatus(s);
-    iterator.onGeneratedCode = (c) => vm.addGeneratedCode(c);
     return vm;
   }
   var ObservableIterator, defaultSystemPrompt, initSpecs;
   var init_viewModel = __esm({
-    "viewModel.ts"() {
+    "core/viewModel.ts"() {
       init_coordinator();
       init_iterator();
       ObservableIterator = class extends Iterator {
@@ -166,17 +162,17 @@ ${generated}`;
       initSpecs = () => `
 function testAdder() {
   const sut = new Adder(1, 2);
-  assert(sut.result === 3);
+  assertEqual(sut.result, 3);
 }
 
 testAdder();`;
     }
   });
 
-  // ollamaclient.ts
+  // core/ollamaclient.ts
   var OllamaClient;
   var init_ollamaclient = __esm({
-    "ollamaclient.ts"() {
+    "core/ollamaclient.ts"() {
       OllamaClient = class {
         model = "llama3.2";
         url = "http://localhost:11434/api/chat";
@@ -204,10 +200,10 @@ testAdder();`;
     }
   });
 
-  // geminiclient.ts
+  // core/geminiclient.ts
   var GeminiClient;
   var init_geminiclient = __esm({
-    "geminiclient.ts"() {
+    "core/geminiclient.ts"() {
       GeminiClient = class {
         constructor(apiKey) {
           this.apiKey = apiKey;
@@ -239,10 +235,10 @@ testAdder();`;
     }
   });
 
-  // evalrunner.ts
+  // core/evalrunner.ts
   var EvalRunner;
   var init_evalrunner = __esm({
-    "evalrunner.ts"() {
+    "core/evalrunner.ts"() {
       EvalRunner = class {
         run(code) {
           const assertHelpers = `
@@ -266,10 +262,10 @@ testAdder();`;
     }
   });
 
-  // _entrypoint.ts
-  var ollamaViewModel, geminiViewModel;
+  // core/_entrypoint.ts
+  var ollamaViewModel, geminiViewModel, fakeClientViewModel;
   var init_entrypoint = __esm({
-    "_entrypoint.ts"() {
+    "core/_entrypoint.ts"() {
       init_viewModel();
       init_ollamaclient();
       init_geminiclient();
@@ -284,15 +280,42 @@ testAdder();`;
         const runner = new EvalRunner();
         return makeReactiveViewModel(client, runner, maxIterations);
       };
+      fakeClientViewModel = () => {
+        class FakeClient {
+          base = [1, 2, 3];
+          ids = [...this.base];
+          async send() {
+            if (this.ids.length === 0) {
+              this.ids = [...this.base];
+            }
+            await new Promise((resolve) => setTimeout(resolve, 1e3));
+            return `Generated code ${this.ids.shift()}`;
+          }
+        }
+        class FakeRunner {
+          base = [false, false, true];
+          results = [...this.base];
+          run(code2) {
+            if (this.results.length === 0) {
+              this.results = [...this.base];
+            }
+            return { isValid: this.results.shift() };
+          }
+        }
+        const client = new FakeClient();
+        const runner = new FakeRunner();
+        return makeReactiveViewModel(client, runner, 3);
+      };
     }
   });
 
-  // entrypoint.ts
+  // core/entrypoint.ts
   var require_entrypoint = __commonJS({
-    "entrypoint.ts"(exports) {
+    "core/entrypoint.ts"(exports) {
       init_entrypoint();
       exports.ollamaViewModel = ollamaViewModel;
       exports.geminiViewModel = geminiViewModel;
+      exports.fakeClientViewModel = fakeClientViewModel;
     }
   });
   return require_entrypoint();
