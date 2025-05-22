@@ -36,7 +36,7 @@ class ObservableIterator extends Iterator {
   }
 }
 
-export function makeReactiveViewModel(client: Client, runner: Runner) {
+export function makeReactiveViewModel(client: Client, runner: Runner, maxIterations: number) {
   const iterator = new ObservableIterator(new Iterator());
   const coordinator = new Coordinator(client, runner, iterator);
 
@@ -46,7 +46,7 @@ export function makeReactiveViewModel(client: Client, runner: Runner) {
     currentIteration: 0,
     statuses: [],
     specification: initSpecs(),
-    maxIterations: 5,
+    maxIterations: maxIterations,
     systemPrompt: defaultSystemPrompt(),
   }
   const vm = {
