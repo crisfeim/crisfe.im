@@ -98,7 +98,6 @@ const defaultSystemPrompt = () => `
 
   1. Provide ONLY runnable javascript code. No explanations, comments, or formatting (no code blocks, markdown, symbols, or text).
   2. DO NOT include unit tests or any test-related code.
-  3. ALWAYS IMPORT ONLY Foundation. No other imports are allowed.
 
   If your code fails to compile, the user will provide the error output for you to make adjustments.
   `
