@@ -58,5 +58,17 @@
     "show_summary": true,
     "show_output": true,
     "tags": []
+  },
+  {
+    "label": "Watch UI",
+    "command": "node build.js",
+    "use_new_terminal": false,
+    "allow_concurrent_runs": false,
+    "reveal": "always",
+    "hide": "never",
+    "shell": "system",
+    "show_summary": true,
+    "show_output": true,
+    "tags": []
   }
 ]
