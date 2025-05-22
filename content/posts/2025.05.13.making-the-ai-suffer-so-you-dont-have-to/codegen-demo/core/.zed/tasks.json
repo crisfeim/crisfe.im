@@ -24,6 +24,18 @@
     "tags": []
   },
   {
+    "label": "Integration Tests",
+    "command": "deno test integrationTests --allow-net",
+    "use_new_terminal": false,
+    "allow_concurrent_runs": false,
+    "reveal": "always",
+    "hide": "never",
+    "shell": "system",
+    "show_summary": true,
+    "show_output": true,
+    "tags": []
+  },
+  {
     "label": "Build",
     "command": "esbuild entrypoint.ts --bundle --outfile=core.js --platform=browser --format=iife --global-name=CodeGenCore",
     "use_new_terminal": false,
