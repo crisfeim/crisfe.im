@@ -2,11 +2,12 @@ import { assert, assertEquals } from "https://deno.land/std/assert/mod.ts";
 import { Coordinator, Client, Runner, RunResult, Message } from "../coordinator.ts";
 import {  makeReactiveViewModel } from "../viewModel.ts";
 
+const maxIterations = 5
 
 Deno.test("ViewModel state updates during code generation", async () => {
   const client = new ClientStub("gencode")
   const alwaysFailingRunner = new RunnerStub({ isValid: false });
-  const viewModel = makeReactiveViewModel(client, alwaysFailingRunner)
+  const viewModel = makeReactiveViewModel(client, alwaysFailingRunner, maxIterations)
   await viewModel.run()
 
   assertEquals(viewModel.currentIteration, 5)
@@ -15,10 +16,11 @@ Deno.test("ViewModel state updates during code generation", async () => {
 });
 
 Deno.test("ViewModel delivers failure on client failure", async () => {
+
   const anyError = new Error("any error")
   const throwingErrorClient = new ClientStub(anyError)
   const anyRunner = new RunnerStub({ isValid: true })
-  const viewModel = makeReactiveViewModel(throwingErrorClient, anyRunner)
+  const viewModel = makeReactiveViewModel(throwingErrorClient, anyRunner, maxIterations)
   await viewModel.run()
 
   assertEquals(viewModel.status(), 'failure')
