@@ -49,7 +49,7 @@
   },
   {
     "label": "Build",
-    "command": "esbuild entrypoint.ts --bundle --outfile=core.js --platform=browser --format=iife --global-name=CodeGenCore",
+    "command": "esbuild entrypoint.ts --bundle --outfile=../src/_imports/core.js --platform=browser --format=iife --global-name=CodeGenCore",
     "use_new_terminal": false,
     "allow_concurrent_runs": false,
     "reveal": "always",
