@@ -20,7 +20,7 @@
         <vstack
             class="right"
             :class="{
-                'grid-background': status === null && isRunning === false,
+                'grid-background': status === undefined & !isRunning,
                 'success': status === 'success',
                 'failure': status === 'failure'
               }"

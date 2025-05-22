@@ -61,7 +61,7 @@ codegen-demo .border-bottom {
 border-bottom: 1px solid #D9D9D9;
 }
 
-codegen-demo .grid-background {
+codegen-demo vstack.right.grid-background {
 background-color: #f9f9f9;
 background-image: radial-gradient(rgba(0, 0, 0, 0.05) 1.2px, transparent 0);
 background-size: 12px 12px;
@@ -245,7 +245,7 @@ spacer {flex: 1;}
         <vstack
             class="right"
             :class="{
-                'grid-background': status === null && isRunning === false,
+                'grid-background': status === undefined & !isRunning,
                 'success': status === 'success',
                 'failure': status === 'failure'
               }"
