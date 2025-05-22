@@ -60,20 +60,18 @@ export function makeReactiveViewModel(client: Client, runner: Runner, maxIterati
     maxIterations: maxIterations,
     systemPrompt: defaultSystemPrompt(),
   }
-  const vm = {
+  const vm: ViewModel = {
     ...initialState,
+    status: undefined,
     run: async function () {
       this.isRunning = true;
       try {
         await coordinator.generate(this.systemPrompt, this.specification, this.maxIterations);
       } catch {
+        this.status = 'failure';
         this.statuses.push('failure');
       }
       this.isRunning = false;
-    },
-
-    get status(): Status | undefined {
-      return this.statuses[this.statuses.length - 1];
     },
 
     get generatedCode(): string | undefined {
@@ -85,6 +83,7 @@ export function makeReactiveViewModel(client: Client, runner: Runner, maxIterati
     },
 
     addStatus(s: Status) {
+      this.status = s;
       this.statuses.push(s);
     },
 
@@ -98,17 +97,17 @@ export function makeReactiveViewModel(client: Client, runner: Runner, maxIterati
   observedIterator.onGeneratedCode = (c) => vm.addGeneratedCode(c);
 
   withLogsIterator.onIterationChange = (i) => {
-    console.log("Will iterate again", i)
+    console.log("Will iterate again", vm.currentIteration)
     observedIterator.onIterationChange?.(i);
   }
 
   withLogsIterator.onStatusChange = (s) => {
-    console.log("Status changed", s)
+    console.log("Status changed", vm.status)
     observedIterator.onStatusChange?.(s);
   }
 
   withLogsIterator.onGeneratedCode = (c) => {
-    console.log("Generated code", c)
+    console.log("Generated code", vm.generatedCode)
     observedIterator.onGeneratedCode?.(c);
   }
 
