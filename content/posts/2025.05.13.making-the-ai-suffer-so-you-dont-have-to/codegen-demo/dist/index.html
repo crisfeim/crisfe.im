@@ -102,7 +102,15 @@ font-size: 13px;
 font-weight: bold;
 padding: 16px;
 color: gray;
-transition: opacity 0.5s ease;
+transition: opacity 0.5s ease, color 0.5s ease;
+}
+
+codegen-demo #count.failure {
+    color: #4A0D0D;
+}
+
+codegen-demo #count.success {
+    color: #0D4A11;
 }
 
 codegen-demo #mobile-version {
@@ -363,7 +371,9 @@ spacer {flex: 1;}
         </hstack>
 
         <textarea id="generated-code" readonly x-model="generatedCode"></textarea>
-        <hstack id="count" x-bind:style="status !== undefined ? 'opacity: 1' : 'opacity: 0'">
+        <hstack id="count"
+            :class="{ 'success': status === 'success','failure': status === 'failure' }"
+            x-bind:style="status !== undefined ? 'opacity: 1' : 'opacity: 0'">
             <spacer></spacer>
             <span id="iteration-count" x-text="`${currentIteration} of ${maxIterations}`"></span>
         </hstack>
