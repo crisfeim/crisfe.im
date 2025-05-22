@@ -1,7 +1,7 @@
 [
   {
     "label": "Run Tests",
-    "command": "deno test tests",
+    "command": "deno test ./core/tests",
     "use_new_terminal": false,
     "allow_concurrent_runs": false,
     "reveal": "always",
