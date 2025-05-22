@@ -23,7 +23,7 @@ Deno.test("ViewModel delivers failure on client failure", async () => {
   const viewModel = makeReactiveViewModel(throwingErrorClient, anyRunner, maxIterations)
   await viewModel.run()
 
-  assertEquals(viewModel.status, 'failure')
+  assertEquals(viewModel.status, 'failure', `Expected status to be failure, but got ${viewModel.status} instead`)
 })
 
 // Stubs
