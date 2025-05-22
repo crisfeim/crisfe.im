@@ -15,8 +15,8 @@ interface AppState {
 
 export interface ViewModel extends AppState {
   run: () => Promise<void>;
-  status: () => Status | undefined;
-  generatedCode: () => string | undefined;
+  readonly status: Status | undefined;
+  readonly generatedCode: string | undefined;
   setIteration: (i: number) => void;
   addStatus: (s: Status) => void;
   addGeneratedCode: (c: string) => void;
@@ -70,11 +70,11 @@ export function makeReactiveViewModel(client: Client, runner: Runner, maxIterati
       this.isRunning = false;
     },
 
-    status() {
+    get status(): Status | undefined {
       return this.statuses[this.statuses.length - 1];
     },
 
-    generatedCode() {
+    get generatedCode(): string | undefined {
       return this.generatedCodes[this.generatedCodes.length - 1];
     },
 

@@ -7,8 +7,8 @@ Deno.test("Ollama client integration test", async () => {
   const sut = ollamaViewModel(maxIterations)
   await sut.run()
 
-  assertExists(sut.generatedCode())
-  assertExists(sut.status())
+  assertExists(sut.generatedCode)
+  assertExists(sut.status)
   assertNotEquals(sut.currentIteration, 0)
 })
 
@@ -17,7 +17,7 @@ Deno.test("Geminii client integration test", async () => {
   const sut = geminiViewModel(gemini_api_key, maxIterations)
   await sut.run()
 
-  assertExists(sut.generatedCode())
-  assertExists(sut.status())
+  assertExists(sut.generatedCode)
+  assertExists(sut.status)
   assertNotEquals(sut.currentIteration, 0)
 })
