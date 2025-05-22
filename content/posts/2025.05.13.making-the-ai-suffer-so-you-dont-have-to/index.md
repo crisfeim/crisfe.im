@@ -125,7 +125,7 @@ while output.processResult.exitCode != 0 {
 
 Inicialmente planteé tres componentes:
 
-1. 🤖 Cliente LLM: Genera código a partir de las specs.
+1. 🤖 *Client*: Genera código a partir de las specs.
 2. 🪢 *Concatenator*: Concatena el *output* del modelo con el test inicial.
 3. ⚙️ *Runner*: Ejecutar la concatenación y devuelve un *output*.
 
