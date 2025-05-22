@@ -4,7 +4,7 @@ export class EvalRunner implements Runner {
 
   run(code: string): RunResult {
     const assertHelpers = `
-       function assertEqual(actual, expected) {
+       function assertEquals(actual, expected) {
          if (actual !== expected) {
            throw new Error(\`Assertion failed: expected \${expected}, but got \${actual}\`);
          }
