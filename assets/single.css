@@ -81,4 +81,10 @@ p > code {
 
 .footnotes {
     font-size: 0.8125rem;
+    color: gray;
+}
+
+.footnote-ref {
+    font-weight: bold;
+    text-decoration: none;
 }
