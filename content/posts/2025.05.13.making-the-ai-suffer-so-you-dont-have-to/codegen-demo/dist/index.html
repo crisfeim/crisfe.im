@@ -46,7 +46,6 @@ Roboto,
 sans-serif;
 }
 
-codegen-demo .body,
 codegen-demo vstack.right {
     background-color: #F9F9F9;
 }
@@ -117,10 +116,7 @@ left: 0;
 right: 0;
 }
 
-codegen-demo .body {
-position: relative;
-height: 300px;
-}
+
 
 codegen-demo .status-indicator * {
 transition: opacity 0.2s ease;
@@ -132,6 +128,18 @@ codegen-demo .status-indicator {
 
 codegen-demo #activity-indicator {
     transition: opacity 1s ease;
+}
+
+codegen-demo vstack.right {
+    transition: background-color 0.8s ease;
+}
+
+codegen-demo vstack.right.success {
+    background-color: #EEFCEF;
+}
+
+codegen-demo vstack.right.failure {
+    background-color: #FBEAEA;
 }
 
 /* Media queries */
@@ -186,6 +194,7 @@ flex-direction: column;
 
 spacer {flex: 1;}
 </style>
+
 <codegen-demo x-data="CodeGenCore.fakeClientViewModel()">
     <hstack id="regular-version" class="container">
         <vstack class="left">
@@ -225,7 +234,11 @@ spacer {flex: 1;}
 
         <vstack
             class="right"
-            :class="{ 'grid-background': status === null && isRunning === false }"
+            :class="{
+                'grid-background': status === null && isRunning === false,
+                'success': status === 'success',
+                'failure': status === 'failure'
+              }"
         >
         <hstack class="header">
              <div id="activity-indicator" class="ispinner" x-bind:style="isRunning ? 'opacity: 1' : 'opacity: 0'">
