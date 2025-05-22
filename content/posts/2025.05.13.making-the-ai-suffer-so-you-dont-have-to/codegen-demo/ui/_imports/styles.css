@@ -101,7 +101,15 @@ font-size: 13px;
 font-weight: bold;
 padding: 16px;
 color: gray;
-transition: opacity 0.5s ease;
+transition: opacity 0.5s ease, color 0.5s ease;
+}
+
+codegen-demo #count.failure {
+    color: #4A0D0D;
+}
+
+codegen-demo #count.success {
+    color: #0D4A11;
 }
 
 codegen-demo #mobile-version {

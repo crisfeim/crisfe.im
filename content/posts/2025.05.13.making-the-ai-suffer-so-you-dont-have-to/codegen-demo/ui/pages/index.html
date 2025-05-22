@@ -32,7 +32,9 @@
         </hstack>
 
         <textarea id="generated-code" readonly x-model="generatedCode"></textarea>
-        <hstack id="count" x-bind:style="status !== undefined ? 'opacity: 1' : 'opacity: 0'">
+        <hstack id="count"
+            :class="{ 'success': status === 'success','failure': status === 'failure' }"
+            x-bind:style="status !== undefined ? 'opacity: 1' : 'opacity: 0'">
             <spacer></spacer>
             <span id="iteration-count" x-text="`${currentIteration} of ${maxIterations}`"></span>
         </hstack>
