@@ -126,7 +126,7 @@ while output.processResult.exitCode != 0 {
 Escribe las pruebas unitarias a la derecha y dale a play. Puedes usar `assertEqual` como mini-framework de testing.
 [Código fuente del playground](https://github.com/crisfeim/crisfe.im/tree/main/content/posts/2025.05.13.making-the-ai-suffer-so-you-dont-have-to/codegen-demo)
 
-{{< fragment "codegen-demo/dist/index.html" >}}
+{{< fragment "demo/index.html" >}}
 
 
 ## Diseño

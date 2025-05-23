@@ -35,7 +35,7 @@ function runSSG() {
     });
 
     // Static folder
-    copyFolderRecursiveSync(dir.static, './dist/');
+    copyFolderRecursiveSync(dir.static, './');
     console.log('Static files copied successfully!');
 
     function generateFile(item, fileName) {
@@ -56,13 +56,13 @@ function runSSG() {
 
             // Except index, no folder.
             if (folder != 'index') {
-                createFolderIfNone('./dist/' + folder);
+                createFolderIfNone('./' + folder);
                 fileName = folder + '/index.html';
             }
         }
 
         // Save to new directory
-        fs.writeFileSync(`./dist/${fileName}`, content);
+        fs.writeFileSync(`./${fileName}`, content);
         return;
     }
 
@@ -70,7 +70,7 @@ function runSSG() {
         let subFolder = item.replace('./ui/pages/', '');
 
         const subPages = fs.readdirSync(item);
-        createFolderIfNone(`./dist/${subFolder}`);
+        createFolderIfNone(`./${subFolder}`);
 
         subPages.forEach(function (page) {
             generateFile(`${dir.pages}/${subFolder}/${page}`, `${subFolder}/${page}`);
