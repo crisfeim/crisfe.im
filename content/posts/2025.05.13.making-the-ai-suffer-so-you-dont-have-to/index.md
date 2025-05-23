@@ -121,14 +121,20 @@ while output.processResult.exitCode != 0 {
 }
 ```
 
-<!-- >
+## Demo en línea
+
+Escribe las pruebas unitarias a la derecha y dale a play. Puedes usar `assertEqual` como mini-framework de testing.
+[Código fuente del playground](https://github.com/crisfeim/crisfe.im/tree/main/content/posts/2025.05.13.making-the-ai-suffer-so-you-dont-have-to/codegen-demo)
+
+{{< fragment "codegen-demo/dist/index.html" >}}
+
+
 ## Diseño
 
-Inicialmente planteé tres componentes:
-
-1. 🤖 *Client*: Genera código a partir de las specs.
+1. 🤖 *Client*: Genera código a partir de unas specs.
 2. 🪢 *Concatenator*: Concatena el *output* del modelo con el test inicial.
-3. ⚙️ *Runner*: Ejecutar la concatenación y devuelve un *output*.
+3. ⚙️ *Runner*: Ejecuta la concatenación y devuelve un *output*.
+4. 🔁 *Iterator*: Itera *N* veces o hasta que se cumpla una condición.
 
 ### Pseudo-código
 
@@ -140,14 +146,6 @@ System.generateCodeFrom(specs) → (GeneratedCode, Stdout/Stderr)
   → Exit
 ```
 
-Al final, terminé con algunos componentes de más. Concretamente:
-
-- Un iterador (para salir del ciclo tras "N" intentos fallidos o al satisfacer una condición)
-- Algunos *helpers* de gestión de archivos
-- Un almacenador de contexto (para enviar los resultados fallidos al modelo)
-
-![system diagram](images/system.png)
-
 ### CLI
 
 ```shell
@@ -156,14 +154,6 @@ $ tddbuddy \
   --ouptput specs.output.swift
   --iterations 5
 ```
--->
-
-## Demo en línea
-
-Escribe las pruebas unitarias a la derecha y dale a play. Puedes usar `assertEqual` como mini-framework de testing.
-[Código fuente del playground](https://github.com/crisfeim/crisfe.im/tree/main/content/posts/2025.05.13.making-the-ai-suffer-so-you-dont-have-to/codegen-demo)
-
-{{< fragment "codegen-demo/dist/index.html" >}}
 
 ## Problemas
 
