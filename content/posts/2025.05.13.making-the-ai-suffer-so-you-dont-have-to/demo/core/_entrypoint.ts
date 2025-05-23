@@ -16,6 +16,13 @@ export const geminiViewModel: (apiKey: string, maxIterations: number) => ViewMod
   return makeReactiveViewModel(client, runner, maxIterations);
 };
 
+import { LLM7Client } from "./llm7client.ts";
+export const llm7ViewModel: (maxIterations: number) => ViewModel = (maxIterations) => {
+  const client = new LLM7Client();
+  const runner = new EvalRunner();
+  return makeReactiveViewModel(client, runner, maxIterations);
+};
+
 import { Client, Runner, RunResult } from "./coordinator.ts";
 
 export const fakeClientViewModel: () => ViewModel = () => {
