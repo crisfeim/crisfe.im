@@ -141,6 +141,7 @@ codegen-demo .status-indicator {
 
 codegen-demo #activity-indicator {
     transition: opacity 1s ease;
+    opacity: 0;
 }
 
 codegen-demo vstack.right {
