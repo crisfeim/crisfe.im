@@ -9,6 +9,8 @@ source = 'content'
 target = 'content'
 excludeFiles = ['node_modules/a.*']
 
+
+
 [params]
 description = "Technical blog and projects by Cristian Rojas. AI, development, and custom tools."
 
@@ -17,4 +19,5 @@ description = "Technical blog and projects by Cristian Rojas. AI, development, a
 [markup.goldmark.renderer]
 unsafe = true
 [markup.highlight]
-codeFences = false
+noClasses = true
+style = "solarized-light"
