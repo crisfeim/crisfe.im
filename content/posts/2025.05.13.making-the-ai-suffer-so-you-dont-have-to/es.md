@@ -124,6 +124,11 @@ let tmpFileURL = tmFileURLWithTimestamp("generated.swift")
 swiftRunner.runCode(at: tmpFileURL)
 ```
 
+<video id="v1" autoplay muted loop playsinline  style="width: 30%; height: auto;" aria-hidden="true">
+  <source src="videos/concatenation.mov" type="video/mp4">
+</video>
+
+
 [^process]: Invocado con la *api* *Process*. [Implementación](https://github.com/crisfeim/cli-tddbuddy/blob/main/Sources/Core/Infrastructure/SwiftRunner.swift).
 
 Si el proceso devuelve un código de salida distinto de cero, significa que la ejecución del código falló. En ese caso, repetimos el ciclo hasta que el código sea cero:
@@ -182,7 +187,7 @@ Iterator encapsula la lógica de iteración y devueve el último resultado:
 iterate<T>(
   nTimes: Int,
   action: () async -> T,
-  until: (T) -> Void
+  until: (T) -> Bool
 ) async -> T
 ```
 
