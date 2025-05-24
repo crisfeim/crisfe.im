@@ -273,7 +273,7 @@ video {
     --text-color: black;
     --keyword-color: #797673;
     --selection-color: #292524;
-    --borders-color: white;
+    --borders-color: #D9D9D9;
 
     --caret-color: #f1d5bf;
     --selection-text-color: var(--keyword-color);
