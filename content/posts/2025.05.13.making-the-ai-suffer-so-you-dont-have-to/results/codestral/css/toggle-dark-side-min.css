@@ -1,0 +1,8 @@
+/*
+  Theme toggle styles adapted from:
+  https://github.com/AlfieJones/theme-toggles
+
+  Copyright (c) 2021 Alfred Jones
+  Licensed under the MIT License
+*/
+.theme-toggle.theme-toggle--reversed .theme-toggle__dark-side{transform:scale(1,-1)}.theme-toggle{--theme-toggle__dark-side--duration:500ms}.theme-toggle__dark-side path{transform-origin:center;transition:transform var(--theme-toggle__dark-side--duration) ease}.theme-toggle input[type=checkbox]:checked~.theme-toggle__dark-side path,.theme-toggle--toggled:not(label).theme-toggle .theme-toggle__dark-side path{transform:rotate(180deg)}.theme-toggle{border:none;background:0 0;cursor:pointer}.theme-toggle input[type=checkbox]{display:none}.theme-toggle .theme-toggle-sr{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border-width:0}@media (prefers-reduced-motion:reduce){.theme-toggle:not(.theme-toggle--force-motion) *{transition:none!important}}

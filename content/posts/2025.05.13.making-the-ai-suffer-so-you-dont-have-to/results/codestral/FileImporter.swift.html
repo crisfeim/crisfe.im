@@ -1,0 +1,394 @@
+<!doctype html>
+<!--
+  Copyright © 2025 Cristian Felipe Patiño Rojas
+  Released under the MIT License
+-->
+<html>
+    <head>
+        <meta charset="UTF-8" />
+        <title>fileimporter.swift</title>
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+        <link
+            href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:ital,wght@0,100..800;1,100..800&display=swap"
+            rel="stylesheet"
+        />
+        <link
+            href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:ital,wght@0,100..700;1,100..700&display=swap"
+            rel="stylesheet"
+        />
+        <link rel="stylesheet" type="text/css" href="css/styles.css" />
+        <link
+            rel="stylesheet"
+            type="text/css"
+            href="css/toggle-dark-side-min.css"
+        />
+        <link
+            rel="stylesheet"
+            href="https://unpkg.com/pyloncss@latest/css/pylon.css"
+        />
+        <script src="https://unpkg.com/htmx.org@2.0.3"></script>
+        <!--<script src="https://unpkg.com/hyperscript.org@0.9.12"></script>-->
+    </head>
+    <body>
+        <!--<vstack id="navigator"><ul><li>
+<a	href="#"
+ onclick="loadContent('/fileimporter.swift', 'main'); return false;">
+ fileimporter.swift
+</a><li>
+<a	href="#"
+ onclick="loadContent('/passwordgenerator.swift', 'main'); return false;">
+ passwordgenerator.swift
+</a><li>
+<a	href="#"
+ onclick="loadContent('/main.swift', 'main'); return false;">
+ main.swift
+</a><li>
+<a	href="#"
+ onclick="loadContent('/lineappender.swift', 'main'); return false;">
+ lineappender.swift
+</a></ul></vstack>-->
+        <main id="main">
+            <vstack id="floating-buttons" spacing="m">
+                <button
+                    id="theme-toggle"
+                    class="theme-toggle"
+                    type="button"
+                    title="Toggle theme"
+                    aria-label="Toggle theme"
+                    onclick="toggle()"
+                >
+                    <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        aria-hidden="true"
+                        width="1em"
+                        height="1em"
+                        class="theme-toggle__dark-side"
+                        fill="currentColor"
+                        viewBox="0 0 32 32"
+                    >
+                        <path
+                            d="M16 .5C7.4.5.5 7.4.5 16S7.4 31.5 16 31.5 31.5 24.6 31.5 16 24.6.5 16 .5zm0 28.1V3.4C23 3.4 28.6 9 28.6 16S23 28.6 16 28.6z"
+                        ></path>
+                    </svg>
+                </button>
+
+                <button id="toggle-color" onclick="toggleColor()">
+                    <div class="first"></div>
+                    <div class="second"></div>
+                    <div class="third"></div>
+                </button>
+            </vstack>
+            <div id="go-to-line">
+                <input
+                    type="text"
+                    id="line-input"
+                    placeholder="Line number"
+                    class="hide"
+                />
+            </div>
+            <div id="top-controls">
+                <hstack id="top-controls-content" class="article-width">
+                    <spacer></spacer>
+                    <button id="play-button" class="button" onclick="run()">
+                        <?xml version="1.0" encoding="iso-8859-1"?>
+                        <!-- Uploaded to: SVG Repo, www.svgrepo.com, Generator: SVG Repo Mixer Tools -->
+                        <svg
+                            fill="#000000"
+                            version="1.1"
+                            id="Capa_1"
+                            xmlns="http://www.w3.org/2000/svg"
+                            xmlns:xlink="http://www.w3.org/1999/xlink"
+                            viewBox="0 0 17.804 17.804"
+                            xml:space="preserve"
+                        >
+                            ®
+                            <g>
+                                <g id="c98_play">
+                                    <path
+                                        d="M2.067,0.043C2.21-0.028,2.372-0.008,2.493,0.085l13.312,8.503c0.094,0.078,0.154,0.191,0.154,0.313
+			c0,0.12-0.061,0.237-0.154,0.314L2.492,17.717c-0.07,0.057-0.162,0.087-0.25,0.087l-0.176-0.04
+			c-0.136-0.065-0.222-0.207-0.222-0.361V0.402C1.844,0.25,1.93,0.107,2.067,0.043z"
+                                    />
+                                </g>
+                                <g id="Capa_1_78_"></g>
+                            </g>
+                        </svg>
+                    </button>
+
+                    <button
+                        id="layout-button"
+                        class="button"
+                        onclick="switchViewMode()"
+                    >
+                        <?xml version="1.0" encoding="utf-8"?>
+
+                        <svg
+                            width="800px"
+                            height="800px"
+                            viewBox="0 0 48 48"
+                            xmlns="http://www.w3.org/2000/svg"
+                        >
+                            <title>expand-horizontal</title>
+                            <g id="Layer_2" data-name="Layer 2">
+                                <g id="invisible_box" data-name="invisible box">
+                                    <rect width="48" height="48" fill="none" />
+                                </g>
+                                <g id="Q3_icons" data-name="Q3 icons">
+                                    <g>
+                                        <path
+                                            d="M30.6,28.6a1.9,1.9,0,0,0,.2,3,2.1,2.1,0,0,0,2.7-.2l5.9-6a1.9,1.9,0,0,0,0-2.8l-5.9-6a2.1,2.1,0,0,0-2.7-.2,1.9,1.9,0,0,0-.2,3L33.2,22H14.8l2.6-2.6a1.9,1.9,0,0,0-.2-3,2.1,2.1,0,0,0-2.7.2l-5.9,6a1.9,1.9,0,0,0,0,2.8l5.9,6a2.1,2.1,0,0,0,2.7.2,1.9,1.9,0,0,0,.2-3L14.8,26H33.2Z"
+                                        />
+                                        <path
+                                            d="M42,6V42a2,2,0,0,0,4,0V6a2,2,0,0,0-4,0Z"
+                                        />
+                                        <path
+                                            d="M6,42V6A2,2,0,0,0,2,6V42a2,2,0,0,0,4,0Z"
+                                        />
+                                    </g>
+                                </g>
+                            </g>
+                        </svg>
+                    </button>
+                </hstack>
+            </div>
+            <hstack id="article-info" class="article-width">
+                <div class="author-picture">
+                    <img src="assets/author.jpg" />
+                </div>
+                <vstack>
+                    <address class="author">
+                        <a rel="author" href="https://crisfe.me">Cristian Felipe Patiño Rojas</a>
+                    </address>
+                    <time pubdate datetime="2025-05-24" title="2025-05-24"
+                        >2025-05-24</time
+                    >
+                </vstack>
+            </hstack>
+            <pre id="code" class="article-width"><code><span id="line-1" class="line-number ">1</span><span class="keyword">import</span> Foundation
+<span id="line-2" class="line-number empty-line">2</span>
+<span id="line-3" class="line-number ">3</span><span class="keyword">class</span> <span class="type-definition">FileImporter</span> {
+<span id="line-4" class="line-number ">4</span>    <span class="keyword">func</span> <span class="other-definition">scanImports</span>(atContent content: <span class="type">String</span>) -&gt; <span class="type">Set</span>&lt;<span class="type">String</span>&gt; {
+<span id="line-5" class="line-number ">5</span>        <span class="keyword">var</span> <span class="other-definition">imports</span> = <span class="type">Set</span>&lt;<span class="type">String</span>&gt;()
+<span id="line-6" class="line-number ">6</span>        <span class="keyword">let</span> <span class="other-definition">lines</span> = content.<span class="call">components</span>(separatedBy: .<span class="dotAccess">newlines</span>)
+<span id="line-7" class="line-number empty-line">7</span>
+<span id="line-8" class="line-number ">8</span>        <span class="keyword">for</span> line <span class="keyword">in</span> lines {
+<span id="line-9" class="line-number ">9</span>            <span class="keyword">if</span> line.<span class="call">hasPrefix</span>(<span class="string">"import "</span>) {
+<span id="line-10" class="line-number ">10</span>                <span class="keyword">let</span> <span class="other-definition">importStatement</span> = line.<span class="call">dropFirst</span>(<span class="number">7</span>)
+<span id="line-11" class="line-number ">11</span>                imports.<span class="call">insert</span>(<span class="type">String</span>(importStatement))
+<span id="line-12" class="line-number ">12</span>            }
+<span id="line-13" class="line-number ">13</span>        }
+<span id="line-14" class="line-number empty-line">14</span>
+<span id="line-15" class="line-number ">15</span>        <span class="keyword">return</span> imports
+<span id="line-16" class="line-number ">16</span>    }
+<span id="line-17" class="line-number ">17</span>}
+<span id="line-18" class="line-number empty-line">18</span>
+<span id="line-19" class="line-number ">19</span><span class="keyword">func</span> <span class="other-definition">tests</span>() {
+<span id="line-20" class="line-number ">20</span>    <span class="keyword">let</span> <span class="other-definition">sut</span> = <span class="custom-type">FileImporter</span>()
+<span id="line-21" class="line-number ">21</span>    <span class="keyword">let</span> <span class="other-definition">code</span> = <span class="string">"""
+<span id="line-22" class="line-number ">22</span>    import a.swift
+<span id="line-23" class="line-number ">23</span>    import b.swift
+<span id="line-24" class="line-number ">24</span>    import some_really_long_named_file.swift
+<span id="line-25" class="line-number empty-line">25</span>
+<span id="line-26" class="line-number ">26</span>    let a = B()
+<span id="line-27" class="line-number ">27</span>    """</span>
+<span id="line-28" class="line-number empty-line">28</span>
+<span id="line-29" class="line-number ">29</span>    <span class="keyword">let</span> <span class="other-definition">output</span> = sut.<span class="call">scanImports</span>(atContent: code)
+<span id="line-30" class="line-number ">30</span>    <span class="keyword">let</span> <span class="other-definition">expectedOutput</span>: <span class="type">Set</span>&lt;<span class="type">String</span>&gt; = [<span class="string">"a.swift"</span>, <span class="string">"b.swift"</span>, <span class="string">"some_really_long_named_file.swift"</span>]
+<span id="line-31" class="line-number empty-line">31</span>
+<span id="line-32" class="line-number ">32</span>    <span class="call">assert</span>(output == expectedOutput)
+<span id="line-33" class="line-number ">33</span>}
+<span id="line-34" class="line-number empty-line">34</span>
+<span id="line-35" class="line-number ">35</span><span class="call">tests</span>()
+<span id="line-36" class="line-number empty-line">36</span>
+<span id="line-37" class="line-number ">37</span><span class="keyword">import</span> Foundation
+<span id="line-38" class="line-number empty-line">38</span>
+<span id="line-39" class="line-number ">39</span><span class="keyword">class</span> <span class="type-definition">FileImporter</span> {
+<span id="line-40" class="line-number ">40</span>    <span class="keyword">func</span> <span class="other-definition">scanImports</span>(atContent content: <span class="type">String</span>) -&gt; <span class="type">Set</span>&lt;<span class="type">String</span>&gt; {
+<span id="line-41" class="line-number ">41</span>        <span class="keyword">var</span> <span class="other-definition">imports</span> = <span class="type">Set</span>&lt;<span class="type">String</span>&gt;()
+<span id="line-42" class="line-number ">42</span>        <span class="keyword">let</span> <span class="other-definition">lines</span> = content.<span class="call">components</span>(separatedBy: .<span class="dotAccess">newlines</span>)
+<span id="line-43" class="line-number empty-line">43</span>
+<span id="line-44" class="line-number ">44</span>        <span class="keyword">for</span> line <span class="keyword">in</span> lines {
+<span id="line-45" class="line-number ">45</span>            <span class="keyword">if</span> line.<span class="call">hasPrefix</span>(<span class="string">"import "</span>) {
+<span id="line-46" class="line-number ">46</span>                <span class="keyword">let</span> <span class="other-definition">importStatement</span> = line.<span class="call">dropFirst</span>(<span class="number">7</span>)
+<span id="line-47" class="line-number ">47</span>                imports.<span class="call">insert</span>(<span class="type">String</span>(importStatement))
+<span id="line-48" class="line-number ">48</span>            }
+<span id="line-49" class="line-number ">49</span>        }
+<span id="line-50" class="line-number empty-line">50</span>
+<span id="line-51" class="line-number ">51</span>        <span class="keyword">return</span> imports
+<span id="line-52" class="line-number ">52</span>    }
+<span id="line-53" class="line-number ">53</span>}
+<span id="line-54" class="line-number empty-line">54</span>
+<span id="line-55" class="line-number ">55</span><span class="keyword">func</span> <span class="other-definition">tests</span>() {
+<span id="line-56" class="line-number ">56</span>    <span class="keyword">let</span> <span class="other-definition">sut</span> = <span class="custom-type">FileImporter</span>()
+<span id="line-57" class="line-number ">57</span>    <span class="keyword">let</span> <span class="other-definition">code</span> = <span class="string">"""
+<span id="line-58" class="line-number ">58</span>    import a.swift
+<span id="line-59" class="line-number ">59</span>    import b.swift
+<span id="line-60" class="line-number ">60</span>    import some_really_long_named_file.swift
+<span id="line-61" class="line-number empty-line">61</span>
+<span id="line-62" class="line-number ">62</span>    let a = B()
+<span id="line-63" class="line-number ">63</span>    """</span>
+<span id="line-64" class="line-number empty-line">64</span>
+<span id="line-65" class="line-number ">65</span>    <span class="keyword">let</span> <span class="other-definition">output</span> = sut.<span class="call">scanImports</span>(atContent: code)
+<span id="line-66" class="line-number ">66</span>    <span class="keyword">let</span> <span class="other-definition">expectedOutput</span>: <span class="type">Set</span>&lt;<span class="type">String</span>&gt; = [<span class="string">"a.swift"</span>, <span class="string">"b.swift"</span>, <span class="string">"some_really_long_named_file.swift"</span>]
+<span id="line-67" class="line-number empty-line">67</span>
+<span id="line-68" class="line-number ">68</span>    <span class="call">assert</span>(output == expectedOutput)
+<span id="line-69" class="line-number ">69</span>}
+<span id="line-70" class="line-number empty-line">70</span>
+<span id="line-71" class="line-number ">71</span><span class="call">tests</span>() <span class="keyword">func</span> <span class="other-definition">tests</span>() {
+<span id="line-72" class="line-number ">72</span>	<span class="keyword">let</span> <span class="other-definition">sut</span> = <span class="custom-type">FileImporter</span>()
+<span id="line-73" class="line-number ">73</span>	<span class="keyword">let</span> <span class="other-definition">code</span> = <span class="string">"""
+<span id="line-74" class="line-number ">74</span>	import a.swift
+<span id="line-75" class="line-number ">75</span>	import b.swift
+<span id="line-76" class="line-number ">76</span>	import some_really_long_named_file.swift
+<span id="line-77" class="line-number empty-line">77</span>
+<span id="line-78" class="line-number ">78</span>	let a = B()
+<span id="line-79" class="line-number ">79</span>	"""</span>
+<span id="line-80" class="line-number empty-line">80</span>	
+<span id="line-81" class="line-number ">81</span>	<span class="keyword">let</span> <span class="other-definition">output</span> = sut.<span class="call">scanImports</span>(atContent: code)
+<span id="line-82" class="line-number ">82</span>	<span class="keyword">let</span> <span class="other-definition">expectedOutput</span>: <span class="type">Set</span>&lt;<span class="type">String</span>&gt; = [<span class="string">"a.swift"</span>, <span class="string">"b.swift"</span>, <span class="string">"some_really_long_named_file.swift"</span>]
+<span id="line-83" class="line-number empty-line">83</span>	
+<span id="line-84" class="line-number ">84</span>	<span class="call">assert</span>(output == expectedOutput)
+<span id="line-85" class="line-number ">85</span>}
+<span id="line-86" class="line-number empty-line">86</span>
+<span id="line-87" class="line-number ">87</span><span class="call">tests</span>()
+</code></pre>
+
+            <div id="console">
+                <hstack class="draggerTop">
+                    <spacer></spacer>
+                    <button id="show-console-button" onclick="run()">
+                        <?xml version="1.0" encoding="utf-8"?>
+                        <svg
+                            viewBox="0 0 24 24"
+                            fill="none"
+                            xmlns="http://www.w3.org/2000/svg"
+                        >
+                            <path
+                                d="M17.5 17.6L6.5 17.6M7.8 3H16.2C17.8802 3 18.7202 3 19.362 3.32698C19.9265 3.6146 20.3854 4.07354 20.673 4.63803C21 5.27976 21 6.11984 21 7.8V16.2C21 17.8802 21 18.7202 20.673 19.362C20.3854 19.9265 19.9265 20.3854 19.362 20.673C18.7202 21 17.8802 21 16.2 21H7.8C6.11984 21 5.27976 21 4.63803 20.673C4.07354 20.3854 3.6146 19.9265 3.32698 19.362C3 18.7202 3 17.8802 3 16.2V7.8C3 6.11984 3 5.27976 3.32698 4.63803C3.6146 4.07354 4.07354 3.6146 4.63803 3.32698C5.27976 3 6.11984 3 7.8 3Z"
+                                stroke-width="2.5"
+                                stroke-linecap="round"
+                                stroke-linejoin="round"
+                            />
+                        </svg>
+                    </button>
+                </hstack>
+                <pre id="output" class="article-width">/var/folders/m9/xbnrbp5d1qb1pm_45jmsr5380000gn/T/fileimporter.swift.no-extension:71:8: error: consecutive statements on a line must be separated by ';'
+69 | }
+70 | 
+71 | tests() func tests() {
+   |        `- error: consecutive statements on a line must be separated by ';'
+72 | 	let sut = FileImporter()
+73 | 	let code = """
+
+/var/folders/m9/xbnrbp5d1qb1pm_45jmsr5380000gn/T/fileimporter.swift.no-extension:35:1: error: ambiguous use of 'tests()'
+17 | }
+18 | 
+19 | func tests() {
+   |      `- note: found this candidate 
+20 |     let sut = FileImporter()
+21 |     let code = """
+   :
+33 | }
+34 | 
+35 | tests()
+   | `- error: ambiguous use of 'tests()'
+36 | 
+37 | import Foundation
+   :
+53 | }
+54 | 
+55 | func tests() {
+   |      `- note: found this candidate 
+56 |     let sut = FileImporter()
+57 |     let code = """
+   :
+69 | }
+70 | 
+71 | tests() func tests() {
+   |              `- note: found this candidate 
+72 | 	let sut = FileImporter()
+73 | 	let code = """
+
+/var/folders/m9/xbnrbp5d1qb1pm_45jmsr5380000gn/T/fileimporter.swift.no-extension:39:7: error: invalid redeclaration of 'FileImporter'
+37 | import Foundation
+38 | 
+39 | class FileImporter {
+   |       `- error: invalid redeclaration of 'FileImporter'
+40 |     func scanImports(atContent content: String) -> Set<String> {
+41 |         var imports = Set<String>()
+
+/var/folders/m9/xbnrbp5d1qb1pm_45jmsr5380000gn/T/fileimporter.swift.no-extension:55:6: error: invalid redeclaration of 'tests()'
+53 | }
+54 | 
+55 | func tests() {
+   |      `- error: invalid redeclaration of 'tests()'
+56 |     let sut = FileImporter()
+57 |     let code = """
+
+/var/folders/m9/xbnrbp5d1qb1pm_45jmsr5380000gn/T/fileimporter.swift.no-extension:71:1: error: ambiguous use of 'tests()'
+17 | }
+18 | 
+19 | func tests() {
+   |      `- note: found this candidate 
+20 |     let sut = FileImporter()
+21 |     let code = """
+   :
+69 | }
+70 | 
+71 | tests() func tests() {
+   | |            `- note: found this candidate 
+   | `- error: ambiguous use of 'tests()'
+72 | 	let sut = FileImporter()
+73 | 	let code = """
+
+/var/folders/m9/xbnrbp5d1qb1pm_45jmsr5380000gn/T/fileimporter.swift.no-extension:71:14: error: invalid redeclaration of 'tests()'
+69 | }
+70 | 
+71 | tests() func tests() {
+   |              `- error: invalid redeclaration of 'tests()'
+72 | 	let sut = FileImporter()
+73 | 	let code = """
+</pre>
+            </div>
+        </main>
+
+        <script src="js/main.js"></script>
+        <script>
+            function loadContent(url, targetId) {
+                fetch(url)
+                    .then((response) => response.text())
+                    .then((html) => {
+                        const parser = new DOMParser();
+                        const doc = parser.parseFromString(html, "text/html");
+                        const newContent = doc.getElementById(targetId);
+
+                        if (newContent) {
+                            document.getElementById(targetId).innerHTML =
+                                newContent.innerHTML;
+                        } else {
+                            console.error(
+                                `No se encontró un elemento con id ${targetId} en la respuesta.`,
+                            );
+                        }
+                    })
+                    .catch((error) =>
+                        console.error("Error al cargar el contenido:", error),
+                    );
+            }
+
+            // Ejemplo de uso
+            // loadContent('/ruta/a/recurso', 'main');
+        </script>
+        <script>
+            document.write(
+                '<script src="http://' +
+                    (location.host || "localhost").split(":")[0] +
+                    ':35729/livereload.js?snipver=2"></' +
+                    "script>",
+            );
+        </script>
+    </body>
+</html>

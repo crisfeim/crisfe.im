@@ -1,0 +1,50 @@
+{{- /* runnable.html – layouts/shortcodes */ -}}
+{{- $path := .Get 0 -}}
+{{- $file := path.Base $path -}}
+{{- $file = replace $file ".html" "" -}}
+
+<style>
+.runnable{
+    text-decoration: none;
+    color: rgba(0,0,0,0.85);
+    will-change: opacity;
+    padding: 0.8rem;
+    border-radius: 4px;
+    border: 1px solid #D9D9D9;
+    box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.05);
+    transition: opacity 0.3s ease;
+    margin-bottom: 0.8rem;
+    display: flex;
+    align-items: center;
+}
+.runnable:hover {
+    opacity: 0.5;
+}
+</style>
+<a href="{{ $path }}" target="_blank" class="runnable">
+
+    {{ $path := .Get 0 }}
+    <svg width="20px" height="20px" viewBox="0 0 20 20" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <title>play-button</title>
+    <defs>
+        <path d="M17.6313437,9.40334243 L2.96465625,2.06999755 C2.758,1.96734128 2.5133125,1.97799753 2.31665625,2.0993413 C2.12,2.22134132 2,2.43534135 2,2.66665389 L2,17.3333124 C2,17.5646562 2.12,17.7786562 2.31665625,17.9006562 C2.4233125,17.9666562 2.54465625,18 2.66665625,18 C2.76865625,18 2.87065625,17.9766562 2.96465625,17.93 L17.6313125,10.5966551 C17.8573437,10.4833426 18,10.2526551 18,10 C18,9.74734248 17.8573437,9.51665494 17.6313437,9.40334243 Z" id="path-1"></path>
+        <filter x="-46.9%" y="-34.4%" width="194.9%" height="193.5%" filterUnits="objectBoundingBox" id="filter-2">
+        <feMorphology radius="0.5" operator="dilate" in="SourceAlpha" result="shadowSpreadOuter1"></feMorphology>
+        <feOffset dx="0" dy="2" in="shadowSpreadOuter1" result="shadowOffsetOuter1"></feOffset>
+        <feGaussianBlur stdDeviation="2" in="shadowOffsetOuter1" result="shadowBlurOuter1"></feGaussianBlur>
+        <feComposite in="shadowBlurOuter1" in2="SourceAlpha" operator="out" result="shadowBlurOuter1"></feComposite>
+        <feColorMatrix values="0 0 0 0 0   0 0 0 0 0   0 0 0 0 0  0 0 0 0.100305944 0" type="matrix" in="shadowBlurOuter1"></feColorMatrix>
+        </filter>
+    </defs>
+    <g id="play-button" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <rect fill="#FFFFFF" x="0" y="0" width="20" height="20"></rect>
+        <g id="Trazado" fill-rule="nonzero">
+        <use fill="black" fill-opacity="1" filter="url(#filter-2)" xlink:href="#path-1"></use>
+        <use stroke="#737373" stroke-width="1" fill="#E3E3E3" xlink:href="#path-1"></use>
+        </g>
+    </g>
+    </svg>
+
+        <span style="margin-left: 8px">{{ $file }}</span>
+
+</a>
