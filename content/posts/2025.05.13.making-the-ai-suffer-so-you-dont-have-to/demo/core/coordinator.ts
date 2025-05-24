@@ -40,6 +40,9 @@ export class Coordinator {
       messages.push({ role: "assistant", content: previousStderr })
     }
     const generated = await this.client.send(messages)
+    const processed = generated
+       .replace(/^```(?:\w+)?\s*/m, '')
+       .replace(/```$/, '')
     const concatenated = `${generated}\n${specs}`
     const runResult = this.runner.run(concatenated)
     return { generatedCode: generated, stdErr: runResult.stdErr, isValid: runResult.isValid }
