@@ -1,50 +1,49 @@
 ---
-title: "Test-Driven Prompting: Making the AI Write Code While You Make Coffee"
+title: "Test-Driven Prompting: Making Coffee While AI Writes Your Code"
 date: 2025-05-13
-slug: making-the-ai-suffer-so-you-dont-have-to
+slug: test-driven-prompting-making-coffee-while-ai-writes-your-code
 og-image: images/system.png
 ---
 
 ### tldr;
 
-Cómo construir un sistema en el que la *IA* genera código a partir de especificaciones de pruebas unitarias, lo compila, lo ejecuta y si falla lo vuelve a intentar hasta que funciona, sin intervención humana.
+On building a system where an LLM writes code based on unit test specs, compiles it, runs it, and — if it fails — tries again until it gets it right. All without human feedback loops. This article explains the architecture, prompt setup, challenges, and some results I gathered while letting the machine suffer through trial and error.
 
-## Introducción
+## Introduction
 
-¿Qué pasa si delegas el trabajo aburrido a una IA?
+What happens if you delegate the boring work to an AI?
 
-Ese fue el punto de partida de este experimento: construir un sistema que no solo genere código automáticamente a partir de especificaciones, sino que lo compile, lo pruebe, y lo repita hasta que acierte — sin intervención humana.
+That was the starting point of this experiment: building a system that not only automatically generates code from specifications, but compiles it, tests it, and repeats until it gets it right — without human intervention.
 
-La idea era convertir el rol del desarrollador en escribir pruebas, darle al botón de ejecutar, y desaparecer. Si el modelo se equivoca, que se corrija solo. Si se cae, que se levante. Si se rinde… pues que no se rinda.
+The idea was to turn the developer's role into writing tests, hitting the execute button, and disappearing. If the model makes mistakes, let it correct itself. If it crashes, let it get back up. If it gives up... well, let it not give up.
 
-En este artículo te cuento cómo monté este sistema de automatización con feedback en bucle y qué aprendí en el proceso.
+In this article, I'll tell you how I set up this automation system with feedback loops and what I learned in the process.
 
 ## Idea
 
-Como desarrollador, mis interacciones con la *IA* se pueden reducir a un bucle:
+As a developer, my interactions with *AI* can be reduced to a loop:
 
-*(1)* A partir de un prompt inicial, pido al modelo que genere código.<br>
-*(2)* Lo pruebo en un entorno de desarrollo<br>
-*(3)* Si falla, envio el error al modelo para darle feedback y vuelva a regenerar el código.
+*(1)* From an initial prompt, I ask the model to generate code.<br>
+*(2)* I test it in a development environment<br>
+*(3)* If it fails, I send the error to the model to give it feedback and have it regenerate the code.
 
-Repito el ciclo hasta que el código generado funcione.
+I repeat the cycle until the generated code works.
 
-Me di cuenta de que podía eliminarme de la ecuación, concretamente, de los pasos *(2)* y *(3)*:
-
+I realized I could eliminate myself from the equation, specifically, from steps *(2)* and *(3)*:
 
 <video id="v1" autoplay muted loop playsinline style="width:45%;" aria-hidden="true">
   <source src="videos/loop.mov" type="video/mp4">
 </video>
 
-Mi ~~fantasía~~ idea era lograr un flujo en el que mi trabajo se convirtiese en escribir *specs*, darle al botón de ejecución, irme a tomar un café y a vivir la vida para volver 3 horas después y encontrarme con el trabajo hecho.
+My ~~fantasy~~ idea was to achieve a flow where my work would become writing *specs*, hitting the execute button, going for coffee and living life, only to return 3 hours later to find the work done.
 
-Se me ocurrió una idea sencilla[^1]: un bucle automatizado basado en un enfoque dirigido por pruebas unitarias.[^tdd]
+I came up with a simple idea[^1]: an automated loop based on a unit test-driven approach.[^tdd]
 
 [^tdd]: *Test Driven Development*
 
-Si usamos como *prompt* una prueba de un sistema sin implementación, podemos pedirle al modelo que la deduzca a partir de las aserciones de la prueba.
+If we use a test of a system without implementation as a *prompt*, we can ask the model to deduce it from the test assertions.
 
-Por ejemplo, esto es suficientemente explícito para que el modelo entienda lo que queremos:
+For example, this is explicit enough for the model to understand what we want:
 
 ```swift
 func test_adder() {
@@ -53,7 +52,7 @@ func test_adder() {
 }
 ```
 
-A partir de esa prueba unitaria como *prompt*, podrá generar cualquier variante de código que satisfaga las aserciones:
+From that unit test as a *prompt*, it will be able to generate any code variant that satisfies the assertions:
 
 ```swift
 struct Adder {
@@ -64,9 +63,9 @@ struct Adder {
 }
 ```
 
-Este formato de *prompt* permite que el modelo (🤖) pueda "comunicar" directamente con el entorno de ejecución (⚙️), automatizando la verificación de la validez del código y el bucle de retroalimentación.
+This *prompt* format allows the model (🤖) to "communicate" directly with the execution environment (⚙️), automating code validity verification and the feedback loop.
 
-Si el código generado es inválido o no pasa la prueba, el ciclo se repite. Si el código es válido, salimos del ciclo.
+If the generated code is invalid or doesn't pass the test, the cycle repeats. If the code is valid, we exit the loop.
 
 <video id="v1" autoplay muted loop playsinline  style="width: 100%; height: auto;" aria-hidden="true">
   <source src="videos/flow.mp4" type="video/mp4">
@@ -74,7 +73,7 @@ Si el código generado es inválido o no pasa la prueba, el ciclo se repite. Si 
 
 ### Prompt
 
-Este es el *prompt* que utilicé en mis pruebas. Seguramente mejorable, pero funcionó para el experimento:
+This is the *prompt* I used in my tests. Probably improvable, but it worked for the experiment:
 
 > Imagine that you are a programmer and the user's responses are feedback from compiling your code in your development environment. Your responses are the code you write, and the user's responses represent the feedback, including any errors.
 >
@@ -89,9 +88,9 @@ Este es el *prompt* que utilicé en mis pruebas. Seguramente mejorable, pero fun
 >
 > If your code fails to compile, the user will provide the error output for you to make adjustments.
 
-## Automatización
+## Automation
 
-El enfoque *naive* que usé para ejecutar el código generado contra las pruebas consistió en usar el método `assert` de *Swift* como *framework* de testing[^xctest]:
+The *naive* approach I used to execute the generated code against the tests consisted of using Swift's `assert` method as a testing *framework*[^xctest]:
 
 ```swift
 func test_adder() {
@@ -99,12 +98,11 @@ func test_adder() {
   assert(sut.result == 4)
 }
 ```
-[^xctest]: Hasta donde sé, lanzar *XCTest* de forma *standalone* es bastante complicado, y mi intención era tener una prueba de concepto funcional sin mayor complicación.
+[^xctest]: As far as I know, launching *XCTest* in a *standalone* way is quite complicated, and my intention was to have a functional proof of concept without major complications.
 
-*Assert* lanza un *trap* en tiempo de ejecución cuando la condición es falsa, generando salida por *stderr*, lo que lo hace útil como señal de error para este sistema.
+*Assert* throws a *trap* at runtime when the condition is false, generating output to *stderr*, making it useful as an error signal for this system.
 
-
-Para ejecutar las pruebas unitarias simplemente las invocamos de forma manual en las propias especificaciones:
+To execute the unit tests, we simply invoke them manually in the specifications themselves:
 
 ```swift
 func test_adder() {
@@ -115,8 +113,7 @@ func test_adder() {
 test_adder()
 ```
 
-Concatenamos el código generado y las pruebas unitarias en una única cadena de texto que almacenamos en un archivo temporal[^8] y se lo pasamos al compilador, en este caso, Swift[^process].
-
+We concatenate the generated code and unit tests into a single text string that we store in a temporary file[^8] and pass it to the compiler, in this case, Swift[^process].
 
 ```swift
 let concatenated = generatedCode + "\n" + unitTestsSpecs
@@ -124,9 +121,9 @@ let tmpFileURL = tmFileURLWithTimestamp("generated.swift")
 swiftRunner.runCode(at: tmpFileURL)
 ```
 
-[^process]: Invocado con la *api* *Process*. [Implementación](https://github.com/crisfeim/cli-tddbuddy/blob/main/Sources/Core/Infrastructure/SwiftRunner.swift).
+[^process]: Invoked with the *Process* api. [Implementation](https://github.com/crisfeim/cli-tddbuddy/blob/main/Sources/Core/Infrastructure/SwiftRunner.swift).
 
-Si el proceso devuelve un código de salida distinto de cero, significa que la ejecución del código falló. En ese caso, repetimos el ciclo hasta que el código sea cero:
+If the process returns an exit code other than zero, it means the code execution failed. In that case, we repeat the cycle until the code is zero:
 
 ```swift
 var output = swiftRunner.runCode(at: tmpFileURL)
@@ -136,32 +133,30 @@ while output.processResult.exitCode != 0 {
 }
 ```
 
-## Demo en línea
+## Online Demo
 
-> ℹ  Escribe a la izquierda las especificaciones y dale al botón *play*.
+> ℹ  Write the specifications on the left and hit the *play* button.
 
-Puedes usar `assertEqual` como mini-framework de testing o escribe tus propios métodos en la propia *textarea*.
+You can use `assertEqual` as a mini-testing framework or write your own methods in the *textarea* itself.
 
-Puedes usar *GPT3.5* cortesía de *llm7*, *Gemini* (requiere clave) o *Llama3.2* [^llama]
+You can use *GPT3.5* courtesy of *llm7*, *Gemini* (requires key) or *Llama3.2* [^llama]
 
-[^llama]: Tendrás que [descargar el *index.html* de la demo](demo) y servirlo desde un servidor local.
+[^llama]: You'll need to [download the demo's *index.html*](demo) and serve it from a local server.
 
 {{< fragment "demo/index.html" >}}
 
+## Design
 
-## Diseño
+These are the main system components:
 
-Estos son los principales componentes del sistema:
+1. 🤖 *Client*: Generates code from specs.
+2. 🪢 *Concatenator*: Concatenates the model's *output* with the initial test.
+3. ⚙️ *Runner*: Executes the concatenation and returns an *output*.
+4. 🔁 *Iterator*: Iterates *N* times or until a condition is met.
+5. 💾 *Persister*: Saves the result of each iteration to a file.
+6. 💬 *Context*: Saves the context of the previous execution to send as feedback in the next one.
 
-1. 🤖 *Client*: Genera código a partir de unas specs.
-2. 🪢 *Concatenator*: Concatena el *output* del modelo con el test inicial.
-3. ⚙️ *Runner*: Ejecuta la concatenación y devuelve un *output*.
-4. 🔁 *Iterator*: Itera *N* veces o hasta que se cumpla una condición.
-5. 💾 *Persister*: Guarda el resultado de cada iteración en un archivo.
-6. 💬 *Context*: Guarda el contexto de la ejecución previa para enviarla como feedback en la siguiente.
-
-
-### Pseudo-código
+### Pseudo-code
 
 ```shell
 Subsystem.genCode(specs, feedback?) → (GeneratedCode, Stdout/Stderr)
@@ -176,7 +171,7 @@ Coordinator.genCode(inputURL, outputURL, maxIterations)
   → Persister.save(outputURL, IterationResult)
 ```
 
-Iterator encapsula la lógica de iteración y devueve el último resultado:
+Iterator encapsulates the iteration logic and returns the last result:
 
 ```swift
 iterate<T>(
@@ -186,7 +181,7 @@ iterate<T>(
 ) async -> T
 ```
 
-Y permite romperla a través de un *closure*:
+And allows breaking it through a *closure*:
 
 ```swift
 while currentIteration < nTimes {
@@ -195,7 +190,7 @@ while currentIteration < nTimes {
 }
 ```
 
-El mismo closure puede ser utilizado para guardar el contexto:
+The same closure can be used to save context:
 
 ```swift
 let context = ContextBuilder(window: 5)
@@ -207,11 +202,11 @@ iterator.iterate(
 )
 ```
 
-Por simplicidad, en el *playground* del artículo, el contexto contiene sólo el resultado de la iteración anterior
+For simplicity, in the article's *playground*, the context contains only the result of the previous iteration
 
-### Contratos
+### Contracts
 
-Para hacer el proyecto flexible y *testeable*,  los actores son modelados con contratos en lugar de implementaciones concretas:
+To make the project flexible and *testable*, the actors are modeled with contracts instead of concrete implementations:
 
 ```swift
 protocol Client {
@@ -231,36 +226,34 @@ protocol Reader {
 }
 ```
 
-Gracias a este enfoque, podemos añadir nuevos modelos, runners alternativos o incluso sistemas de almacenamiento sin tocar la lógica principal del programa. Esto también simplifica las pruebas, porque cada componente puede ser mockeado por separado.
-
+Thanks to this approach, we can add new models, alternative runners, or even storage systems without touching the main program logic. This also simplifies testing, because each component can be mocked separately.
 
 ## Data
 
-La primera versión del proyecto fue muy sencilla: Unos pocos ficheros de *Swift* compilados con *CodeRunner*.
-Con ella hice pruebas de intensidad moderada (tanto de especificaciones como de modelos).
+The first version of the project was very simple: A few *Swift* files compiled with *CodeRunner*.
+With it, I did moderate intensity tests (both specifications and models).
 
-Desafortunadamente, no tengo acceso a esos datos.
+Unfortunately, I don't have access to that data.
 
-A falta de datos, solo puedo decir que el modelo que peor se portó fue *Gemini*.
+For lack of data, I can only say that the worst performing model was *Gemini*.
 
-Los que mejor desempeño tuvieron fueron *Claude* y *ChatGPT*.
+The best performers were *Claude* and *ChatGPT*.
 
-*Llama 3.2* dió resultados variables, aunque la velocidad de iteración por ser una ejecución local compensaba muchas veces las carencias.
+*Llama 3.2* gave variable results, although the iteration speed from being a local execution often compensated for the shortcomings.
 
-Aún con la pérdida del proyecto original, conservo algunos resultados de codestral:
+Even with the loss of the original project, I retain some results from codestral:
 
 {{< runnable "./results/codestral/FileImporter.swift.html">}}
 {{< runnable "./results/codestral/LineAppender.swift.html">}}
 {{< runnable "./results/codestral/PasswordGenerator.swift.html">}}
 
+## Problems
 
-## Problemas
+I haven't had the opportunity to test this approach as exhaustively as I'd like, but I was able to collect some examples of issues I encountered along the way.
 
-No he tenido la oportunidad de probar  este enfoque tan exhaustivamente como me gustaría, pero pude recopilar algunos ejemplos de problemáticas que me encontré en el camino.
+### When Codestral gives you a pat on the back and says: "I'll leave the rest as an exercise, champ"
 
-### Cuando Codestral te da una palmadita y te dice: “te dejo el resto como ejercicio, campeón”
-
-Partiendo de estas *specs*:
+Starting from these *specs*:
 
 ```swift
 func test_fetch_reposWithMinimumStarsFromRealApi() async throws {
@@ -272,7 +265,7 @@ func test_fetch_reposWithMinimumStarsFromRealApi() async throws {
 }
 ```
 
-*Codestral* fue capaz de generar un cliente **funcional**, a pesar de algunas dificultades iniciales:
+*Codestral* was able to generate a **functional** client, despite some initial difficulties:
 
 ```swift
 struct Repository: Decodable {
@@ -295,7 +288,7 @@ struct SearchResults<T: Decodable>: Decodable {
 }
 ```
 
-Pero en un inicio el modelo insistía en generarme código de este tipo:
+But initially the model insisted on generating code like this:
 
 ```swift
 class GithubClient {
@@ -306,11 +299,11 @@ class GithubClient {
 }
 ```
 
-~~Gracias, Codestral. Con eso y un croquis, casi tengo un sistema distribuido.~~
+~~Thanks, Codestral. With that and a sketch, I almost have a distributed system.~~
 
-### Cuando el modelo no resuelve el problema... porque ya sabe la respuesta
+### When the model doesn't solve the problem... because it already knows the answer
 
-Aunque poco frecuente, otro caso que me encontré ocasionalmente, fue el de pruebas satisfechas *"en duro"*. Ej:
+Although infrequent, another case I occasionally encountered was tests satisfied *"hard-coded"*. E.g.:
 
 ```swift
 func test_adder() {
@@ -319,7 +312,7 @@ func test_adder() {
 }
 ```
 
-El modelo generaba esto:
+The model generated this:
 
 ```swift
 struct Adder {
@@ -328,7 +321,7 @@ struct Adder {
 }
 ```
 
-Estos casos se solucionan fácilmente añadiendo más aserciones a la prueba:
+These cases are easily solved by adding more assertions to the test:
 
 ```swift
 func test_adder() {
@@ -343,29 +336,29 @@ func test_adder() {
 }
 ```
 
-### Cuando *Gemini* quiere ser tu profe, pero tú solo quieres compilar
+### When *Gemini* wants to be your teacher, but you just want to compile
 
-En el *system prompt* que definimos, el siguiente apartado es importante para que el código pueda compilar correctamente:
+In the *system prompt* we defined, the following section is important for the code to compile correctly:
 
 > Provide ONLY runnable Swift code. No explanations, comments, or formatting (no code blocks, markdown, symbols, or text).
 
-Aún con este *prompt*, algunos modelos (*Gemini*...), tenían dificultades respetando las instrucciones y se empeñaban en encapsular el código en bloques de código de markdown, acompañándolo además de comentarios explicativos.
+Even with this *prompt*, some models (*Gemini*...), had difficulty respecting the instructions and insisted on encapsulating the code in markdown code blocks, also accompanying it with explanatory comments.
 
-Aunque se agradece el entusiasmo por la pedagogía, hubiera preferido no tener que escribir una función de preprocesamiento para limpiar los artefactos de las respuestas.
+While the enthusiasm for pedagogy is appreciated, I would have preferred not having to write a preprocessing function to clean the artifacts from the responses.
 
-## Limitaciones
+## Limitations
 
-Esta idea asume especificaciones completamente ajustadas al sistema de de antemano, algo poco realista.
+This idea assumes specifications completely adjusted to the system beforehand, something unrealistic.
 
-También asume que las especificaciones no tienen ningún error. Cosa que es también poco realista.
+It also assumes that the specifications have no errors. Which is also unrealistic.
 
-Al desarrollar, y en especial en el enfoque *test driven*, es común que las especificaciones emerjan de forma orgánica durante el desarrollo: El proceso en sí es un *marco* para el pensamiento.
+When developing, and especially in the *test driven* approach, it's common for specifications to emerge organically during development: The process itself is a *framework* for thinking.
 
-Muchas veces escribimos tests que refactorizamos o eliminamos a medida que vamos aprendiendo sobre el sistema.
+Many times we write tests that we refactor or eliminate as we learn about the system.
 
-Creo que la idea puede ser especialmente útil para tareas automatizables o problemas repetitivos, pero no para problemas complejos en dónde el proceso de desarrollo acompaña la definición o refinamiento de las especificaciones.
+I think the idea can be especially useful for automatable tasks or repetitive problems, but not for complex problems where the development process accompanies the definition or refinement of specifications.
 
-Por ejemplo, en vez de utilizar la idea para implementaciones de Infrastructure, podría aprovecharse para generar implementaciones de coordinadores a partir de situaciones recurrentes repetitivas en *TDD*, como verificar que un sistema y sus dependencias interactúan correctamente mediante mocks:
+For example, instead of using the idea for Infrastructure implementations, it could be leveraged to generate coordinator implementations from repetitive recurring situations in *TDD*, like verifying that a system and its dependencies interact correctly through mocks:
 
 ```swift
 // Failure cases
@@ -376,31 +369,31 @@ func test_coordinator_deliversErrorOnPersisterError() async {}
 // Success cases
 ```
 
-## Conclusiones
+## Conclusions
 
-Aunque este experimento tiene limitaciones claras —como la dependencia de especificaciones precisas y la falta de pruebas exhaustivas—, me parece un enfoque prometedor.
+Although this experiment has clear limitations —like the dependency on precise specifications and lack of exhaustive testing— I find it a promising approach.
 
-Automatizar el ciclo de prueba y corrección puede liberar tiempo para tareas más relevantes del desarrollo, siempre que el problema esté bien acotado. En ese sentido, este tipo de sistema podría resultar especialmente útil para tareas repetitivas o muy estructuradas.
+Automating the test and correction cycle can free up time for more relevant development tasks, as long as the problem is well-scoped. In that sense, this type of system could be especially useful for repetitive or highly structured tasks.
 
-El reto real no está en la capacidad técnica del modelo, sino en cómo integrar estas herramientas en el flujo de trabajo diario sin añadir más fricción. Diría que no es un problema de potencia, porque aún con las limitaciones de los modelos actuales, el enfoque puede ser útil, sino de experiencia de usuario.
+The real challenge isn't in the model's technical capacity, but in how to integrate these tools into daily workflow without adding more friction. I'd say it's not a power problem, because even with current model limitations, the approach can be useful, but a user experience problem.
 
-## Ideas futuras
+## Future Ideas
 
-Quedan muchas cosas por explorar. Esta primera versión fue una prueba de concepto centrada en el flujo más simple posible, pero hay espacio para hacer el sistema más robusto, flexible y útil en contextos reales.
+There are many things left to explore. This first version was a proof of concept focused on the simplest possible flow, but there's room to make the system more robust, flexible, and useful in real contexts.
 
-Algunas direcciones que me interesaría explorar:
-- Integrar un framework de pruebas real.
-- Generar automáticamente tests para estructuras comunes con mocking.
-- Utilizar snapshots como fuente de especificación y validar la salida del modelo con aserciones snapshot.
-- Ejecutar peticiones paralelas con varios modelos y romper la iteración en cuanto uno pase la prueba.
-- Ajustar dinámicamente el prompt en función de fallos consecutivos, usando otro modelo como refinador.
-- Añadir un sistema de notificaciones al finalizar las pruebas.
+Some directions I'd be interested in exploring:
+- Integrate a real testing framework.
+- Automatically generate tests for common structures with mocking.
+- Use snapshots as a specification source and validate model output with snapshot assertions.
+- Execute parallel requests with multiple models and break iteration as soon as one passes the test.
+- Dynamically adjust the prompt based on consecutive failures, using another model as a refiner.
+- Add a notification system when tests finish.
 
-## Enlaces
+## Links
 
 1. [LLM7](llm7.io)
-2. [Código fuente del playground](https://github.com/crisfeim/crisfe.im/tree/main/content/posts/2025.05.13.making-the-ai-suffer-so-you-dont-have-to/codegen-demo)
+2. [Playground source code](https://github.com/crisfeim/crisfe.im/tree/main/content/posts/2025.05.13.making-the-ai-suffer-so-you-dont-have-to/codegen-demo)
 
-[^1]: Aunque no original: [cf.github](https://github.com/crisfeim/cli-tddbuddy/search?q=tdd&type=code).
+[^1]: Although not original: [cf.github](https://github.com/crisfeim/cli-tddbuddy/search?q=tdd&type=code).
 [^2]: *XCTest* / *Swift Testing*
-[^8]: El compilador no acepta un *string* como entrada.
+[^8]: The compiler doesn't accept a *string* as input.
