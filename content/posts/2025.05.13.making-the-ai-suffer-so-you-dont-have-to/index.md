@@ -234,21 +234,19 @@ Thanks to this approach, we can add new models, alternative runners, or even sto
 ## Data
 
 The first version of the project was very simple: A few *Swift* files compiled through *CLI*[^coderunner].
-With it, I did a few tests with different specifications and models. Originally I planned to be more academic and gather data to make visual comparisons, but in the end, I only had the opportunity to log basic data.
+I did a few tests with different specifications and models and originally planned to gather data to make visual comparisons, but in the end, I only had the opportunity to log basic data.
 
 [^coderunner]: With the *amazing CodeRunner app*
 
-Unfortunately, I have not access at this time to those few tests I did back then. Though, I have found some of the outputs from *Codestral* in my disk:
+Unfortunately, I have not access at this time to those few tests I did back then. Though, I have found some of the outputs from *Codestral* in my *ssd*:
 
 {{< runnable "./results/codestral/FileImporter.swift.html">}}
 {{< runnable "./results/codestral/LineAppender.swift.html">}}
 {{< runnable "./results/codestral/PasswordGenerator.swift.html">}}
 
-Since I can't give you data, I can only tell you that the worst performing model was *Gemini*. But it may be due to the current setup.
+Since I can't give you data, all I can tell you is that the worst performing model was *Gemini* and the best performers were *Claude* and *ChatGPT*.
 
-The best performers were *Claude* and *ChatGPT*.
-
-*Llama 3.2* gave variable results, although the iteration speed from being a local execution often compensated for the shortcomings.
+*Llama 3.2* gave variable results, although the iteration speed from being a local execution somewhat compensated the shortcomings.
 
 ## Issues
 
@@ -361,20 +359,23 @@ Often we write tests that we refactor or eliminate as we learn along the way. So
 
 However, I think the idea could be useful for things like automated exploration (letting the AI explore some paths and log them). It can also be useful for repetitive problems, but not for complex problems where development needs to help clarify the requirements.
 
-One example of those repetitive problems that always have the same shape is testing a system that coordinates a bunch of objects where we need to ensure data/error delivery is conditional on the *"coordinatees"* result. E.g.:
+One example of those repetitive problems that always have the same shape is testing a system that coordinates a bunch of objects where we need to ensure data/error delivery is conditional on the *"coordinatee"* result. E.g.:
 
 ```swift
-// Failure cases
+// Sad paths
 func test_coordinator_deliversErrorOnClientError() async {}
 func test_coordinator_deliversErrorOnRunnerError() async {}
 func test_coordinator_deliversErrorOnPersisterError() async {}
 ...
-// Success cases
+// Happy paths
+func test_coordinator_deliversDataClientSuccess() async {}
+func test_coordinator_deliversDataOnRunnerSuccess() async {}
+func test_coordinator_deliversDataOnPersisterSuccess() async {}
 ```
 
 ## Conclusions
 
-Although this experiment has clear limitations, like the dependency on precise specifications and lack of exhaustive testing, I find it a promising approach.
+Although this experiment has clear limitations, like the dependency on precise specifications, I find it a promising approach.
 
 Automating the test and correction cycle can free up time for more relevant development tasks, as long as the problem is well-scoped. In that sense, this type of system could be especially useful for repetitive or highly structured tasks.
 
@@ -386,14 +387,14 @@ There are many things left to explore. This first version was a proof of concept
 
 Some directions I'd be interested in exploring:
 
-- Look for truly useful ways to leverage this flow
-- Use better models (*Claude* and *ChatGPT*)
 - Integrate a real testing framework.
 - Automatically generate tests for common structures with mocking.
 - Use snapshots as a specification source and validate model output with snapshot assertions.
 - Execute parallel requests with multiple models and break iteration as soon as one passes the test.
 - Dynamically adjust the prompt based on consecutive failures, using another model as a refiner.
 - Add a notification system when tests finish.
+- Look for opportunities to integrate this idea in my daily workflow.
+- Use better models (*Claude* and *ChatGPT*) and gather useful data.
 
 ## Links
 
