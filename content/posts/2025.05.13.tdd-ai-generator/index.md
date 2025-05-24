@@ -269,7 +269,7 @@ func test_fetch_reposWithMinimumStarsFromRealApi() async throws {
 }
 ```
 
-*Codestral* was able to generate a **functional** client, despite some initial difficulties:
+*Codestral* was able to generate a **functional** client:
 
 ```swift
 struct Repository: Decodable {
@@ -302,7 +302,7 @@ class GithubClient {
 }
 ```
 
-I appreciate the trust, but I'd rather get my code. So I forced a bit by adding comments to the specs themselves.
+I appreciate the trust it manifest in my dev skills, but I'd rather get my code when I ask for it. So I forced a bit by adding comments to the specs themselves.
 The problem persisted intermittently, though.
 
 ### When the model doesn't solve the problem... because it already knows the answer
@@ -354,11 +354,11 @@ While the enthusiasm for pedagogy and teaching spirit is appreciated, I would ha
 
 This idea assumes specifications you provide are completely adjusted to the system beforehand, something unrealistic.
 
-It also assumes that the specifications have no logic errors. Which is less likely to happen, but it happens.
+It also assumes that the specifications have no logic errors. Which is less likely to happen, but it does.
 
 When developing using *TDD*, specification details usually "emerge" naturally as your understanding on the system grows: The process is a *framework* for thinking.
 
-Often we write tests that we refactor or eliminate as we learn along the way. So that's a big caveat.
+Often we write tests that we refactor or eliminate as we learn along the way. So that's a big blind spot for this kind of model.
 
 However, I think the idea could be useful for things like automated exploration (letting the AI explore some paths and log them). It can also be useful for repetitive problems, but not for complex problems where development needs to help clarify the requirements.
 
@@ -386,7 +386,7 @@ The real challenge isn't in the model's technical capacity, but in how to integr
 
 ## Future Ideas
 
-There are many things left to explore. This first version was a proof of concept focused on the simplest possible flow, but there's room to make the system more robust, flexible, and useful in real contexts.
+There are many things left to explore. This was a proof of concept focused on the simplest possible flow, but there's room to make the system more robust, flexible, and useful in real contexts.
 
 Some directions I'd be interested in exploring:
 
@@ -394,10 +394,9 @@ Some directions I'd be interested in exploring:
 - Automatically generate tests for common structures with mocking.
 - Use snapshots as a specification source and validate model output with snapshot assertions.
 - Execute parallel requests with multiple models and break iteration as soon as one passes the test.
-- Dynamically adjust the prompt based on consecutive failures, using another model as a refiner.
-- Add a notification system when tests finish.
-- Look for opportunities to integrate this idea in my daily workflow.
-- Use better models (*Claude* and *ChatGPT*) and gather useful data.
+- Dynamically adjust the prompt based on *N* consecutive failures, using another model as a refiner.
+- Look for opportunities to integrate this idea in your typical daily workflow.
+- Use better models (*Claude* and *ChatGPT*), gather useful data (average number of iterations for a given problem per model, etc).
 
 ## Links
 
