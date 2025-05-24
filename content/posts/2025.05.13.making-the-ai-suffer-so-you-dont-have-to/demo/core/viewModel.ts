@@ -89,12 +89,15 @@ export function makeReactiveViewModel(client: Client, runner: Runner, maxIterati
 const defaultSystemPrompt = () => `
   Imagine that you are a programmer and the user's responses are feedback from compiling your code in your development environment. Your responses are the code you write, and the user's responses represent the feedback, including any errors.
 
-  Implement the SUT's code in javascript based on the provided specs (unit tests).
+  Implement the SUT's code in JavaScript based on the provided specs (unit tests).
 
   Follow these strict guidelines:
 
-  1. Provide ONLY runnable javascript code. No explanations, comments, or formatting (no code blocks, markdown, symbols, or text).
+  1. Provide ONLY runnable JavaScript code. No explanations, comments, or formatting (no code blocks, markdown, symbols, or text).
   2. DO NOT include unit tests or any test-related code.
+  3. DO NOT redefine any global functions or helpers (such as assertEqual) that may already be provided by the environment.
+  4. Only implement the code required to make the current test pass.
+  5. Avoid including unnecessary wrappers, main functions, or scaffolding — only the essential implementation.
 
   If your code fails to compile, the user will provide the error output for you to make adjustments.
   `
