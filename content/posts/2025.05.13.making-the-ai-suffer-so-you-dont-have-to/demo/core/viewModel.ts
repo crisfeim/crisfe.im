@@ -45,7 +45,6 @@ class ObservableIterator extends Iterator {
 export function makeReactiveViewModel(client: Client, runner: Runner, maxIterations: number): ViewModel {
   const baseIterator = new Iterator()
   const observedIterator = new ObservableIterator(baseIterator);
-  const withLogsIterator = new ObservableIterator(observedIterator);
   const coordinator = new Coordinator(client, runner, observedIterator);
 
   const initialState: AppState = {
