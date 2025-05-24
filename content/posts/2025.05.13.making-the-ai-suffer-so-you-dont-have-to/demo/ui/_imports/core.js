@@ -39,11 +39,13 @@ var CodeGenCore = (() => {
             messages.push({ role: "assistant", content: previousStderr });
           }
           const generated = await this.client.send(messages);
-          const concatenated = `${specs}
-${generated}`;
+          const processed = generated.replace(/^```(?:\w+)?\s*/m, "").replace(/```$/, "");
+          const concatenated = `${generated}
+${specs}`;
           const runResult = this.runner.run(concatenated);
           return { generatedCode: generated, stdErr: runResult.stdErr, isValid: runResult.isValid };
         }
+        // @TODO: remove this method
         async generateCodeFromSpecs(systemPrompt, specs) {
           const systemPromptMessage = { role: "system", content: systemPrompt };
           const userMessage = { role: "user", content: specs };
@@ -82,7 +84,6 @@ ${generated}`;
   function makeReactiveViewModel(client, runner, maxIterations) {
     const baseIterator = new Iterator();
     const observedIterator = new ObservableIterator(baseIterator);
-    const withLogsIterator = new ObservableIterator(observedIterator);
     const coordinator = new Coordinator(client, runner, observedIterator);
     const initialState = {
       isRunning: false,
@@ -150,12 +151,15 @@ ${generated}`;
       defaultSystemPrompt = () => `
   Imagine that you are a programmer and the user's responses are feedback from compiling your code in your development environment. Your responses are the code you write, and the user's responses represent the feedback, including any errors.
 
-  Implement the SUT's code in javascript based on the provided specs (unit tests).
+  Implement the SUT's code in JavaScript based on the provided specs (unit tests).
 
   Follow these strict guidelines:
 
-  1. Provide ONLY runnable javascript code. No explanations, comments, or formatting (no code blocks, markdown, symbols, or text).
+  1. Provide ONLY runnable JavaScript code. No explanations, comments, or formatting (no code blocks, markdown, symbols, or text).
   2. DO NOT include unit tests or any test-related code.
+  3. DO NOT redefine any global functions or helpers (such as assertEqual) that may already be provided by the environment.
+  4. Only implement the code required to make the current test pass.
+  5. Avoid including unnecessary wrappers, main functions, or scaffolding \u2014 only the essential implementation.
 
   If your code fails to compile, the user will provide the error output for you to make adjustments.
   `;
@@ -262,14 +266,46 @@ testAdder();`;
     }
   });
 
+  // core/llm7client.ts
+  var LLM7Client;
+  var init_llm7client = __esm({
+    "core/llm7client.ts"() {
+      LLM7Client = class {
+        model = "gpt-3.5-turbo";
+        url = "https://api.llm7.io/v1/chat/completions";
+        async send(messages) {
+          const body = {
+            model: this.model,
+            messages,
+            stream: false
+          };
+          const response = await fetch(this.url, {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(body)
+          });
+          if (!response.ok) {
+            throw new Error(`LLM7Client: HTTP error ${response.status}`);
+          }
+          const data = await response.json();
+          if (!data?.choices?.[0]?.message?.content) {
+            throw new Error("LLM7Client: Invalid response shape");
+          }
+          return data.choices[0].message.content;
+        }
+      };
+    }
+  });
+
   // core/_entrypoint.ts
-  var ollamaViewModel, geminiViewModel, fakeClientViewModel;
+  var ollamaViewModel, geminiViewModel, llm7ViewModel, fakeClientViewModel;
   var init_entrypoint = __esm({
     "core/_entrypoint.ts"() {
       init_viewModel();
       init_ollamaclient();
       init_geminiclient();
       init_evalrunner();
+      init_llm7client();
       ollamaViewModel = (maxIterations) => {
         const client = new OllamaClient();
         const runner = new EvalRunner();
@@ -277,6 +313,11 @@ testAdder();`;
       };
       geminiViewModel = (apiKey, maxIterations) => {
         const client = new GeminiClient(apiKey);
+        const runner = new EvalRunner();
+        return makeReactiveViewModel(client, runner, maxIterations);
+      };
+      llm7ViewModel = (maxIterations) => {
+        const client = new LLM7Client();
         const runner = new EvalRunner();
         return makeReactiveViewModel(client, runner, maxIterations);
       };
@@ -316,6 +357,7 @@ testAdder();`;
       exports.ollamaViewModel = ollamaViewModel;
       exports.geminiViewModel = geminiViewModel;
       exports.fakeClientViewModel = fakeClientViewModel;
+      exports.llm7ViewModel = llm7ViewModel;
     }
   });
   return require_entrypoint();
