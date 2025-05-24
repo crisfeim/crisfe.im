@@ -1,10 +1,3 @@
----
-title: "Test-Driven Prompting: Haciendo el cafe mientras la IA te escribe código"
-date: 2025-05-13
-slug: test-driven-prompting-haciendo-el-cafe-mientras-la-ia-te-escribe-codigo
-og-image: images/system.png
----
-
 ### tl;dr
 
 Cómo construir un sistema en el que la *IA* genera código a partir de especificaciones de pruebas unitarias, lo compila, lo ejecuta y si falla lo vuelve a intentar hasta que funciona, sin intervención humana.

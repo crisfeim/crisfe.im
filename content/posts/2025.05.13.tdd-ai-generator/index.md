@@ -9,6 +9,9 @@ og-image: images/system.png
 
 On building a system where an LLM writes code based on unit test specs, compiles it, runs it, and — if it fails — tries again until it gets it right. All without human feedback loops. This article explains the architecture, prompt setup, challenges, and some results I gathered while letting the machine suffer through trial and error.
 
+[CLI (work in progress)](https://github.com/crisfeim/cli-tddbuddy)
+<a href="https://github.com/crisfeim/crisfe.im/tree/main/content/posts/2025.05.13.tdd-ai-generator/demo" style="margin-left: 12px">Web playground</a>
+
 ## Introduction
 
 What happens if you delegate the boring work to an AI?
