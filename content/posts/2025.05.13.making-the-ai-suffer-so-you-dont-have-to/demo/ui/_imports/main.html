@@ -1,0 +1,42 @@
+ <codegen-demo>
+     <!-- <pre x-text="JSON.stringify($data, null, 2)"></pre> -->
+     <hstack id="regular-version" class="container">
+         <vstack class="left">
+             <hstack class="header">
+                 <spacer></spacer>
+                 <button id="run-button"
+                 @click="run"
+                 :disabled="isRunning"
+                 :class="{ 'canRun': !isRunning }">
+                     @import(play-button.svg)
+                 </button>
+
+             </hstack>
+             <textarea id="specs" x-model="specification"></textarea>
+         </vstack>
+
+         <vstack
+             class="right"
+             :class="{
+                 'grid-background': status === undefined & !isRunning,
+                 'success': status === 'success',
+                 'failure': status === 'failure'
+               }"
+         >
+         <hstack class="header">
+             @import(activity-indicator.html)
+             <spacer></spacer>
+             @import(status-indicator.html)
+         </hstack>
+
+         <textarea id="generated-code" readonly x-model="generatedCode"></textarea>
+         <hstack id="count"
+             :class="{ 'success': status === 'success','failure': status === 'failure' }"
+             x-bind:style="status !== undefined ? 'opacity: 1' : 'opacity: 0'">
+             <spacer></spacer>
+             <span id="iteration-count" x-text="`${currentIteration} of ${maxIterations}`"></span>
+         </hstack>
+         </vstack>
+
+     </hstack>
+ </codegen-demo>

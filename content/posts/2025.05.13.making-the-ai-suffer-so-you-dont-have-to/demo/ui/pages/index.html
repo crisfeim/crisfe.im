@@ -1,47 +1,27 @@
 <script src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js" defer></script>
 <style>@import(styles.css)</style>
 
-<codegen-demo x-data="CodeGenCore.fakeClientViewModel()">
-    <hstack id="regular-version" class="container">
-        <vstack class="left">
-            <hstack class="header">
-                <spacer></spacer>
-                <button id="run-button"
-                @click="run"
-                :disabled="isRunning"
-                :class="{ 'canRun': !isRunning }">
-                    @import(play-button.svg)
-                </button>
+<div x-data="{ provider: 'llm7' }">
 
-            </hstack>
-            <textarea id="specs" x-model="specification"></textarea>
-        </vstack>
+<hstack style="margin-bottom: 12px">
+    <spacer></spacer>
+  <label class="block">
+    <select x-model="provider">
+      <option value="ollama">Ollama</option>
+      <option value="llm7">LLM7</option>
+    </select>
+  </label>
 
-        <vstack
-            class="right"
-            :class="{
-                'grid-background': status === undefined & !isRunning,
-                'success': status === 'success',
-                'failure': status === 'failure'
-              }"
-        >
-        <hstack class="header">
-            @import(activity-indicator.html)
-            <spacer></spacer>
-            @import(status-indicator.html)
-        </hstack>
+</hstack>
 
-        <textarea id="generated-code" readonly x-model="generatedCode"></textarea>
-        <hstack id="count"
-            :class="{ 'success': status === 'success','failure': status === 'failure' }"
-            x-bind:style="status !== undefined ? 'opacity: 1' : 'opacity: 0'">
-            <spacer></spacer>
-            <span id="iteration-count" x-text="`${currentIteration} of ${maxIterations}`"></span>
-        </hstack>
-        </vstack>
+  <template x-if="provider === 'llm7'" x-data="CodeGenCore.llm7ViewModel(15)">
+      @import(main.html)
+  </template>
 
-    </hstack>
-</codegen-demo>
+  <template x-if="provider === 'ollama'" x-data="CodeGenCore.ollamaViewModel(15)">
+      @import(main.html)
+  </template>
+</div>
 
 <script>
 @import(core.js)
