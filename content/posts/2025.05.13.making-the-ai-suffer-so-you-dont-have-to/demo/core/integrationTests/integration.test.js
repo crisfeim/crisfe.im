@@ -3,7 +3,7 @@ import { EvalRunner } from "../evalrunner.ts"
 import { ollamaViewModel, geminiViewModel, llm7ViewModel } from "../_entrypoint.ts";
 
 
-const maxIterations = 15
+const maxIterations = 25
 
 Deno.test("Ollama client integration test", async () => {
   const sut = ollamaViewModel(maxIterations)
