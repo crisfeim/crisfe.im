@@ -1,5 +1,4 @@
  <codegen-demo>
-     <!-- <pre x-text="JSON.stringify($data, null, 2)"></pre> -->
      <hstack id="regular-version" class="container">
          <vstack class="left">
              <hstack class="header">
@@ -37,6 +36,7 @@
              <span id="iteration-count" x-text="`${currentIteration} of ${maxIterations}`"></span>
          </hstack>
          </vstack>
-
      </hstack>
+
+     <pre x-show="showState" x-text="JSON.stringify($data, null, 2)" style="margin-top: 24px"></pre>
  </codegen-demo>
