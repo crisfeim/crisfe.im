@@ -45,6 +45,7 @@ export class Coordinator {
     return { generatedCode: generated, stdErr: runResult.stdErr, isValid: runResult.isValid }
   }
 
+  // @TODO: remove this method
   async generateCodeFromSpecs(systemPrompt: string, specs: string): Promise<Coordinator.Result> {
     const systemPromptMessage: Message = { role: "system", content: systemPrompt }
     const userMessage: Message = { role: "user", content: specs }
