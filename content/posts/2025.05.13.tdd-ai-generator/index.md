@@ -9,9 +9,6 @@ og-image: images/system.png
 
 On building a system where an LLM writes code based on unit test specs, compiles it, runs it, and — if it fails — tries again until it gets it right. All without human feedback loops. This article explains the architecture, prompt setup, challenges, and some results I gathered while letting the machine suffer through trial and error.
 
-[CLI (work in progress)](https://github.com/crisfeim/cli-tddbuddy)
-<a href="https://github.com/crisfeim/crisfe.im/tree/main/content/posts/2025.05.13.tdd-ai-generator/demo" style="margin-left: 12px">Web playground</a>
-
 ## Introduction
 
 What happens if you delegate the boring work to an AI?
@@ -38,11 +35,12 @@ I realized I could eliminate myself from the equation, specifically, from steps 
   <source src="videos/loop.mov" type="video/mp4">
 </video>
 
-My ~~fantasy~~ idea was to achieve a flow where my work would become writing *specs*, hitting the execute button, going for coffee and living life, only to return 3 hours later to find the work done.
+My ~~fantasy~~ idea was to achieve a flow where my work would become writing *specs*, hitting the execute button, going for coffee, enjoying life and then returning 3 hours later to find my job done.
 
-I came up with a simple idea[^1]: an automated loop based on a unit test-driven approach.[^tdd]
+I came up with a simple idea[^notoriginal]: an automated loop based on a unit test-driven prompting approach.
 
-[^tdd]: *Test Driven Development*
+[^notoriginal]: Although not original: [cf.github](https://github.com/crisfeim/cli-tddbuddy/search?q=tdd&type=code).
+
 
 If we use a test of a system without implementation as a *prompt*, we can ask the model to deduce it from the test assertions.
 
@@ -55,7 +53,7 @@ func test_adder() {
 }
 ```
 
-From that unit test as a *prompt*, it will be able to generate any code variant that satisfies the assertions:
+From that unit test, the model will be able to generate any code variant that satisfies the assertions (e.g.):
 
 ```swift
 struct Adder {
@@ -91,6 +89,12 @@ This is the *prompt* I used in my tests. It can certainly be improved, but it wo
 >
 > If your code fails to compile, the user will provide the error output for you to make adjustments.
 
+The first point is important to get runnable code, otherwise formatting or explanations will make the process fail when passing the model's response to the compiler.
+
+The point two avoids the model from including the specs (thus duplicating it as you'll see in the next section)
+
+The point three is relevant because can try to import libraries unavailable on our development environment setup (basically *swiftc*) making the run fail.
+
 ## Automation
 
 The *naive* approach I used to execute the generated code against the tests consisted of using Swift's `assert` method as a testing *framework*:
@@ -115,7 +119,11 @@ func test_adder() {
 test_adder()
 ```
 
-We concatenate the generated code and unit tests into a single text string that we store in a temporary file[^8] and pass it to the compiler, in this case, Swift[^process].
+We concatenate the generated code and unit tests into a single text string that we store in a temporary file and pass it to the compiler[^process].
+
+<video id="v1" autoplay muted loop playsinline  style="width: 30%; height: auto;" aria-hidden="true">
+  <source src="videos/concatenation.mov" type="video/mp4">
+</video>
 
 ```swift
 let concatenated = generatedCode + "\n" + unitTestsSpecs
@@ -123,37 +131,37 @@ let tmpFileURL = tmFileURLWithTimestamp("generated.swift")
 swiftRunner.runCode(at: tmpFileURL)
 ```
 
-<video id="v1" autoplay muted loop playsinline  style="width: 30%; height: auto;" aria-hidden="true">
-  <source src="videos/concatenation.mov" type="video/mp4">
-</video>
-
-[^process]: Invoked with the *Process* api. [Implementation](https://github.com/crisfeim/cli-tddbuddy/blob/main/Sources/Core/Infrastructure/SwiftRunner.swift).
+[^process]: *swiftc* invoked with the *Process* api. [Implementation](https://github.com/crisfeim/cli-tddbuddy/blob/main/Sources/Core/Infrastructure/SwiftRunner.swift).
 
 If the process returns an exit code other than zero, it means the code execution failed. In that case, we repeat the cycle until the code is zero:
 
 ```swift
-var output = swiftRunner.runCode(at: tmpFileURL)
+var output = runCode(at: tmpFileURL)
 while output.processResult.exitCode != 0 {
-    let regeneratedCodeFileURL = ...
-    output = swiftRunner.runCode(at: regeneratedCodeFileURL)
+    ...
+    output = runCode(at: tmpFileURL)
 }
 ```
 
 ## Try it Yourself
 
-> ℹ  Write the specifications on the left and hit the *play* button.
+I have prepared a javascript playground so you can test the concept.
 
-You can use `assertEqual` as a mini-testing framework or write your own methods in the *textarea* itself.
+Write the specifications on the left and hit the *play* button.
 
-Available models are *GPT3.5* (courtesy of *llm7*), *Gemini* (requires key) and *Llama3.2*.
+I use *javascript's eval* method to evaluate the code. There's an injected `assertEqual` method so you can assert.
 
-To use *llama* you'll need to [download the demo's *index.html*](demo) and serve it from a local server.
+Available models are *GPT-3.5*[^llm7], *Gemini* (requires api-key) and *Llama3.2*.
+
+[^llm7]: Courtesy of *llm7*
+
+To use *Llama3.2* you'll need to [download the demo's *index.html*](demo) and serve it from a local server.
 
 {{< fragment "demo/index.html" >}}
 
-## Design
+## System Design
 
-These are the core system components:
+These are the core components of the system:
 
 1. 🤖 *Client*: Generates code from specs.
 2. 🪢 *Concatenator*: Concatenates the model's *output* with the initial test.
@@ -164,17 +172,24 @@ These are the core system components:
 
 ### Pseudo-code
 
-```shell
+I comportamentized the generation and running logic of a single run into a subsystem:
+
+```
 Subsystem.genCode(specs, feedback?) → (GeneratedCode, Stdout/Stderr)
   → LLM.send(specs + feedback) → GeneratedCode
   → Concatenator.concatenate(GeneratedCode, Specs) → Concatenated
   → SwiftRunner.run(Concatenated) → Stdout/Stderr
   → Exit
+```
 
-Coordinator.genCode(inputURL, outputURL, maxIterations)
+Then the system coordinates the iterations and pesist on success:
+```
+System.genCode(inputURL, outputURL, maxIterations)
   → Context.save(IterationResult)
   → Iterator.iterate(maxIterations, Subsystem.genCode)
-  → Persister.save(outputURL, IterationResult)
+     isSuccess
+      ? Persister.save(outputURL, IterationResult)
+      :()
 ```
 
 Iterator encapsulates the iteration logic and returns the last result:
@@ -187,7 +202,7 @@ iterate<T>(
 ) async -> T
 ```
 
-It allows clients to break through a *closure*:
+It allows consumers to break loop by using a *closure* that provides the current iteration result so they can decide:
 
 ```swift
 while currentIteration < nTimes {
@@ -208,11 +223,21 @@ iterator.iterate(
 )
 ```
 
-For simplicity, the demo *playground* context contains only the result of the previous iteration.
+For simplicity, the web playground context contains only the result of the previous iteration which is often more than enough:
+
+```ts
+let previousFeedback: string | undefined
+const makeMessages = (sysPrompt, specs, previousFeedback)
+return await this.iterator.iterate(
+  maxIterations,
+  async () => await this.generateCode(messages),
+  (result) => { previousFeedback = result.stdErr;  return result.isValid })
+)
+```
 
 ### Contracts
 
-To make the project flexible and *testable*, the actors are modeled with contracts instead of concrete implementations:
+To make the project flexible and *testable*, the actors are modeled with *protocols* instead of concrete implementations:
 
 ```swift
 protocol Client {
@@ -232,30 +257,37 @@ protocol Reader {
 }
 ```
 
-Thanks to this approach, we can add new models, alternative runners, or even storage systems without touching the main program logic. This also simplifies testing, because each component can be mocked separately.
+Thanks to this approach, we can add new models, alternative runners, or even storage systems without touching the main program logic. This also simplifies testing.
 
 ## Data
 
-The first version of the project was very simple: A few *Swift* files compiled through *CLI*[^coderunner].
-I did a few tests with different specifications and models and originally planned to gather data to make visual comparisons, but in the end, I only had the opportunity to log basic data.
+The first version of the project was very simple: A few *Swift* files compiled with *swiftc*[^coderunner].
+
+I did a few tests with different specifications and models and originally planned to gather data to make visual comparisons, but ultimately, I only had the opportunity to log basic data.
 
 [^coderunner]: With the *amazing CodeRunner app*
 
-Unfortunately, I have not access at this time to those few tests I did back then. Though, I have found some of the outputs from *Codestral* in my *ssd*:
+Unfortunately, I lost the results of those few tests I did. Though, I have found some of the outputs from *Codestral*, you'll find the output code and specs generated in this online playgrounds:
 
 {{< runnable "./results/codestral/FileImporter.swift.html">}}
 {{< runnable "./results/codestral/LineAppender.swift.html">}}
 {{< runnable "./results/codestral/PasswordGenerator.swift.html">}}
 
-Since I can't give you data, all I can tell you is that the worst performing model was *Gemini* and the best performers were *Claude* and *ChatGPT*.
+Hit the *play* button to see the running output (no output means no running errors)
 
-*Llama 3.2* gave variable results, although the iteration speed from being a local execution somewhat compensated the shortcomings.
+In the other hand, the worst performing model was *Gemini* and the best performers were *Claude* and *ChatGPT*.
+
+*Llama 3.2* gave variable results, although the iteration speed gains from being a local execution somewhat compensated the shortcomings.
+
+The average number of iterations for easy problems like the adder (and similar ones: multiplier, divider, etc...) was unsurprisingly low (between 1-2).
+
+If I recall correctly, *Codestral* took around 15 iterations to generate the *PasswordGenerator* provided above.
 
 ## Issues
 
 I haven't had the opportunity to test this approach as exhaustively as I'd like, but I was able to collect some examples of issues I encountered along the way.
 
-### When Codestral gives you a pat and says: "I'll leave the rest to you"
+### When Codestral says: "I'll leave the rest to you"
 
 Starting from these *specs*:
 
@@ -302,12 +334,14 @@ class GithubClient {
 }
 ```
 
-I appreciate the trust it manifest in my dev skills, but I'd rather get my code when I ask for it. So I forced a bit by adding comments to the specs themselves.
-The problem persisted intermittently, though.
+I appreciate its trust in my dev skills, but for the sake of the experiment, I'd rather not have to code. So I forced a bit by adding comments to the specs.
+Though, the problem persisted intermittently.
 
-### When the model doesn't solve the problem... because it already knows the answer
+### When the model cheats
 
-Although infrequent, another case I occasionally encountered was tests being satisfied by *"hard-coded"* expected results. E.g.[^1]:
+Although infrequent, another case I occasionally encountered was tests being satisfied by *"hard-coded"* expected results (e.g.):[^justexample]
+
+[^justexample]: Not a real case, but useful to illustrate the problem.
 
 ```swift
 func test_adder() {
@@ -346,29 +380,42 @@ In the *system prompt* we defined, the following section is important for the co
 
 > Provide ONLY runnable Swift code. No explanations, comments, or formatting (no code blocks, markdown, symbols, or text).
 
-Even with this *prompt*, some models (*Gemini*...), had difficulty respecting the instructions and insisted on encapsulating the code in markdown code blocks, also accompanying it with explanatory comments.
+Even with this *prompt*, some models (*Gemini* and *Llama 3.2*), had difficulty respecting the instructions and insisted on encapsulating the code in markdown code blocks, also accompanying it with explanatory comments.
 
 While the enthusiasm for pedagogy and teaching spirit is appreciated, I would have preferred not having to write a preprocessing function to clean the artifacts from the responses.
 
 ## Limitations
 
-This idea assumes specifications you provide are completely adjusted to the system beforehand, something unrealistic.
+This idea assumes specifications you provide are completely adjusted to the system beforehand, which is unrealistic for almost every project.
 
 It also assumes that the specifications have no logic errors. Which is less likely to happen, but it does.
 
 When developing using *TDD*, specification details usually "emerge" naturally as your understanding on the system grows: The process is a *framework* for thinking.
 
-Often we write tests that we refactor or eliminate as we learn along the way. So that's a big blind spot for this kind of model.
+Often we write tests that we refactor or eliminate as we learn along the way. So the requirement of perfect spects its a big downside for this kind of system.
 
-However, I think the idea could be useful for things like automated exploration (letting the AI explore some paths and log them). It can also be useful for repetitive problems, but not for complex problems where development needs to help clarify the requirements.
+A potential solution may be have a second model regenerating specs after *N* failed attemps or feeding the model with unit tests from a spec incrementally rather than providing the whole spec at once. So it can validate each step progressivelly (which mirrors the dev *TDD* workflow)
 
-One example of those repetitive problems that always have the same shape is testing a system that coordinates a bunch of objects where we need to ensure data/error delivery is conditional on the *"coordinatee"* result. E.g.:
+For complex problems, I think the idea could be useful for automated exploration : Letting the AI explore implementation path and log the attemps and compiler feedback. Then using it as a reference/inspiration for the job.
+
+It can also be useful for repetitive problems that have always the same shape.
+
+For example, testing a system that delivers data/error based on the items it coordinates (e.g.):
 
 ```swift
 // Sad paths
-func test_coordinator_deliversErrorOnClientError() async {}
-func test_coordinator_deliversErrorOnRunnerError() async {}
-func test_coordinator_deliversErrorOnPersisterError() async {}
+func test_generate_deliversErrorOnClientError() {
+    let sut = makeSUT(alwaysFailingClient())
+    XCTAssertThrowsError(sut.generate())
+}
+func test_coordinator_deliversErrorOnRunnerError() async {
+    let sut = makeSUT(alwaysFailingRunner())
+    XCTAssertThrowsError(sut.generate())
+}
+func test_coordinator_deliversErrorOnPersisterError() async {
+    let sut = makeSUT(alwaysFailingPersister())
+    XCTAssertThrowsError(sut.generate())
+}
 ...
 // Happy paths
 func test_coordinator_deliversDataClientSuccess() async {}
@@ -376,33 +423,36 @@ func test_coordinator_deliversDataOnRunnerSuccess() async {}
 func test_coordinator_deliversDataOnPersisterSuccess() async {}
 ```
 
+I think those cases are "easy" enough to be successfully automated by this approach.
+
 ## Conclusions
 
-Although this experiment has clear limitations, like the dependency on precise specifications, I find it a promising approach.
+Although this experiment has clear limitations, I find is promising.
 
-Automating the test and correction cycle can free up time for more relevant development tasks, as long as the problem is well-scoped. In that sense, this type of system could be especially useful for repetitive or highly structured tasks.
+Finding useful application could free up time for more relevant development tasks, as long as the problem we provide to the model is well-scoped. In that sense, this type of system could be especially useful for repetitive or highly structured tasks.
 
-The real challenge isn't in the model's technical capacity, but in how to integrate these tools into daily workflow without adding more friction. I'd say it's not a technical problem, because rather a user experience one: The tech is there, we just need to find effective ways of leveraging it.
+The real challenge would be identifying useful opportunities and integrating this is into a daily workflow without friction.
 
 ## Future Ideas
 
 There are many things left to explore. This was a proof of concept focused on the simplest possible flow, but there's room to make the system more robust, flexible, and useful in real contexts.
 
-Some directions I'd be interested in exploring:
+Some directions I'd be love to explore:
 
-- Integrate a real testing framework.
+- Integrate an actual testing framework.
 - Automatically generate tests for common structures with mocking.
-- Use snapshots as a specification source and validate model output with snapshot assertions.
+- Use design mockups as a specification and validate output with snapshot assertions.
 - Execute parallel requests with multiple models and break iteration as soon as one passes the test.
 - Dynamically adjust the prompt based on *N* consecutive failures, using another model as a refiner.
-- Look for opportunities to integrate this idea in your typical daily workflow.
-- Use better models (*Claude* and *ChatGPT*), gather useful data (average number of iterations for a given problem per model, etc).
+- Incremental unit test feeding with validated steps being commited to git.
+- Look for opportunities to integrate this idea in daily workflows.
+- Use better models (*Claude* and *ChatGPT*).
+- Experimenting with compiler feedback preprocessing before passing it to the model to see if that actually improves speed.
+- Have a more academic aproach: Gather and present useful data for next articles (e.g.,  get the average number of iterations for a given problem per model by stressing it *N* times).
+- Test different prompts.
 
 ## Links
 
 1. [LLM7](llm7.io)
 2. [Playground source code](https://github.com/crisfeim/crisfe.im/tree/main/content/posts/2025.05.13.making-the-ai-suffer-so-you-dont-have-to/codegen-demo)
-
-[^1]: Although not original: [cf.github](https://github.com/crisfeim/cli-tddbuddy/search?q=tdd&type=code).
-[^2]: *XCTest* / *Swift Testing*
-[^8]: The compiler doesn't accept a *string* as input.
+3. [CLI (work in progress)](https://github.com/crisfeim/cli-tddbuddy)
