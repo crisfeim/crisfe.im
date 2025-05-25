@@ -1,5 +1,5 @@
 ---
-title: "Test-Driven Prompting: Making Coffee While AI Writes Your Code"
+title: "Test-Driven Prompting: Making Coffee While AI Writes Your Code?"
 date: 2025-05-13
 slug: test-driven-prompting-making-coffee-while-ai-writes-your-code
 og-image: images/system.png
@@ -31,7 +31,7 @@ I repeat the cycle until the generated code works.
 
 I realized I could eliminate myself from the equation, specifically, from steps *(2)* and *(3)*:
 
-<img src="images/loop.gif" alt="Loop" width="45%">
+<img src="images/loop.gif" alt="Loop" width="300px">
 
 My ~~fantasy~~ idea was to achieve a flow where my work would become writing *specs*, hitting the execute button, going for coffee, enjoying life and then returning 3 hours later to find my job done.
 
@@ -87,9 +87,9 @@ This is the *prompt* I used in my tests. It can certainly be improved, but it wo
 
 The first point is important to get runnable code, otherwise formatting or explanations will make the process fail when passing the model's response to the compiler.
 
-The point two avoids the model from including the specs (thus duplicating it as you'll see in the next section)
+The point two prevents the model from including the specs (thus duplicating it as you'll see in the next section)
 
-The point three is relevant because can try to import libraries unavailable on our development environment setup (basically *swiftc*) making the run fail.
+The point three is relevant because the model can try importing libraries unavailable on our development environment setup (basically *swiftc*) making the run fail.
 
 ## Automation
 
@@ -117,7 +117,7 @@ test_adder()
 
 We concatenate the generated code and unit tests into a single text string that we store in a temporary file and pass it to the compiler[^process].
 
-<img src="images/concatenation.gif" alt="Concatenation" width="30%">
+<img src="images/concatenation.gif" alt="Concatenation" width="200px">
 
 ```swift
 let concatenated = generatedCode + "\n" + unitTestsSpecs
@@ -271,13 +271,13 @@ Hit the *play* button to see the running output (no output means no running erro
 
 In the other hand, the worst performing model was *Gemini* and the best performers were *Claude* and *ChatGPT*.
 
-*Llama 3.2 (8B)* gave variable results on my machine[^machine], although the iteration speed gains from being a local execution somewhat compensated the shortcomings.
+*Llama 3.2 (8B)* gave variable results on my machine[^machine], although the iteration speed gains from being a local execution somewhat compensated the shortcomings (sometimes).
 
 [^machine]: *Macbook Pro M2 2022 16GB*.
 
 The average number of iterations for easy problems like the adder (and similar ones: multiplier, divider, etc...) was unsurprisingly low (between 1-5).
 
-If I recall correctly, *Codestral* took around 15 iterations to generate the *PasswordGenerator* provided above.
+*Codestral* took about 15 iterations to generate the *PasswordGenerator* provided above, which may be classified as a mid difficulty problem.
 
 ## Issues
 
