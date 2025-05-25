@@ -61,7 +61,7 @@
   },
   {
     "label": "Watch UI",
-    "command": "node ./ui/build.js",
+    "command": "node ./build.js",
     "use_new_terminal": false,
     "allow_concurrent_runs": false,
     "reveal": "always",
