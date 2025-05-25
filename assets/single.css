@@ -4,19 +4,14 @@ ol {
     margin-block-end: 0;
 }
 
-li {
-  margin-bottom: 0.5rem;
-}
-ol {
-     padding-inline-start: 1rem;
-}
+li {margin-bottom: 0.5rem;}
+ol {padding-inline-start: 1rem;}
+ul {padding-inline-start: 0rem;}
+ul {list-style-type: circle;}
 
-ul {
-     padding-inline-start: 0rem;
-}
-
-ul {
-    list-style-type: circle;
+img, video {
+    display: block;
+    margin: auto
 }
 
 h1,
@@ -31,6 +26,7 @@ h6 {
 
 h2 {margin-top: 3.5rem;}
 
+img,
 video,
 p,
 hr,
@@ -92,11 +88,4 @@ p > code {
 .footnote-ref {
     font-weight: bold;
     text-decoration: none;
-}
-
-video {
-    height:auto;
-    display:block;
-    margin-left: auto;
-    margin-right: auto;
 }

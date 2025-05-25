@@ -31,7 +31,7 @@ I repeat the cycle until the generated code works.
 
 I realized I could eliminate myself from the equation, specifically, from steps *(2)* and *(3)*:
 
-<img src="images/loop.gif" alt="Loop" width="45%" style="margin: auto; display: block">
+<img src="images/loop.gif" alt="Loop" width="45%">
 
 My ~~fantasy~~ idea was to achieve a flow where my work would become writing *specs*, hitting the execute button, going for coffee, enjoying life and then returning 3 hours later to find my job done.
 
@@ -66,7 +66,7 @@ This *prompt* format allows the model (🤖) to "communicate" directly with the 
 
 If the generated code is invalid or doesn't pass the test, the cycle repeats. If the code is valid, we exit the loop.
 
-<img src="images/flow.gif" alt="Flow" width="100%" style="margin: auto; display: block">
+<img src="images/flow.gif" alt="Flow" width="100%">
 
 ### Prompt
 
@@ -117,7 +117,7 @@ test_adder()
 
 We concatenate the generated code and unit tests into a single text string that we store in a temporary file and pass it to the compiler[^process].
 
-<img src="images/concatenation.gif" alt="Concatenation" style="width:30%; margin:auto; display:block;">
+<img src="images/concatenation.gif" alt="Concatenation" width="30%">
 
 ```swift
 let concatenated = generatedCode + "\n" + unitTestsSpecs
