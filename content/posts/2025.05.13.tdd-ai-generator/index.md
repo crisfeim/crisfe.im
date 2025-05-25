@@ -39,7 +39,7 @@ My ~~fantasy~~ idea was to achieve a flow where my work would become writing *sp
 
 I came up with a simple idea[^notoriginal]: an automated loop based on a unit test-driven prompting approach.
 
-[^notoriginal]: Although not original: [cf.github](https://github.com/crisfeim/cli-tddbuddy/search?q=tdd&type=code).
+[^notoriginal]: Although not original: [cf. github](https://github.com/search?q=tdd%20ai&type=repositories).
 
 
 If we use a test of a system without implementation as a *prompt*, we can ask the model to deduce it from the test assertions.
@@ -277,7 +277,9 @@ Hit the *play* button to see the running output (no output means no running erro
 
 In the other hand, the worst performing model was *Gemini* and the best performers were *Claude* and *ChatGPT*.
 
-*Llama 3.2* gave variable results, although the iteration speed gains from being a local execution somewhat compensated the shortcomings.
+*Llama 3.2 (8B)* gave variable results on my machine[^machine], although the iteration speed gains from being a local execution somewhat compensated the shortcomings.
+
+[^machine]: *Macbook Pro M2 2022 16GB*.
 
 The average number of iterations for easy problems like the adder (and similar ones: multiplier, divider, etc...) was unsurprisingly low (between 1-2).
 
@@ -334,12 +336,12 @@ class GithubClient {
 }
 ```
 
-I appreciate its trust in my dev skills, but for the sake of the experiment, I'd rather not have to code. So I forced a bit by adding comments to the specs.
+I appreciate the trust in my dev skills, but for the sake of the experiment, I'd rather not have to code. So I forced a bit by adding comments to the specs.
 Though, the problem persisted intermittently.
 
 ### When the model cheats
 
-Although infrequent, another case I occasionally encountered was tests being satisfied by *"hard-coded"* expected results (e.g.):[^justexample]
+Although infrequent, another case I occasionally encountered was tests being satisfied by hardcoded expected results (e.g.):[^justexample]
 
 [^justexample]: Not a real case, but useful to illustrate the problem.
 
@@ -392,15 +394,13 @@ It also assumes that the specifications have no logic errors. Which is less like
 
 When developing using *TDD*, specification details usually "emerge" naturally as your understanding on the system grows: The process is a *framework* for thinking.
 
-Often we write tests that we refactor or eliminate as we learn along the way. So the requirement of perfect spects its a big downside for this kind of system.
+Often we rewrite or eliminate tests as we learn about the system. So we never really start with final specs.
 
-A potential solution may be have a second model regenerating specs after *N* failed attemps or feeding the model with unit tests from a spec incrementally rather than providing the whole spec at once. So it can validate each step progressivelly (which mirrors the dev *TDD* workflow)
+A worth exploring solution for this may be have a second model regenerating specs after *N* failed attemps. It also may help providing the unit tests incrementally rather than the whole spec (so it can validate each step progressivelly (which mirrors the dev *TDD* workflow)
 
-For complex problems, I think the idea could be useful for automated exploration : Letting the AI explore implementation path and log the attemps and compiler feedback. Then using it as a reference/inspiration for the job.
+For complex problems, I think the idea could be useful for automated exploration : Letting the AI explore implementation path and log the attemps and compiler feedback. Then using it as a reference/inspiration for tackle the problem.
 
-It can also be useful for repetitive problems that have always the same shape.
-
-For example, testing a system that delivers data/error based on the items it coordinates (e.g.):
+It may also be useful for common repetitive problems that have always the same shape. For example, testing a system that delivers data/error based on the items it coordinates (e.g.):
 
 ```swift
 // Sad paths
@@ -423,7 +423,7 @@ func test_coordinator_deliversDataOnRunnerSuccess() async {}
 func test_coordinator_deliversDataOnPersisterSuccess() async {}
 ```
 
-I think those cases are "easy" enough to be successfully automated by this approach.
+I think those cases are "easy" enough to be successfully automated by this approach, but I've not tested the system yet with thise cases.
 
 ## Conclusions
 
@@ -444,12 +444,12 @@ Some directions I'd be love to explore:
 - Use design mockups as a specification and validate output with snapshot assertions.
 - Execute parallel requests with multiple models and break iteration as soon as one passes the test.
 - Dynamically adjust the prompt based on *N* consecutive failures, using another model as a refiner.
-- Incremental unit test feeding with validated steps being commited to git.
+- Incremental unit test with validated steps being commited to git so we prevent regresions and facilitate problem digestion to the model.
 - Look for opportunities to integrate this idea in daily workflows.
-- Use better models (*Claude* and *ChatGPT*).
+- Use better models extensively (*Claude* and *ChatGPT*).
 - Experimenting with compiler feedback preprocessing before passing it to the model to see if that actually improves speed.
 - Have a more academic aproach: Gather and present useful data for next articles (e.g.,  get the average number of iterations for a given problem per model by stressing it *N* times).
-- Test different prompts.
+- Test different prompts, specifically, try having the model formatting its response in a parasable mini-dsl or [json](https://github.com/crisfeim/poc-aidriven-app/blob/main/macApp/AI_Counter/SystemPrompt.swift) to avoid unwanted explanations.
 
 ## Links
 

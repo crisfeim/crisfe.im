@@ -1,4 +1,5 @@
 - Refinar ul/ol estilos.
+- Los videos no se ven en algunos dispositivos o tardan en cargar...
 - Coloración de sintáxis: Hay algún estilo que hace que el color sea más oscuro, interfiere con el color de solarized-light.
 - Focus on scroll
 - SPAlike navigation
@@ -9,27 +10,27 @@
 - Sitio multilengua: Activar español
 - Añadir frase descriptiva en la home
 - Importar alpine de una manera más eficiente en los artículos que lo usen.
-    - Actualmente el index.html generado lo importa directamente, estaría bien que fuese el artículo el que tuviese una propiedad del tipo: "dependencies": ["alpine3x.js"] y el `single.html` los importase en el header.
+	- Actualmente el index.html generado lo importa directamente, estaría bien que fuese el artículo el que tuviese una propiedad del tipo: "dependencies": ["alpine3x.js"] y el `single.html` los importase en el header.
 - Simplificar el script de build de componentes: eliminar la necesidad de un "pages", un index.html o "main.html" basta. Podría generar dos: un "index.html" y un main.html. El primero con el import de alpine embebido y el otro sin  él.
 - Core js de la demo del generador: No me gusta como se construye el viewModel, actualmente llamo a los bindings cada vez que se hace un run. Me gustaría una forma más eficiente de hacer esto, tal vez:
 
 <div x-data="makeViewModel()" x-init="bind">
 
 func makeViewModel(): ViewModel {
-    const iterator = new Observable(Iterator())
-    const coordinator = new Coordinator(iterator)
-    return {
-        ...appState,
-        coordinator: coordinator,
-        bind: {
-            iterator.observeStatusChange = (s) => this.status = s
-            ... bindings ...
-        },
-        run: {
-            this.isRunnig = true
-            await this.coordinator.run()
-        }
-    }
+	const iterator = new Observable(Iterator())
+	const coordinator = new Coordinator(iterator)
+	return {
+		...appState,
+		coordinator: coordinator,
+		bind: {
+			iterator.observeStatusChange = (s) => this.status = s
+			... bindings ...
+		},
+		run: {
+			this.isRunnig = true
+			await this.coordinator.run()
+		}
+	}
 
 UI de la demo: No me gustan los controles nativos (selector de "show state" y picker de "provider"), integrarlos mejor en el layout.
 
