@@ -1,9 +1,5 @@
-html {
-    font-size: 16px;
-}
-* {
-    margin: 0;
-}
+html {font-size: 16px;}
+* {margin: 0;}
 
 body {
     max-width: 70ch;
@@ -20,9 +16,5 @@ body {
         sans-serif;
 }
 
-a {
-    filter: grayscale(1);
-}
-a:hover {
-    filter: grayscale(0);
-}
+a {filter: grayscale(1);}
+a:hover {filter: grayscale(0);}
