@@ -4,7 +4,6 @@
 - SPAlike navigation
 - Mover artefactos del artículo a `assets`.
 - Eliminar `runnable` shortcode ?
-- Transformar mov/mp4 a webm. Optimizar videos.
 - Minificar hugo en vercel
 - Sitio multilengua: Activar español
 - Añadir frase descriptiva en la home
