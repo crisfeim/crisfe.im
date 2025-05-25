@@ -104,7 +104,7 @@ func test_adder() {
 
 *Assert* throws a *trap* at runtime when the condition is false, generating output to *stderr*, making it useful as an error signal for this system.
 
-To execute the unit tests, we simply invoke them manually in the specifications themselves:
+To execute the unit tests, we simply invoke them manually in the specifications:
 
 ```swift
 func test_adder() {
@@ -275,7 +275,7 @@ In the other hand, the worst performing model was *Gemini* and the best performe
 
 [^machine]: *Macbook Pro M2 2022 16GB*.
 
-The average number of iterations for easy problems like the adder (and similar ones: multiplier, divider, etc...) was unsurprisingly low (between 1-2).
+The average number of iterations for easy problems like the adder (and similar ones: multiplier, divider, etc...) was unsurprisingly low (between 1-5).
 
 If I recall correctly, *Codestral* took around 15 iterations to generate the *PasswordGenerator* provided above.
 
@@ -290,7 +290,6 @@ Starting from these *specs*:
 ```swift
 func test_fetch_reposWithMinimumStarsFromRealApi() async throws {
   let sut = GithubClient()
-  // This MUST PERFORM A REAL CALL TO THE GITHUB API
   let repos = try await sut.fetchRepositories(minStars: 100)
   assert(!repos.isEmpty)
   assert(repos.allSatisfy { $0.stars >= 100 })
@@ -330,7 +329,18 @@ class GithubClient {
 }
 ```
 
-I appreciate the trust in my dev skills, but for the sake of the experiment, I'd rather not have to code. So I forced a bit by adding comments to the specs.
+I appreciate the trust in my dev skills, but for the sake of the experiment, I'd rather not have to code, so I forced the model a bit by adding explicit comments to the specs:
+
+```swift
+func test_fetch_reposWithMinimumStarsFromRealApi() async throws {
+  let sut = GithubClient()
+  // This MUST PERFORM A REAL CALL TO THE GITHUB API!
+  let repos = try await sut.fetchRepositories(minStars: 100)
+  assert(!repos.isEmpty)
+  assert(repos.allSatisfy { $0.stars >= 100 })
+}
+```
+
 Though, the problem persisted intermittently.
 
 ### When the model cheats
@@ -390,14 +400,14 @@ When developing using *TDD*, specification details usually "emerge" naturally as
 
 Often we rewrite or eliminate tests as we learn about the system. So we never really start with final specs.
 
-A worth exploring solution for this may be have a second model regenerating specs after *N* failed attemps. It also may help providing the unit tests incrementally rather than the whole spec (so it can validate each step progressivelly (which mirrors the dev *TDD* workflow)
+A worth exploring solution for this may be having a second model regenerating specs after *N* failed attemps. It also may help providing the unit tests incrementally rather than the whole spec at once (so it can validate steps progressivelly, which mirrors the dev *TDD* workflow)
 
-For complex problems, I think the idea could be useful for automated exploration : Letting the AI explore implementation path and log the attemps and compiler feedback. Then using it as a reference/inspiration for tackle the problem.
+For complex problems, I think the idea could be useful for automated exploration: Letting the AI explore implementation paths and log the attemps + compiler feedback. Then using those attempts as helpful references for tackle the problem.
 
 It may also be useful for common repetitive problems that have always the same shape. For example, testing a system that delivers data/error based on the items it coordinates (e.g.):
 
 ```swift
-// Sad paths
+// MARK: - Sad paths
 func test_generate_deliversErrorOnClientError() {
     let sut = makeSUT(alwaysFailingClient())
     XCTAssertThrowsError(sut.generate())
@@ -410,18 +420,24 @@ func test_coordinator_deliversErrorOnPersisterError() async {
     let sut = makeSUT(alwaysFailingPersister())
     XCTAssertThrowsError(sut.generate())
 }
-...
-// Happy paths
-func test_coordinator_deliversDataClientSuccess() async {}
-func test_coordinator_deliversDataOnRunnerSuccess() async {}
-func test_coordinator_deliversDataOnPersisterSuccess() async {}
+
+// MARK: - Happy paths
+func test_coordinator_deliversDataClientSuccess() async {
+ ...
+}
+func test_coordinator_deliversDataOnRunnerSuccess() async {
+ ...
+}
+func test_coordinator_deliversDataOnPersisterSuccess() async {
+ ...
+}
 ```
 
 I think those cases are "easy" enough to be successfully automated by this approach, but I've not tested the system yet with thise cases.
 
 ## Conclusions
 
-Although this experiment has clear limitations, I find is promising.
+Although this experiment has clear limitations, I find it promising.
 
 Finding useful application could free up time for more relevant development tasks, as long as the problem we provide to the model is well-scoped. In that sense, this type of system could be especially useful for repetitive or highly structured tasks.
 
@@ -440,10 +456,11 @@ Some directions I'd be love to explore:
 - Dynamically adjust the prompt based on *N* consecutive failures, using another model as a refiner.
 - Incremental unit test with validated steps being commited to git so we prevent regresions and facilitate problem digestion to the model.
 - Look for opportunities to integrate this idea in daily workflows.
-- Use better models extensively (*Claude* and *ChatGPT*).
+- Use better models (*Claude* and *ChatGPT*).
 - Experimenting with compiler feedback preprocessing before passing it to the model to see if that actually improves speed.
 - Have a more academic aproach: Gather and present useful data for next articles (e.g.,  get the average number of iterations for a given problem per model by stressing it *N* times).
-- Test different prompts, specifically, try having the model formatting its response in a parasable mini-dsl or [json](https://github.com/crisfeim/poc-aidriven-app/blob/main/macApp/AI_Counter/SystemPrompt.swift) to avoid unwanted explanations.
+- Expriment with different prompts.
+- Try the model format its response [as a parasable mini-dsl or json](https://github.com/crisfeim/poc-aidriven-app/blob/main/macApp/AI_Counter/SystemPrompt.swift) to avoid unwanted explanations or codeblocks (we may tell him to put those inside a value of the *json* dictionnary).
 
 ## Links
 
