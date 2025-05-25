@@ -1,5 +1,4 @@
 - Refinar ul/ol estilos.
-- Los videos no se ven en algunos dispositivos o tardan en cargar...
 - Coloración de sintáxis: Hay algún estilo que hace que el color sea más oscuro, interfiere con el color de solarized-light.
 - Focus on scroll
 - SPAlike navigation
