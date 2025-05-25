@@ -7,11 +7,5 @@
 {{ end }}
 
 {{ define "main" }}
-<ul style="margin-top: 64px; list-style: none; padding: 0">
-    {{ range where .Site.RegularPages "Section" "posts" }}
-    <li>
-        <a href="{{ .RelPermalink }}">{{ .Title }}</a>
-    </li>
-    {{ end }}
-</ul>
+<div style="margin-top:120px">{{ .Content}}</div>
 {{ end }}
