@@ -17,7 +17,7 @@ That was the starting point of this experiment: building a system that not only 
 
 The idea was to turn the developer's role into writing tests, hitting the execute button, and disappearing. If the model makes mistakes, let it correct itself. If it crashes, let it get back up. If it gives up... well, let's give it a break.
 
-In this article, I'll tell you how I set up this automation system with feedback loops and what I learned in the process.
+In this article, I'll tell you how to set up an automation system with feedback loops.
 
 ## Idea
 
@@ -29,16 +29,15 @@ As a developer, my interactions with *AI* can be reduced to a loop:
 
 I repeat the cycle until the generated code works.
 
-I realized I could eliminate myself from the equation, specifically, from steps *(2)* and *(3)*:
+The goal was to remove the dev from from the equation, specifically, from steps *(2)* and *(3)*:
 
 <img src="images/loop.gif" alt="Loop" width="300px">
 
-My ~~fantasy~~ idea was to achieve a flow where my work would become writing *specs*, hitting the execute button, going for coffee, enjoying life and then returning 3 hours later to find my job done.
+The ~~fantasy~~ idea was to achieve a flow where dev work would become writing *specs*, hitting the execute button, going for coffee, enjoying life and then returning 3 hours later to find the job done.
 
-I came up with a simple idea[^notoriginal]: an automated loop based on a unit test-driven prompting approach.
+I came up with a simple idea, algthought not original[^notoriginal]: an automated loop based on a unit test-driven prompting approach.
 
-[^notoriginal]: Although not original: [cf. github](https://github.com/search?q=tdd%20ai&type=repositories).
-
+[^notoriginal]: [cf. github](https://github.com/search?q=tdd%20ai&type=repositories).
 
 If we use a test of a system without implementation as a *prompt*, we can ask the model to deduce it from the test assertions.
 
@@ -62,7 +61,7 @@ struct Adder {
 }
 ```
 
-This *prompt* format allows the model (🤖) to "communicate" directly with the execution environment (⚙️), automating code validity verification and the feedback loop.
+This *prompt* format allows the model (🤖) to "communicate" directly with the execution environment (⚙️), automating code validity verification and the feedback loop as we can directly test he output of the model against the prompt itself.
 
 If the generated code is invalid or doesn't pass the test, the cycle repeats. If the code is valid, we exit the loop.
 
@@ -70,7 +69,7 @@ If the generated code is invalid or doesn't pass the test, the cycle repeats. If
 
 ### Prompt
 
-This is the *prompt* I used in my tests. It can certainly be improved, but it worked for the *POC*:
+This is the *prompt* used in the *POC*. It can certainly be improved, but it worked:
 
 > Imagine that you are a programmer and the user's responses are feedback from compiling your code in your development environment. Your responses are the code you write, and the user's responses represent the feedback, including any errors.
 >
@@ -117,6 +116,8 @@ test_adder()
 
 We concatenate the generated code and unit tests into a single text string that we store in a temporary file and pass it to the compiler[^process].
 
+[^process]: *swiftc* invoked with the *Process* api. [Implementation](https://github.com/crisfeim/cli-tddbuddy/blob/main/Sources/Core/Infrastructure/SwiftRunner.swift).
+
 <img src="images/concatenation.gif" alt="Concatenation" width="200px">
 
 ```swift
@@ -125,7 +126,7 @@ let tmpFileURL = tmFileURLWithTimestamp("generated.swift")
 swiftRunner.runCode(at: tmpFileURL)
 ```
 
-[^process]: *swiftc* invoked with the *Process* api. [Implementation](https://github.com/crisfeim/cli-tddbuddy/blob/main/Sources/Core/Infrastructure/SwiftRunner.swift).
+Here I'm using swift compiler, but of course, this could be applied to any language.
 
 If the process returns an exit code other than zero, it means the code execution failed. In that case, we repeat the cycle until the code is zero:
 
@@ -139,11 +140,9 @@ while output.processResult.exitCode != 0 {
 
 ## Try it Yourself
 
-I have prepared a javascript playground so you can test the concept.
+I have prepared an online playground so you can test the concept.
 
-Write the specifications on the left and hit the *play* button.
-
-I use *javascript's eval* method to evaluate the code. There's an injected `assertEqual` method so you can assert.
+Write the specifications on the left and hit the *play* button. *Javascript's eval* method is used to evaluate the code. There's an injected `assertEqual` method so you can assert.
 
 Available models are *GPT-3.5*[^llm7], *Gemini* (requires api-key) and *Llama3.2*.
 
@@ -231,7 +230,7 @@ return await this.iterator.iterate(
 
 ### Contracts
 
-To make the project flexible and *testable*, the actors are modeled with *protocols* instead of concrete implementations:
+To make the project flexible and simplify testing, the actors are modeled with *protocols* instead of concrete implementations:
 
 ```swift
 protocol Client {
@@ -251,7 +250,12 @@ protocol Reader {
 }
 ```
 
-Thanks to this approach, we can add new models, alternative runners, or even storage systems without touching the main program logic. This also simplifies testing.
+Thanks to this approach, we can add new models and alternative runners without altering the system:
+
+```swift
+let golangGenerator = Coordinator(claudeClient, golangRunner, filePersister)
+let elixirGenerator = Coordinator(chatGPTClient, elxirRunner, filePersister)
+```
 
 ## Data
 
@@ -261,7 +265,7 @@ I did a few tests with different specifications and models and originally planne
 
 [^coderunner]: With the *amazing CodeRunner app*
 
-Unfortunately, I lost the results of those few tests I did. Though, I have found some of the outputs from *Codestral*, you'll find the output code and specs generated in this online playgrounds:
+Unfortunately, I lost the results of those few tests I did and then I archived the project for a while. Though, I have found some of the outputs from *Codestral*, you'll find the output code and specs generated in this online playgrounds:
 
 {{< runnable "./results/codestral/FileImporter.swift.html">}}
 {{< runnable "./results/codestral/LineAppender.swift.html">}}
@@ -396,7 +400,7 @@ This idea assumes specifications you provide are completely adjusted to the syst
 
 It also assumes that the specifications have no logic errors. Which is less likely to happen, but it does.
 
-When developing using *TDD*, specification details usually "emerge" naturally as your understanding on the system grows: The process is a *framework* for thinking.
+When developing using *TDD*, specification details usually "emerge" naturally as your understanding on the system grows: The process is a *framework* for thinking and requirement clarification.
 
 Often we rewrite or eliminate tests as we learn about the system. So we never really start with final specs.
 
@@ -433,11 +437,11 @@ func test_coordinator_deliversDataOnPersisterSuccess() async {
 }
 ```
 
-I think those cases are "easy" enough to be successfully automated by this approach, but I've not tested the system yet with thise cases.
+I think those cases are "easy" enough to be successfully automated by this approach, but I've not tested that yet.
 
 ## Conclusions
 
-Although this experiment has clear limitations, I find it promising.
+Although this experiment has clear limitations, it seems promising.
 
 Finding useful application could free up time for more relevant development tasks, as long as the problem we provide to the model is well-scoped. In that sense, this type of system could be especially useful for repetitive or highly structured tasks.
 
@@ -447,7 +451,7 @@ The real challenge would be identifying useful opportunities and integrating thi
 
 There are many things left to explore. This was a proof of concept focused on the simplest possible flow, but there's room to make the system more robust, flexible, and useful in real contexts.
 
-Some directions I'd be love to explore:
+Some directions I'd love to explore:
 
 - Integrate an actual testing framework.
 - Automatically generate tests for common structures with mocking.
@@ -459,8 +463,8 @@ Some directions I'd be love to explore:
 - Use better models (*Claude* and *ChatGPT*).
 - Experimenting with compiler feedback preprocessing before passing it to the model to see if that actually improves speed.
 - Have a more academic aproach: Gather and present useful data for next articles (e.g.,  get the average number of iterations for a given problem per model by stressing it *N* times).
-- Expriment with different prompts.
-- Try the model format its response [as a parasable mini-dsl or json](https://github.com/crisfeim/poc-aidriven-app/blob/main/macApp/AI_Counter/SystemPrompt.swift) to avoid unwanted explanations or codeblocks (we may tell him to put those inside a value of the *json* dictionnary).
+- Experiment with different prompts.
+- Make the model format the responses [as a parsable mini-dsl or json](https://github.com/crisfeim/poc-aidriven-app/blob/main/macApp/AI_Counter/SystemPrompt.swift) to avoid unwanted explanations or codeblocks (by telling it to put them inside a field of the *json/dsl*).
 
 ## Links
 
