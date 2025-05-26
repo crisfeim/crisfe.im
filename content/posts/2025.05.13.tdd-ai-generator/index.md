@@ -471,3 +471,9 @@ Some directions I'd love to explore:
 1. [LLM7](llm7.io)
 2. [Playground source code](https://github.com/crisfeim/crisfe.im/tree/main/content/posts/2025.05.13.making-the-ai-suffer-so-you-dont-have-to/codegen-demo)
 3. [CLI (work in progress)](https://github.com/crisfeim/cli-tddbuddy)
+
+## Feedback
+
+If you have any feedback — technical, editorial, or otherwise — it's more than welcome.
+
+[📫 Reach me out!](mailto:cristian.rojas@live.fr?subject=Test-Driven%20Prompting%20Feedback)
