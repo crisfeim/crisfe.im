@@ -476,4 +476,4 @@ Some directions I'd love to explore:
 
 If you have any feedback — technical, editorial, or otherwise — it's more than welcome.
 
-[📫 Reach me out!](mailto:cristian.rojas@live.fr?subject=Test-Driven%20Prompting%20Feedback)
+[📫 Get in touch!](mailto:cristian.rojas@live.fr?subject=Test-Driven%20Prompting%20Feedback)
