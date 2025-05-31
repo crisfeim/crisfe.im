@@ -3,5 +3,12 @@
     "env": {
       "HUGO_VERSION": "0.110.0"
     }
-  }
+  },
+  "redirects": [
+      {
+        "source": "/:path((?!.*\\..*).+[^/])",
+        "destination": "/:path/",
+        "permanent": true
+      }
+    ]
 }
