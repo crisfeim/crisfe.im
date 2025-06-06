@@ -1,4 +1,5 @@
 - Refinar ul/ol estilos.
+- Como estoy añadiendo el script de minissg, tengo que añadir la licencia original. importante!
 - Coloración de sintáxis: Hay algún estilo que hace que el color sea más oscuro, interfiere con el color de solarized-light.
 - Focus on scroll
 - SPAlike navigation
