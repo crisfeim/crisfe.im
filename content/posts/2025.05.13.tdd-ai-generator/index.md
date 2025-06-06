@@ -39,7 +39,7 @@ I came up with a simple idea, algthought not original[^notoriginal]: an automate
 
 [^notoriginal]: [cf. github](https://github.com/search?q=tdd%20ai&type=repositories).
 
-If we use a test of a system without implementation as a *prompt*, we can ask the model to deduce it from the test assertions.
+If we use a test of an unimplemented system as a *prompt*, we can ask the model to deduce the implementation from the test itself.
 
 For example, this is explicit enough for the model to understand what we want:
 
@@ -50,7 +50,7 @@ func test_adder() {
 }
 ```
 
-From that unit test, the model will be able to generate any code variant that satisfies the assertions (e.g.):
+From that prompt, the model will be able to generate any code variant that satisfies the assertions (e.g.):
 
 ```swift
 struct Adder {
@@ -61,7 +61,7 @@ struct Adder {
 }
 ```
 
-This *prompt* format allows the model (🤖) to "communicate" directly with the execution environment (⚙️), automating code validity verification and the feedback loop as we can directly test he output of the model against the prompt itself.
+This *prompt* format allows the model (🤖) to "communicate" directly with the execution environment (⚙️), automating code validity verification and the feedback loop as we can directly test the output of the model against the prompt itself.
 
 If the generated code is invalid or doesn't pass the test, the cycle repeats. If the code is valid, we exit the loop.
 
@@ -69,7 +69,7 @@ If the generated code is invalid or doesn't pass the test, the cycle repeats. If
 
 ### Prompt
 
-This is the *prompt* used in the *POC*. It can certainly be improved, but it worked:
+This is the *prompt* used in the *POC*. It can certainly be improved, but it worked well enough for the current POC:
 
 > Imagine that you are a programmer and the user's responses are feedback from compiling your code in your development environment. Your responses are the code you write, and the user's responses represent the feedback, including any errors.
 >
@@ -216,7 +216,7 @@ iterator.iterate(
 )
 ```
 
-For simplicity, the web playground context contains only the result of the previous iteration which is often more than enough:
+For simplicity, the web playground context contains only the result of the previous iteration, which is often more than enough:
 
 ```ts
 let previousFeedback: string | undefined
@@ -469,11 +469,17 @@ Some directions I'd love to explore:
 ## Links
 
 1. [LLM7](llm7.io)
-2. [Playground source code](https://github.com/crisfeim/crisfe.im/tree/main/content/posts/2025.05.13.making-the-ai-suffer-so-you-dont-have-to/codegen-demo)
-3. [CLI (work in progress)](https://github.com/crisfeim/cli-tddbuddy)
+2. [Playground source code](https://github.com/crisfeim/crisfe.im/tree/main/content/posts/2025.05.13.tdd-ai-generator/demo)
+3. [CLI source code (work in progress)](https://github.com/crisfeim/cli-tddbuddy)
 
 ## Feedback
 
-If you have any feedback — technical, editorial, or otherwise — it's more than welcome.
+Any feedback — technical, editorial, or otherwise — is more than welcome. 
+
+> "We all need people who will give us feedback. That’s how we improve." — Bill Gates
+
+If you have thoughts, suggestions, or even gentle corrections, feel free to send me an email:
 
 [📫 Get in touch!](mailto:cristian.rojas@live.fr?subject=Test-Driven%20Prompting%20Feedback)
+
+
