@@ -474,12 +474,10 @@ Some directions I'd love to explore:
 
 ## Feedback
 
-Any feedback — technical, editorial, or otherwise — is more than welcome. 
+> We all need people who will give us feedback. That’s how we improve. — Bill Gates
 
-> "We all need people who will give us feedback. That’s how we improve." — Bill Gates
+Any feedback — technical, editorial, or otherwise — is more than welcome.
 
 If you have thoughts, suggestions, or even gentle corrections, feel free to send me an email:
 
 [📫 Get in touch!](mailto:cristian.rojas@live.fr?subject=Test-Driven%20Prompting%20Feedback)
-
-
