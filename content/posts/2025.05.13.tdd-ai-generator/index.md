@@ -471,13 +471,3 @@ Some directions I'd love to explore:
 1. [LLM7](llm7.io)
 2. [Playground source code](https://github.com/crisfeim/crisfe.im/tree/main/content/posts/2025.05.13.tdd-ai-generator/demo)
 3. [CLI source code (work in progress)](https://github.com/crisfeim/cli-tddbuddy)
-
-## Feedback
-
-> We all need people who will give us feedback. That’s how we improve. — Bill Gates
-
-Any feedback — technical, editorial, or otherwise — is more than welcome.
-
-If you have thoughts, suggestions, or even gentle corrections, feel free to send me an email:
-
-[📫 Get in touch!](mailto:cristian.rojas@live.fr?subject=Test-Driven%20Prompting%20Feedback)

@@ -259,17 +259,6 @@ These small changes not only reduce repetition and bugs, they also make your Vie
 
 In a time where UIKit is still very much alive in many codebases, small improvements like this can make day-to-day development a bit cleaner and more maintainable.
 
-## Feedback
-
-> We all need people who will give us feedback. That’s how we improve. — Bill Gates
-
-Any feedback — technical, editorial, or otherwise — is more than welcome.
-
-If you have thoughts, suggestions, or even gentle corrections, feel free to send me an email:
-
-[📫 Get in touch!](mailto:cristian.rojas@live.fr?subject=UIKit%20State%20Binding%20Feedback)
-
-
 ## Further reading
 
 - https://www.swiftbysundell.com/articles/modelling-state-in-swift/
