@@ -5,7 +5,7 @@ slug: test-driven-prompting-making-coffee-while-ai-writes-your-code
 og-image: images/system.png
 ---
 
-### tl;dr
+## tl;dr
 
 On building a system where an LLM writes code based on unit test specs, compiles it, runs it, and — if it fails — tries again until it gets it right. All without human feedback loops. This article explains the architecture, prompt setup, challenges, and some results I gathered while letting the machine suffer through trial and error.
 
