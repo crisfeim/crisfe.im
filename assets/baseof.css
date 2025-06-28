@@ -1,6 +1,10 @@
 html {font-size: 16px;}
 * {margin: 0;}
 
+*, *::before, *::after {
+  box-sizing: border-box;
+}
+
 body {
     max-width: 70ch;
     margin: auto;
@@ -18,3 +22,14 @@ body {
 
 a {filter: grayscale(1);}
 a:hover {filter: grayscale(0);}
+
+/* Typography */
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    font-size: 1rem;
+    margin-bottom: 1rem;
+}
