@@ -12,6 +12,15 @@ body {
   color: var(--text-color);
 }
 
+#writing {
+    margin-top: 128px;
+}
+
+#title {
+    margin-bottom: 32px;
+    font-weight: 500;
+}
+
 .year-section {
   --item-padding: 16px;
   display: grid;
@@ -98,6 +107,7 @@ body {
 {{ $pages := .Pages }}
 
 <section id="writing">
+    <h1 id="title">Writing</h1>
 {{ range $years }}
     {{ $year := . }}
   <div id="section-{{ $year }}" class="year-section">
