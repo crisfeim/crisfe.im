@@ -8,10 +8,22 @@ html {
     font-size: 16px;
 }
 
+:root {
+    --background-color: rgb(26,26,26);
+    --text-color: rgb(242,242,242);
+    --mono-9: rgb(112,112,112);
+    --mono-5: rgba(46,46,46)
+}
+
+body {
+  background: var(--background-color);
+  color: var(--text-color);
+}
+
+
 body {
     max-width: 70ch;
     margin: auto;
-    color: #303336;
     -webkit-font-smoothing: antialiased;
     font-family:
         ui-sans-serif,
