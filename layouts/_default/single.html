@@ -16,7 +16,7 @@
 {{ define "main" }}
 {{ $isServer := .Site.IsServer }}
 
-{{ partial "import-asset" (dict "isServer" $isServer "name" "single.css") }}
+{{ partial "imports/asset" (dict "isServer" $isServer "name" "single.css") }}
 {{ partial "postcss" . }}
 {{ partial "postjs" . }}
 
