@@ -39,7 +39,6 @@ blockquote {
 .footnotes p {margin-bottom: 0.5rem;}
 
 time {
-    font-size: 0.9rem;
     display: block;
     color: var(--mono-11);
     margin-bottom: 2rem;
