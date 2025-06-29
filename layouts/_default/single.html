@@ -16,6 +16,7 @@
 {{ define "main" }}
 {{ $isServer := .Site.IsServer }}
 
+{{ partial "imports/asset" (dict "isServer" $isServer "name" "syntax-highlighting.css") }}
 {{ partial "imports/asset" (dict "isServer" $isServer "name" "single.css") }}
 {{ partial "imports/single-css" . }}
 {{ partial "imports/single-js" . }}
