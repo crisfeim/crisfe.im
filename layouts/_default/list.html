@@ -28,7 +28,7 @@ body {
 
   time {
       color: var(--mono-9);
-      font-size: 0.8rem;
+      font-size: 0.9rem;
   }
 
   .post-list {
@@ -44,6 +44,7 @@ body {
          grid-template-columns: 1fr 60px;
          align-items: center;
          text-decoration: none;
+         transition: opacity 0.2s ease;
        }
 
        p {
@@ -61,11 +62,27 @@ body {
       border-bottom: 1px solid;
     }
   }
+
+  .post-list:hover .item a {
+    opacity: 0.4;
+  }
+
+  .post-list .item:hover a {
+    opacity: 1;
+  }
 }
 
 .year-section,
 .year-section .post-list .item:not(:last-child) {
     border-color: var(--mono-5);
+}
+
+#writing:has(.item:hover) .item a {
+  opacity: 0.4;
+}
+
+#writing:has(.item:hover) .item:hover a {
+  opacity: 1;
 }
 </style>
 
@@ -79,6 +96,8 @@ body {
 {{ end }}
 
 {{ $pages := .Pages }}
+
+<section id="writing">
 {{ range $years }}
     {{ $year := . }}
   <div id="section-{{ $year }}" class="year-section">
