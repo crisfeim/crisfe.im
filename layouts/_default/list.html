@@ -1,10 +1,103 @@
 {{ define "main" }}
-<h1>{{ .Title }}</h1>
-<ul>
-    {{ range .Pages }}
-    <li>
-        <a href="{{ .RelPermalink }}">{{ .Title }}</a>
-    </li>
-    {{ end }}
-</ul>
+<style>
+:root {
+    --background-color: rgb(26,26,26);
+    --text-color: rgb(242,242,242);
+    --mono-9: rgb(112,112,112);
+    --mono-5: rgba(46,46,46)
+}
+
+body {
+  background: var(--background-color);
+  color: var(--text-color);
+}
+
+.year-section {
+  display: grid;
+  grid-template-columns: 80px 1fr;
+  column-gap: 2rem;
+  border-top: 1px solid;
+
+  .year {
+      margin-top: 12px;
+  }
+
+  a {
+      color: var(--text-color);
+  }
+
+  time {
+      color: var(--mono-9);
+      font-size: 0.8rem;
+  }
+
+  .post-list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+
+    .item {
+       padding: 12px 0px;
+
+       a {
+         display: grid;
+         grid-template-columns: 1fr 60px;
+         align-items: center;
+         text-decoration: none;
+       }
+
+       p {
+         white-space: nowrap;
+         overflow: hidden;
+         text-overflow: ellipsis;
+       }
+
+       time {
+           text-align: right;
+       }
+    }
+
+    .item:not(:last-child) {
+      border-bottom: 1px solid;
+    }
+  }
+}
+
+.year-section,
+.year-section .post-list .item:not(:last-child) {
+    border-color: var(--mono-5);
+}
+</style>
+
+
+{{ $years := slice }}
+{{ range .Pages }}
+  {{ $year := .Date.Format "2006" }}
+  {{ if not (in $years $year) }}
+    {{ $years = $years | append $year }}
+  {{ end }}
+{{ end }}
+
+{{ $pages := .Pages }}
+{{ range $years }}
+    {{ $year := . }}
+  <div id="section-{{ $year }}" class="year-section">
+    <time id="{{ $year }}" class="year">{{ $year }}</time>
+    <ul class="post-list">
+      {{ range $pages }}
+
+      {{ if eq (.Date.Format "2006") $year }}
+        <li class="item">
+            <a href={{ .RelPermalink }}>
+            <p>{{ .Title }}</p>
+            <time date="{{ .Date.Format "2006-01-02" }}">{{ .Date.Format "2/6" }}</time>
+            </a>
+        </li>
+      {{ end }}
+      {{ end }}
+    </ul>
+    </div>
+{{ end }}
+
+</section>
 {{ end }}
