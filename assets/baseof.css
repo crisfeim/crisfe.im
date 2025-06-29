@@ -1,8 +1,11 @@
-html {font-size: 16px;}
+/* Reset */
 * {margin: 0;}
 
 *, *::before, *::after {
   box-sizing: border-box;
+}
+html {
+    font-size: 16px;
 }
 
 body {
@@ -20,9 +23,6 @@ body {
         sans-serif;
 }
 
-a {filter: grayscale(1);}
-a:hover {filter: grayscale(0);}
-
 /* Typography */
 h1,
 h2,
@@ -31,5 +31,4 @@ h4,
 h5,
 h6 {
     font-size: 1rem;
-    margin-bottom: 1rem;
 }
