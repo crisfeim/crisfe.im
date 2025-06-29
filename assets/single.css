@@ -56,7 +56,6 @@ time {
 pre {
     padding: 0.8rem;
     border-radius: 0.25rem;
-    filter: grayscale(1);
     overflow-x: scroll;
     font-size: 0.8125rem;
     border: 1px solid #D9D9D9;
