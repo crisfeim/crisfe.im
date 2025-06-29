@@ -57,7 +57,6 @@ pre {
     padding: 0.8rem;
     border-radius: 0.25rem;
     filter: grayscale(1);
-    background-color: rgba(0,0,0,0.025) !important;
     overflow-x: scroll;
     font-size: 0.8125rem;
     border: 1px solid #D9D9D9;
