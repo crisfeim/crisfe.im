@@ -1,36 +1,3 @@
 {{ define "main" }}
-
-{{ $years := slice }}
-{{ range .Pages }}
-  {{ $year := .Date.Format "2006" }}
-  {{ if not (in $years $year) }}
-    {{ $years = $years | append $year }}
-  {{ end }}
-{{ end }}
-
-{{ $pages := .Pages }}
-
-<section id="writing">
-    <h1 id="title">Writing</h1>
-{{ range $years }}
-    {{ $year := . }}
-  <div id="section-{{ $year }}" class="year-section">
-    <time id="{{ $year }}" class="year">{{ $year }}</time>
-    <ul class="post-list">
-      {{ range $pages }}
-
-      {{ if eq (.Date.Format "2006") $year }}
-        <li class="item">
-            <a href={{ .RelPermalink }}>
-            <p>{{ .Title }}</p>
-            <time date="{{ .Date.Format "2006-01-02" }}">{{ .Date.Format "2/6" }}</time>
-            </a>
-        </li>
-      {{ end }}
-      {{ end }}
-    </ul>
-    </div>
-{{ end }}
-
-</section>
+{{ partial "list.html" .Pages }}
 {{ end }}
