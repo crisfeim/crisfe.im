@@ -13,13 +13,13 @@ body {
 }
 
 .year-section {
+  --item-padding: 16px;
   display: grid;
   grid-template-columns: 80px 1fr;
   column-gap: 2rem;
   border-top: 1px solid;
-
   .year {
-      margin-top: 12px;
+      margin-top: var(--item-padding);
   }
 
   a {
@@ -37,7 +37,7 @@ body {
     padding: 0;
 
     .item {
-       padding: 12px 0px;
+       padding: var(--item-padding) 0px;
 
        a {
          display: grid;
