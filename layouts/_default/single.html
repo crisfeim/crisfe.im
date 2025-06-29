@@ -17,8 +17,8 @@
 {{ $isServer := .Site.IsServer }}
 
 {{ partial "imports/asset" (dict "isServer" $isServer "name" "single.css") }}
-{{ partial "postcss" . }}
-{{ partial "postjs" . }}
+{{ partial "imports/single-css" . }}
+{{ partial "imports/single-js" . }}
 
 <article>
     <h1>{{ .Title }}</h1>
