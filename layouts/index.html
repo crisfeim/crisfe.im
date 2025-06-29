@@ -8,4 +8,7 @@
 
 {{ define "main" }}
 {{ partial "list.html" .Site.RegularPages "Section" "posts" }}
+
+{{ $isServer := .Site.IsServer }}
+{{ partial "imports/asset" (dict "isServer" $isServer "name" "list.css") }}
 {{ end }}

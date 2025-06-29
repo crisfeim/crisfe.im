@@ -1,3 +1,5 @@
 {{ define "main" }}
 {{ partial "list.html" .Pages }}
+{{ $isServer := .Site.IsServer }}
+{{ partial "imports/asset" (dict "isServer" $isServer "name" "list.css") }}
 {{ end }}
