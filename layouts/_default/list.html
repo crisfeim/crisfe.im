@@ -1,5 +1,10 @@
 {{ define "main" }}
-{{ partial "list.html" .Pages }}
+
+<section id="writing">
+  <h1 id="title">Writing</h1>
+  {{ partial "list.html" .Pages }}
+</section>
+
 {{ $isServer := .Site.IsServer }}
 {{ partial "imports/asset" (dict "isServer" $isServer "name" "list.css") }}
 {{ end }}
