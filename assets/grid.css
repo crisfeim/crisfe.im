@@ -1,0 +1,28 @@
+:root {
+    --vertical-margin: 128px;
+    --width: 640px;
+}
+
+body {
+    min-width: var(--width);
+    max-width: 1072px;
+    margin: var(--vertical-margin) auto;
+}
+
+main {
+  display: grid;
+  grid-template-columns: 192px var(--width) 192px;
+  column-gap: 24px;
+  align-items: flex-start;
+}
+
+.sticky-aside {
+    position: sticky;
+    white-space: nowrap;
+    z-index: 1;
+    top: var(--vertical-margin);
+}
+
+.main-column {
+    grid-column: 2;
+}

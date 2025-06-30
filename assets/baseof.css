@@ -20,8 +20,6 @@ html {
 body {
     background-color: var(--background-color);
     color: var(--text-color);
-    max-width: 65ch;
-    margin: auto;
     -webkit-font-smoothing: antialiased;
     font-family:
         ui-sans-serif,

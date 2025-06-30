@@ -1,9 +1,13 @@
 {{ define "main" }}
-
-<section class="year-sections-container">
-  <h1 class="title">Writing</h1>
-  {{ partial "list.html" .Pages }}
-</section>
+<main>
+    <aside class="sticky-aside">
+        <nav><a href="/" class="index-link">↩︎ Index</a></nav>
+    </aside>
+    <section class="year-sections-container main-column">
+        <h1 class="title">Writing</h1>
+        {{ partial "list.html" .Pages }}
+    </section>
+</main>
 
 {{ $isServer := .Site.IsServer }}
 {{ partial "imports/asset" (dict "isServer" $isServer "name" "list.css") }}

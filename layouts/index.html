@@ -7,11 +7,12 @@
 {{ end }}
 
 {{ define "main" }}
-<section class="year-sections-container">
-    <h3 class="title">Writing</h3>
-{{ partial "list.html" .Site.RegularPages "Section" "posts" }}
- </section>
-
+<main>
+    <section class="year-sections-container main-column">
+        <h3 class="title">Writing</h3>
+    {{ partial "list.html" .Site.RegularPages "Section" "posts" }}
+    </section>
+</main>
 {{ $isServer := .Site.IsServer }}
 {{ partial "imports/asset" (dict "isServer" $isServer "name" "list.css") }}
 {{ end }}

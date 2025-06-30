@@ -11,5 +11,6 @@
     </head>
 
     {{ partial "imports/asset" (dict "isServer" $isServer "name" "baseof.css") }}
+    {{ partial "imports/asset" (dict "isServer" $isServer "name" "grid.css") }}
     {{ block "main" . }} baseof.html {{ end }}
 </html>
