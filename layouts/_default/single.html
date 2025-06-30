@@ -18,6 +18,7 @@
 
 {{ partial "imports/asset" (dict "isServer" $isServer "name" "syntax-highlighting.css") }}
 {{ partial "imports/asset" (dict "isServer" $isServer "name" "single.css") }}
+{{ partial "imports/asset" (dict "isServer" $isServer "name" "list.css") }}
 {{ partial "imports/single-css" . }}
 {{ partial "imports/single-js" . }}
 
@@ -42,11 +43,12 @@
         <time>{{ .Date.Format "January 2006" }}</time>
         <content>
             {{ $mainContent | safeHTML }}
-
+        </content>
+        <footer>
             {{ if $footnotes }}
                     {{ $footnotes | safeHTML }}
             {{ end }}
-        </content>
+        </footer>
     </article>
 </main>
 {{ end }}
