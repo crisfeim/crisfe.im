@@ -1,5 +1,10 @@
+UI:
+    - Spacing
+    - View transitions
+    - SPAlike navigation
+    - Responsiveness
+    - Custom mark: see https://rauno.me/craft/contrasting-aesthetics
 - Como estoy añadiendo el script de minissg, tengo que añadir la licencia original. importante!
-- SPAlike navigation
 - Eliminar `runnable` shortcode ?
 - Minificar hugo en vercel
 - Sitio multilengua: Activar español

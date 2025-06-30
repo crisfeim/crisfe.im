@@ -23,6 +23,6 @@ main {
     top: var(--vertical-margin);
 }
 
-.main-column {
-    grid-column: 2;
+main > :only-child {
+  grid-column: 2;
 }
