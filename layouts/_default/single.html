@@ -29,7 +29,9 @@
     <article>
         <h1>{{ .Title }}</h1>
         <time>{{ .Date.Format "January 2006" }}</time>
-        {{ .Content }}
+        <content>
+            {{ .Content }}
+        </content>
     </article>
 </main>
 {{ end }}

@@ -42,6 +42,17 @@ p > code {
     font-size: 0.8125rem;
 }
 
+content>:not(:last-child) {
+    margin-bottom: 28px;
+}
+
+content {
+    h2, h3, h4, h5, h6 {
+        margin-top: 32px;
+        margin-bottom: 4px !important;
+    }
+}
+
 .nav {
     #TableOfContents {
        ul {

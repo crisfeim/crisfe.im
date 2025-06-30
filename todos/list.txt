@@ -1,8 +1,14 @@
 UI:
-    - Spacing
+    - Defaults
+        - Spacing
+        - Selection
+        - Highlight --> add regex for ::syntax::
+        - Arrows: add regex for syntax
+        - Syntax highlighting
+            - Line highlighting
     - View transitions
     - SPAlike navigation
-    - Responsiveness
+    - Responsivenes
     - Custom mark: see https://rauno.me/craft/contrasting-aesthetics
 - Como estoy añadiendo el script de minissg, tengo que añadir la licencia original. importante!
 - Eliminar `runnable` shortcode ?
