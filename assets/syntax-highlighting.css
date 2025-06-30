@@ -1,3 +1,10 @@
+@import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono&display=swap');
+
+code,
+pre {
+  font-family: 'JetBrains Mono', monospace;
+}
+
 /* Background */ .bg { color: #d8dee9; background-color: #2e3440; }
 /* PreWrapper */ .chroma { color: #d8dee9; background-color: #2e3440; }
 /* Other */ .chroma .x {  }
