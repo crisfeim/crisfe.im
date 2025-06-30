@@ -21,9 +21,11 @@
 {{ partial "imports/single-css" . }}
 {{ partial "imports/single-js" . }}
 
-<article>
+<main>
+<article class="main-column">
     <h1>{{ .Title }}</h1>
     <time>{{ .Date.Format "January 2006" }}</time>
     {{ .Content }}
 </article>
+</main>
 {{ end }}
