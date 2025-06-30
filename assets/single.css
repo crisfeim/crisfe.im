@@ -42,23 +42,31 @@ p > code {
     font-size: 0.8125rem;
 }
 
-#TableOfContents {
-   ul {
-       list-style: none;
-       white-space: nowrap;
-       padding: 0;
-       li {
-           margin-bottom: 8px;
-           width: 15ch;
-           text-overflow: ellipsis;
-           overflow: hidden;
+.nav {
+    #TableOfContents {
+       ul {
+           list-style: none;
+           white-space: nowrap;
+           padding: 0;
+           li {
+               margin-bottom: 8px;
+               width: 15ch;
+               text-overflow: ellipsis;
+               overflow: hidden;
+           }
        }
-       a {
-           color: var(--mono-11);
-           font-size: 0.9rem;
-           text-decoration: none;
-       }
-   }
+    }
+
+    a {
+        color: var(--mono-11);
+        font-size: 0.9rem;
+        text-decoration: none;
+    }
+
+    .index-link {
+        display: block;
+        margin-bottom: 64px;
+    }
 }
 
 .footnotes {
