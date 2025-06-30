@@ -42,3 +42,13 @@ print("hello world")
 Inline codeblock `inlined`.
 
 ### View Transitions
+
+### Footnotes
+
+Paragraph with some[^some] footnotes[^footnotes] about[^about] random[^random] things[^things]
+
+[^some]: Some
+[^footnotes]: Footnotes
+[^about]: About
+[^random]: Random
+[^things]: Things
