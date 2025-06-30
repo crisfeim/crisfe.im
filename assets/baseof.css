@@ -30,7 +30,7 @@ body {
         sans-serif;
 }
 
-a, a:visited {
+a {
     color: var(--text-color);
     transition: opacity 0.2s ease;
 }

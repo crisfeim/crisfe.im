@@ -68,12 +68,6 @@ content {
        }
     }
 
-    a {
-        color: var(--mono-11);
-        font-size: 0.9rem;
-        text-decoration: none;
-    }
-
     .index-link {
         display: block;
         margin-bottom: 64px;

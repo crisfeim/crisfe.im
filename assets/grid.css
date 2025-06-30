@@ -14,6 +14,14 @@ main {
   grid-template-columns: 192px var(--width) 192px;
   column-gap: 24px;
   align-items: flex-start;
+
+  aside {
+      a {
+          color: var(--mono-11);
+          font-size: 0.9rem;
+          text-decoration: none;
+      }
+  }
 }
 
 main aside:first-child {
