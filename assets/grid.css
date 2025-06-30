@@ -21,6 +21,8 @@ main {
     white-space: nowrap;
     z-index: 1;
     top: var(--vertical-margin);
+    display: flex;
+    justify-content: flex-start;
 }
 
 .main-column {
