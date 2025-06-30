@@ -21,16 +21,31 @@
 {{ partial "imports/single-css" . }}
 {{ partial "imports/single-js" . }}
 
+{{ $content := .Content }}
+{{ $footnotes := "" }}
+{{ $mainContent := $content }}
+
+{{ $footnotesRegex := `(?s)<div class="footnotes"[^>]*>.*?</div>` }}
+{{ if findRE $footnotesRegex $content }}
+    {{ $footnotes = index (findRE $footnotesRegex $content) 0 }}
+    {{ $mainContent = replaceRE $footnotesRegex "" $content }}
+{{ end }}
+
 <main>
     <aside>
         <a href="/posts" class="index-link">↩︎</a>
         {{ .TableOfContents }}
+
     </aside>
     <article>
         <h1>{{ .Title }}</h1>
         <time>{{ .Date.Format "January 2006" }}</time>
         <content>
-            {{ .Content }}
+            {{ $mainContent | safeHTML }}
+
+            {{ if $footnotes }}
+                    {{ $footnotes | safeHTML }}
+            {{ end }}
         </content>
     </article>
 </main>
