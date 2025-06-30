@@ -16,7 +16,7 @@ main {
   align-items: flex-start;
 }
 
-.sticky-aside {
+main aside:first-child {
     position: sticky;
     white-space: nowrap;
     z-index: 1;
