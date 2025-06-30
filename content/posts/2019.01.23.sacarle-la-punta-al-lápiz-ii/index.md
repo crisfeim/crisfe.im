@@ -1,6 +1,5 @@
 ---
 title: Sacarle la punta al lápiz 2
-tags: ["escritura"]
 date: 2019-01-23
 ---
 
@@ -16,31 +15,31 @@ Entre la lista de herramientas y material de dibujo que compré _-y que están, 
 
 _Un par de pinceles completamente inmaculados_
 
-![](/media/pinceaux.jpg)
+![](pinceaux.jpg)
 
 _Pasteles sin tocar_
 
-![](/media/pastels.jpg)
+![](pastels.jpg)
 
 _Los famosos carboncillos..._
 
-![](/media/fusain.jpg)
+![](fusain.jpg)
 
 _Papel_
 
-![](/media/papier.jpg)
+![](papier.jpg)
 
 _Incluso una tableta gráfica semi-profesional que casi no utilicé y acabé por regalar hace poco a unos amigos..._
 
-![](/media/tablet.png)
+![](tablet.png)
 
 Mis expectativas al comenzar el verano eran algo así:
 
-![](/media/summer.png)
+![](summer.png)
 
 Pero mi verano fue algo más bien parecido a esto:
 
-![](/media/summer-reality.png)
+![](summer-reality.png)
 
 En fin, **una vergüenza...**
 

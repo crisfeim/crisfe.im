@@ -1,33 +1,31 @@
 ---
 title: El potencial de los objetivos numéricos
 date: 2019-08-07
-tags: ["objetivos"]
-featured: true
 ---
 
 Estás en el punto A.
 
-![](/media/objectifsa.png)
+![](objectifsa.png)
 
 Te gustaría estar en el punto B.
 
-![](/media/objectifsb.png)
+![](objectifsb.png)
 
 A y B están separados.
 
-![](/media/objectifsab.png)
+![](objectifsab.png)
 
 Para ir a B hay que caminar.
 
-![](/media/objectifsmarcher.png)
+![](objectifsmarcher.png)
 
 No conoces la distancia que separa los dos puntos. Sólo tienes una idea de en qué dirección se encunetra B.
 
-![](/media/objectifunknown.png)
+![](objectifunknown.png)
 
 Puedes, sin embargo, hacer una estimación...
 
-![10 km aprox?](/media/objectifs10km.png)
+![10 km aprox?](objectifs10km.png)
 
 Para ir a B podrías :
 
@@ -65,7 +63,7 @@ Estimaste que te tenías que caminar 10 Km y lo hiciste. Estableciste un _objeti
 
 Un objetivo es **un deseo**. El deseo de estar en B en lugar de en A.
 
-![](/media/objectifscommon.png)
+![](objectifscommon.png)
 
 Pero...
 
@@ -81,7 +79,7 @@ Pero, malas noticias...
 
 Siempre habrá una distancia que separará A y B.
 
-![](/media/objectifsepare.png)
+![](objectifsepare.png)
 
 No hay atajos. Si queremos ir a B deberemos atravasar esa distancia.
 
@@ -136,4 +134,4 @@ Pueden igualmente ayudarte a desarrollar nuevos — _y buenos_ — hábitos.
 Utilizo estos principios desde hace un par de meses con muy buenos resultados. Por el momento, y para que te hagas una idea de cómo puedes implementar estos principios, te dejo una imagen con mis objetivos de este verano y su estado actual :
 
  
-![Horas promedio de despertar/acostar. El resto es acumulativo](/media/objectifsaout.png)
+![Horas promedio de despertar/acostar. El resto es acumulativo](objectifsaout.png)
