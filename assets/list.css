@@ -2,6 +2,11 @@
 /* Components */
 .year-sections-container {
     margin-top: 128px;
+
+    .title {
+        margin-bottom: 32px;
+        font-weight: 500;
+    }
 }
 
 .year-sections-container:has(.item:hover) .item a {
@@ -10,11 +15,6 @@
 
 .year-sections-container:has(.item:hover) .item:hover a {
   opacity: 1;
-}
-
-.year-sections-container .title {
-    margin-bottom: 32px;
-    font-weight: 500;
 }
 
 .year-section {
