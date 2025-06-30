@@ -16,14 +16,14 @@
 {{ define "main" }}
 {{ $isServer := .Site.IsServer }}
 
-{{ partial "asset" (dict "isServer" $isServer "name" "single.css") }}
-{{ partial "postcss" . }}
-{{ partial "postjs" . }}
+{{ partial "imports/asset" (dict "isServer" $isServer "name" "syntax-highlighting.css") }}
+{{ partial "imports/asset" (dict "isServer" $isServer "name" "single.css") }}
+{{ partial "imports/single-css" . }}
+{{ partial "imports/single-js" . }}
 
 <article>
     <h1>{{ .Title }}</h1>
     <time>{{ .Date.Format "January 2006" }}</time>
-    {{ partial "feedback-buttons" . }}
     {{ .Content }}
     {{ partial "feedback-section" . }}
 </article>

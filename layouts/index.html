@@ -7,12 +7,8 @@
 {{ end }}
 
 {{ define "main" }}
-<div style="margin-top:120px">{{ .Content}}</div>
-<style>
-body {
-    background: black;
-    color: white;
-}
-</style>
+{{ partial "list.html" .Site.RegularPages "Section" "posts" }}
 
+{{ $isServer := .Site.IsServer }}
+{{ partial "imports/asset" (dict "isServer" $isServer "name" "list.css") }}
 {{ end }}

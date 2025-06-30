@@ -1,10 +1,5 @@
 {{ define "main" }}
-<h1>{{ .Title }}</h1>
-<ul>
-    {{ range .Pages }}
-    <li>
-        <a href="{{ .RelPermalink }}">{{ .Title }}</a>
-    </li>
-    {{ end }}
-</ul>
+{{ partial "list.html" .Pages }}
+{{ $isServer := .Site.IsServer }}
+{{ partial "imports/asset" (dict "isServer" $isServer "name" "list.css") }}
 {{ end }}
