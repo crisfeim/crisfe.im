@@ -25,7 +25,6 @@ main {
 
   aside:first-child {
       position: sticky;
-      white-space: nowrap;
       z-index: 1;
       top: var(--vertical-margin);
   }
