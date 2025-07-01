@@ -34,7 +34,7 @@
 
 <main>
     <aside>
-        <a href="/posts" class="index-link">↩︎</a>
+        <a href="/{{ .Section }}" class="index-link">↩︎</a>
         {{ .TableOfContents }}
 
     </aside>
@@ -49,6 +49,8 @@
                     {{ $footnotes | safeHTML }}
             {{ end }}
         </footer>
+
+        {{ partial "comments.html" . }}
     </article>
 </main>
 {{ end }}
