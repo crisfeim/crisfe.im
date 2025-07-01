@@ -3,3 +3,4 @@
 .hugo_build.lock
 /resources
 /todos/list.txt
+/content/posts/drafts/*
