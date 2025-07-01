@@ -1,0 +1,128 @@
+
+<style>
+
+comments {
+    ul {
+        list-style: none;
+        padding: 0;
+
+        li {
+            margin-bottom: 2rem;
+        }
+    }
+
+    form {
+        textarea {
+            background: transparent;
+            height: 8rem;
+            border: 1px solid var(--mono-5);
+            resize: none;
+            padding: 1rem;
+            font-size: 1rem;
+            color: var(--text-color);
+        }
+
+        button {
+            padding: 0rem 1rem;
+            height: 2rem;
+            float: right;
+            background-color: var(--mono-5);
+            border: none;
+            border-radius: 4px;
+            color: var(--text-color);
+            font-size: 1rem;
+        }
+    }
+
+    form::after {
+      content: "";
+      display: table;
+      clear: both;
+      margin-bottom: 3rem;
+    }
+
+    info {
+        display: flex;
+        gap: 0.5rem;
+        align-items: center;
+        justify-content: space-between;
+        margin-bottom: 12px;
+        .avatar {
+            border-radius: 4px;
+            width: 24px;
+            height: 24px;
+            margin: 0;
+        }
+
+        time {
+            margin: 0px;
+        }
+    }
+}
+</style>
+
+
+<section id="#comments">
+<h3>Comments</h3>
+<comments x-data="commentsApp()">
+    <form @submit.prevent="addComment" style="margin-bottom: 1rem;">
+       <label>
+         <textarea x-model="newComment" rows="3" placeholder="Write your comment here..." style="width: 100%;"></textarea>
+       </label>
+       <button type="submit">Post</button>
+     </form>
+
+  <ul>
+    <template x-for="comment in comments" :key="comment.id">
+      <li>
+          <info>
+              <a :href="'https://github.com/' + comment.userHandle" x-text="'@' + comment.userHandle"></a>
+            <time x-text="formatDate(comment.date)"></time>
+          </info>
+         <p x-text="comment.text"></p>
+      </li>
+    </template>
+  </ul>
+</comments>
+</section>
+
+<script src="//unpkg.com/alpinejs" defer></script>
+<script>
+  function commentsApp() {
+    return {
+      comments: [
+        {
+            id: 1,
+            userHandle: "alice",
+            text: "Great post!",
+            userAvatar: "https://cataas.com/cat",
+            date: Date()
+        },
+        {
+            id: 2,
+            userHandle: "bob",
+            text: "Thanks for sharing.",
+            userAvatar: "https://cataas.com/cat",
+            date: Date()
+        }
+      ],
+      newComment: "",
+      formatDate(dateString) {
+           const date = new Date(dateString);
+           return `${date.getDate()}/${date.getMonth() + 1}`;
+         },
+      addComment() {
+        const text = this.newComment.trim();
+        if (!text) return;
+        this.comments.push({
+          id: Date.now(),
+          userHandle: "guest",
+          text,
+          userAvatar: "https://cataas.com/cat", // o un placeholder
+          date: new Date()
+        });
+        this.newComment = "";
+      }
+    };
+  }
+</script>

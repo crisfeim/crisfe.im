@@ -49,6 +49,8 @@
                     {{ $footnotes | safeHTML }}
             {{ end }}
         </footer>
+
+        {{ partial "comments.html" . }}
     </article>
 </main>
 {{ end }}
