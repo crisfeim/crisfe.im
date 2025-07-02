@@ -46,11 +46,20 @@ content>:not(:last-child) {
     margin-bottom: 28px;
 }
 
+article {
+    header {
+        margin-bottom: 2rem;
+        h1 {
+            margin-bottom: 4px;
+        }
+    }
+}
+
 content {
     display: block;
     margin-bottom: 32px;
     h2, h3, h4, h5, h6 {
-        margin-top: 52px;
+        margin-top: 60px;
         margin-bottom: 8px !important;
         padding-bottom: 8px;
         border-bottom: 1px solid var(--mono-5);

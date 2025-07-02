@@ -34,13 +34,17 @@
 
 <main>
     <aside>
+
         <a href="/{{ .Section }}" class="index-link">↩︎</a>
         {{ .TableOfContents }}
 
     </aside>
     <article>
-        <h1>{{ .Title }}</h1>
-        <time>{{ .Date.Format "January 2006" }}</time>
+        <header>
+            <h1>{{ .Title }}</h1>
+              <time>{{ .Date.Format "January 2006" }}</time>
+        </header>
+
         <content>
             {{ $mainContent | safeHTML }}
         </content>
