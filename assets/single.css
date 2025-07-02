@@ -50,8 +50,10 @@ content {
     display: block;
     margin-bottom: 32px;
     h2, h3, h4, h5, h6 {
-        margin-top: 32px;
-        margin-bottom: 4px !important;
+        margin-top: 52px;
+        margin-bottom: 8px !important;
+        padding-bottom: 8px;
+        border-bottom: 1px solid var(--mono-5);
     }
 }
 
