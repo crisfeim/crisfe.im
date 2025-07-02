@@ -14,6 +14,7 @@ main {
   grid-template-columns: 192px var(--width) 192px;
   column-gap: 24px;
   align-items: flex-start;
+  position: relative;
 
   aside {
       a {
@@ -25,11 +26,16 @@ main {
 
   aside:first-child {
       position: sticky;
-      z-index: -1;
+      z-index: 1;
       top: var(--vertical-margin);
   }
 
   > :only-child {
     grid-column: 2;
+  }
+
+  *:nth-child(2) {
+    position: relative;
+    z-index: 1;
   }
 }
