@@ -3,6 +3,16 @@
     --width: 640px;
 }
 
+main {
+    aside {
+        a {
+            color: var(--mono-11);
+            font-size: 0.9rem;
+            text-decoration: none;
+        }
+    }
+}
+
 @media (min-width: 768px) {
     body {
         min-width: var(--width);
@@ -16,14 +26,6 @@
       column-gap: 24px;
       align-items: flex-start;
       position: relative;
-
-      aside {
-          a {
-              color: var(--mono-11);
-              font-size: 0.9rem;
-              text-decoration: none;
-          }
-      }
 
       aside:first-child {
           position: sticky;
