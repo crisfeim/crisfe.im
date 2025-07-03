@@ -139,3 +139,12 @@ aside {
         opacity: 0.6;
     }
 }
+
+del, sup a {
+    color: var(--mono-11);
+}
+
+em {
+    font-family: "Georgia";
+}
+
