@@ -46,6 +46,7 @@
         </header>
 
         <content>
+            {{ $mainContent :=  $mainContent | replaceRE `::(.*?)::` `<mark>$1</mark>` }}
             {{ $mainContent | safeHTML }}
         </content>
         <footer>
