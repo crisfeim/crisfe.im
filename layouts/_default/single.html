@@ -34,21 +34,16 @@
 
 <main>
     <aside>
-
         <a href="/{{ .Section }}" class="index-link">↩︎</a>
         {{ .TableOfContents }}
-
     </aside>
     <article>
         <header>
             <h1>{{ .Title }}</h1>
               <time>{{ .Date.Format "January 2006" }}</time>
         </header>
-
-        <content>
             {{ $mainContent :=  $mainContent | replaceRE `::(.*?)::` `<mark>$1</mark>` }}
             {{ $mainContent | safeHTML }}
-        </content>
         <footer>
             {{ if $footnotes }}
                     {{ $footnotes | safeHTML }}

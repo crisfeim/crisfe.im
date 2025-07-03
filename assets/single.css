@@ -1,7 +1,7 @@
 
 @media screen and (max-width: 768px) {
     article {
-        content {
+        > *:not(header):not(footer) {
             pre code > span {
                 display: inline !important;
                 font-size: inherit !important;
@@ -9,7 +9,6 @@
         }
     }
 }
-
 
 article {
     header {
@@ -25,7 +24,7 @@ article {
         }
     }
 
-    content {
+     > *:not(header):not(footer) {
         display: block;
         margin-bottom: 32px;
         h2, h3, h4, h5, h6 {
@@ -34,7 +33,6 @@ article {
             padding-bottom: 8px;
             border-bottom: 1px solid var(--mono-5);
         }
-
         hr {
             border: none;
             background-color: var(--mono-5);
@@ -42,7 +40,6 @@ article {
             margin: 32px auto !important;
             width: 240px;
         }
-
         pre {
             padding: 0.8rem;
             border-radius: 0.25rem;
@@ -54,7 +51,6 @@ article {
                 ui-monospace, SFMono-Regular, Menlo, "Andale Mono", Consolas, Monaco,
                 monospace;
         }
-
         p {
             transition: 0.3s ease color;
         }
@@ -66,12 +62,10 @@ article {
             border-radius: 0.25rem;
             font-size: 0.8125rem;
         }
-
         img, video {
             display: block;
             margin: auto
         }
-
         blockquote {
             padding: 0 1rem;
             font-style: italic;
@@ -82,10 +76,16 @@ article {
             max-width: 80%;
             text-align: center;
         }
+        del, sup a {
+            color: var(--mono-11);
+        }
+        em {
+            font-family: "Georgia";
+        }
     }
 
-    content>:not(:last-child) {
-        margin-bottom: 28px;
+    > *:not(header):not(footer):not(:last-child) {
+      margin-bottom: 28px;
     }
 }
 
@@ -160,12 +160,4 @@ aside {
         margin-left: 4px;
         opacity: 0.6;
     }
-}
-
-del, sup a {
-    color: var(--mono-11);
-}
-
-em {
-    font-family: "Georgia";
 }
