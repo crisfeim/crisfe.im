@@ -29,9 +29,11 @@
       color: var(--text-color);
   }
 
+
   time {
       color: var(--mono-9);
       font-size: 0.9rem;
+      font-weight: 500;
   }
 
   .post-list {
