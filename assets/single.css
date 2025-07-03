@@ -10,6 +10,7 @@
     }
 }
 
+
 article {
     header {
         margin-bottom: 2rem;
@@ -90,6 +91,7 @@ article {
 
 aside {
     #TableOfContents {
+        display :none;
        ul {
            list-style: none;
            padding: 0;
@@ -99,6 +101,10 @@ aside {
                text-overflow: ellipsis;
                overflow: hidden;
            }
+       }
+
+       @media (min-width: 768px) {
+           display: block
        }
     }
 
