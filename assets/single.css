@@ -40,7 +40,7 @@ pre {
     overflow-x: scroll;
     font-size: 0.8125rem;
     box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.05);
-
+    filter: grayscale(1);
     font-family:
         ui-monospace, SFMono-Regular, Menlo, "Andale Mono", Consolas, Monaco,
         monospace;
@@ -160,4 +160,3 @@ del, sup a {
 em {
     font-family: "Georgia";
 }
-
