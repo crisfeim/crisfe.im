@@ -1,83 +1,78 @@
 
 /* Components */
-.year-sections-container {
+.section {
     .title {
         margin-bottom: 32px;
         font-weight: 500;
     }
 }
 
-.year-sections-container:has(.item:hover) .item a {
+.section:has(.item:hover) .item a {
   opacity: 0.4;
 }
 
-.year-sections-container:has(.item:hover) .item:hover a {
+.section:has(.item:hover) .item:hover a {
   opacity: 1;
 }
 
-.year-section {
-  --item-padding: 16px;
-  display: grid;
-  grid-template-columns: 80px 1fr;
-  column-gap: 2rem;
-  border-top: 1px solid;
-  .year {
-      margin-top: var(--item-padding);
-  }
+.section {
+    section {
+        --item-padding: 16px;
+        display: grid;
+        grid-template-columns: 80px 1fr;
+        column-gap: 2rem;
+        border-top: 1px solid;
 
-  a {
-      color: var(--text-color);
-  }
+        time:first-child {
+            margin-top: var(--item-padding);
+        }
+        a {
+            color: var(--text-color);
+        }
+        time {
+            color: var(--mono-9);
+            font-size: 0.9rem;
+            font-weight: 500;
+        }
+        ul {
+            list-style: none;
+            margin: 0;
+            padding: 0;
 
+            li {
+                padding: var(--item-padding) 0px;
 
-  time {
-      color: var(--mono-9);
-      font-size: 0.9rem;
-      font-weight: 500;
-  }
+                a {
+                    display: grid;
+                    grid-template-columns: 1fr 60px;
+                    align-items: center;
+                    text-decoration: none;
+                    transition: opacity 0.2s ease;
+                }
+                p {
+                    white-space: nowrap;
+                    overflow: hidden;
+                    text-overflow: ellipsis;
+                }
+                time {
+                    text-align: right;
+                }
+            }
 
-  .post-list {
-    list-style: none;
-    margin: 0;
-    padding: 0;
-
-    .item {
-       padding: var(--item-padding) 0px;
-
-       a {
-         display: grid;
-         grid-template-columns: 1fr 60px;
-         align-items: center;
-         text-decoration: none;
-         transition: opacity 0.2s ease;
-       }
-
-       p {
-         white-space: nowrap;
-         overflow: hidden;
-         text-overflow: ellipsis;
-       }
-
-       time {
-           text-align: right;
-       }
+            li:not(:last-child) {
+                border-bottom: 1px solid;
+            }
+        }
+        ul:hover li a {
+            opacity: 0.4;
+        }
+        ul li:hover a {
+            opacity: 1;
+        }
     }
 
-    .item:not(:last-child) {
-      border-bottom: 1px solid;
+    section,
+    section ul li:not(:last-child) {
+        border-color: var(--mono-5);
     }
-  }
-
-  .post-list:hover .item a {
-    opacity: 0.4;
-  }
-
-  .post-list .item:hover a {
-    opacity: 1;
-  }
-}
-
-.year-section,
-.year-section .post-list .item:not(:last-child) {
-    border-color: var(--mono-5);
 }

@@ -13,12 +13,12 @@
     <h3 class="title">Writing</h3>
   {{- range $years }}
     {{- $year := . }}
-    <div id="section-{{ $year }}" class="year-section">
-      <time id="{{ $year }}" class="year">{{ $year }}</time>
-      <ul class="post-list">
+    <section>
+      <time>{{ $year }}</time>
+      <ul>
         {{- range $pages }}
           {{- if eq (.Date.Format "2006") $year }}
-            <li class="item">
+            <li>
               <a href="{{ .RelPermalink }}">
                 <p>{{ .Title }}</p>
                 <time date="{{ .Date.Format "2006-01-02" }}">{{ .Date.Format "2/1" }}</time>
@@ -27,6 +27,6 @@
           {{- end }}
         {{- end }}
       </ul>
-    </div>
+    </section>
   {{- end }}
 </section>
