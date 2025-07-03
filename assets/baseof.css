@@ -23,7 +23,7 @@ html {
 }
 
 body {
-    background-color: var(--background-color);
+    background-color: var(--chimero-bg);
     color: var(--text-color);
     -webkit-font-smoothing: antialiased;
     font-family:
