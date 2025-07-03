@@ -4,9 +4,19 @@ img, video {
 }
 
 blockquote {
-    border-left: 1px solid #D9D9D9;
-    padding: 0 1.5rem;
+    padding: 0 1rem;
     font-style: italic;
+    font-family: "Georgia";
+    color: var(--mono-11);
+    margin: 72px auto !important;
+    display: block;
+    max-width: 80%;
+    text-align: center;
+}
+
+
+p:hover {
+  color: white;
 }
 .footnotes hr {border: 0.8px solid #D9D9D9;}
 .footnotes p {margin-bottom: 0.5rem;}
@@ -36,6 +46,9 @@ pre {
         monospace;
 }
 
+p {
+    transition: 0.3s ease color;
+}
 p > code {
     padding: 0.2rem;
     border-radius: 0.25rem;
