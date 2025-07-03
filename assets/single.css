@@ -64,6 +64,14 @@ content {
         padding-bottom: 8px;
         border-bottom: 1px solid var(--mono-5);
     }
+
+    hr {
+        border: none;
+        background-color: var(--mono-5);
+        height: 1px;
+        margin: 32px auto !important;
+        width: 240px;
+    }
 }
 
 aside {
