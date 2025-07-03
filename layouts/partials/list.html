@@ -1,4 +1,5 @@
-{{- $pages := . -}}
+{{- $pages := .pages -}}
+{{- $title := .title -}}
 {{- $years := slice -}}
 
 {{- range $pages }}
@@ -8,7 +9,8 @@
   {{- end -}}
 {{- end }}
 
-
+<section class="year-sections-container">
+    <h3 class="title">{{ $title }}</h3>
   {{- range $years }}
     {{- $year := . }}
     <div id="section-{{ $year }}" class="year-section">
@@ -27,3 +29,4 @@
       </ul>
     </div>
   {{- end }}
+</section>

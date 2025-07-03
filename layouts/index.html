@@ -8,11 +8,9 @@
 
 {{ define "main" }}
 <main>
-    <section class="year-sections-container">
-        <h3 class="title">Writing</h3>
+
     {{ $posts := where .Site.RegularPages "Section" "posts" }}
-    {{ partial "list.html" $posts }}
-    </section>
+    {{ partial "list.html" (dict "pages" $posts "title" "Writing") }}
 </main>
 {{ $isServer := .Site.IsServer }}
 {{ partial "imports/asset" (dict "isServer" $isServer "name" "list.css") }}

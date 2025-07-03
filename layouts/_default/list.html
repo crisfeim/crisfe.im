@@ -3,10 +3,7 @@
     <aside>
         <nav><a href="/">↩︎</a></nav>
     </aside>
-    <section class="year-sections-container">
-        <h1 class="title">{{ .Title }}</h1>
-        {{ partial "list.html" .Pages }}
-    </section>
+        {{ partial "list.html" (dict "pages" .Pages "title" .Title) }}
 </main>
 
 {{ $isServer := .Site.IsServer }}
