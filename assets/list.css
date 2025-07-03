@@ -1,21 +1,21 @@
 
 /* Components */
-.section {
+.collection {
     .title {
         margin-bottom: 32px;
         font-weight: 500;
     }
 }
 
-.section:has(.item:hover) .item a {
+.collection:has(.item:hover) .item a {
   opacity: 0.4;
 }
 
-.section:has(.item:hover) .item:hover a {
+.collection:has(.item:hover) .item:hover a {
   opacity: 1;
 }
 
-.section {
+.collection {
     section {
         --item-padding: 16px;
         display: grid;
