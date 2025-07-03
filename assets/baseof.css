@@ -11,6 +11,9 @@ html {
 }
 
 :root {
+    --chimero-bg: #242120;
+    --chimero-text: rga(186,182,187);
+    --chimero-dim: rgba(121,118,115);
     --background-color: hsl(0,0%,8.5%);
     --background-color-1: rgb(26,26,26);
     --text-color: rgb(242,242,242);
