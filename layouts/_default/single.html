@@ -14,17 +14,40 @@
 {{ end }}
 
 {{ define "main" }}
-{{ $isServer := .Site.IsServer }}
 
-{{ partial "asset" (dict "isServer" $isServer "name" "single.css") }}
-{{ partial "postcss" . }}
-{{ partial "postjs" . }}
+{{ partial "import/styles" (dict "name" "syntax-highlighting.scss") }}
+{{ partial "import/styles" (dict "name" "single.scss") }}
+{{ partial "import/styles" (dict "name" "list.scss") }}
+{{ partial "import/single-css" . }}
+{{ partial "import/single-js" . }}
 
-<article>
-    <h1>{{ .Title }}</h1>
-    <time>{{ .Date.Format "January 2006" }}</time>
-    {{ partial "feedback-buttons" . }}
-    {{ .Content }}
-    {{ partial "feedback-section" . }}
-</article>
+{{ $content := .Content }}
+{{ $footnotes := "" }}
+{{ $mainContent := $content }}
+
+{{ $footnotesRegex := `(?s)<div class="footnotes"[^>]*>.*?</div>` }}
+{{ if findRE $footnotesRegex $content }}
+    {{ $footnotes = index (findRE $footnotesRegex $content) 0 }}
+    {{ $mainContent = replaceRE $footnotesRegex "" $content }}
+{{ end }}
+
+<main>
+    <aside>
+        <a href="/{{ .Section }}" class="index-link">↩︎</a>
+        {{ .TableOfContents }}
+    </aside>
+    <article>
+        <header>
+            <h1>{{ .Title }}</h1>
+              <time>{{ .Date.Format "January 2006" }}</time>
+        </header>
+            {{ $mainContent :=  $mainContent | replaceRE `::(.*?)::` `<mark>$1</mark>` }}
+            {{ $mainContent | safeHTML }}
+        <footer>
+            {{ if $footnotes }}
+                    {{ $footnotes | safeHTML }}
+            {{ end }}
+        </footer>
+    </article>
+</main>
 {{ end }}

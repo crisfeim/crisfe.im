@@ -1,0 +1,6 @@
+{{ with resources.Get .name | toCSS }}
+    {{ $min := . | resources.Minify }}
+    <style>
+        {{ $min.Content | safeCSS }}
+    </style>
+{{ end }}

@@ -1,10 +1,10 @@
 {{ define "main" }}
-<h1>{{ .Title }}</h1>
-<ul>
-    {{ range .Pages }}
-    <li>
-        <a href="{{ .RelPermalink }}">{{ .Title }}</a>
-    </li>
-    {{ end }}
-</ul>
+<main>
+    <aside>
+        <nav><a href="/">↩︎</a></nav>
+    </aside>
+        {{ partial "list.html" (dict "pages" .Pages "title" .Title) }}
+</main>
+
+{{ partial "import/styles" (dict "name" "list.scss") }}
 {{ end }}
