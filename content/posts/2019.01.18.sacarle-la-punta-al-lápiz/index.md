@@ -62,7 +62,9 @@ Es normal hacerse la pregunta: _Quién de entre nuestros héroes ha aprendido m�
 
 La última vez que lo vimos estaba sentado en un rinconcito de su habitación, triste y aburrido por no poder seguir dibujando...
 
-_Ya no tengo más material, que puedo hacer?_ - Se dijo con tristeza
+> _"Ya no tengo más material, que puedo hacer?"_
+
+—Se dijo con tristeza
 
 ![](mathieu3.png)
 
@@ -70,7 +72,7 @@ Fue entonces cuando una idea le llegó como un rayo
 
 ![](idea.png)
 
-_Podría vender alguno de mis dibujos!_
+> _"Podría vender alguno de mis dibujos!"_
 
 Cogío su cuaderno y se dispuso a echar un ojo.
 
@@ -93,7 +95,7 @@ Visitó sin parar varias galerías hasta encontrar un _Marchand_ dispuesto a pag
 
 Tras la venta obtuvo unas pocas monedas, aún así, más de lo que esperaba!
 
-_He obtenido suficentes **ontis** (la moneda del reino) para comprarme no sólo un cuaderno, sino dos! Y suficientes ontis para comprarme no solo un lápiz, sino un lápiz y acuarelas. Me gustaría probar esta técnica, así que compraré un cuaderno normal y un cuaderno de acuarelas!_
+> _"He obtenido suficentes **ontis** (la moneda del reino) para comprarme no sólo un cuaderno, sino dos! Y suficientes ontis para comprarme no solo un lápiz, sino un lápiz y acuarelas. Me gustaría probar esta técnica, así que compraré un cuaderno normal y un cuaderno de acuarelas!"_
 
 
 ![](outils.png)
@@ -106,8 +108,7 @@ Con una pequeña diferencia: Esta vez produjo pinturas de acuarela. Podía pues 
 
 Habiendo adquirido la experiencia necesaria para negociar, tomó de nuevo sus mejores obras del último tercio de sus cuadernos y se fue decidido a venderlas. Una vez más, no obtuvo mucho dinero. Sin embargo, obtuvo mucho más que la vez anterior. Dos opciones se presentaron entonces:
 
-
-_Puedo continuar comprando cuadernos de acuarela, o puedo utilizar estos ontis para lanzarme con la pintura al óleo_
+> _"Puedo continuar comprando cuadernos de acuarela, o puedo utilizar estos ontis para lanzarme con la pintura al óleo"_
 
 ![](mathieu4.png)
 
@@ -139,6 +140,6 @@ Este artículo puedo servirte como ejemplo: Hay probablemente faltas de ortograf
 
 No olvides, sin embargo que...
 
->Cuantos más lápices tengas, más díficil será sacarles punta a todos
+> Cuantos más lápices tengas, más díficil será sacarles punta a todos
 
 Mantente pues, sobrio y minimalista con tus posesiones y objetivos, para que puedas concentrarte realmente en lo que de verdad importa.
