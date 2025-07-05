@@ -4,7 +4,7 @@
 box-sizing: border-box;
 }
 
-codegen-demo { display: block }
+codegen-demo { display: block; }
 codegen-demo button {
     border: 0;
     background: none;
@@ -40,6 +40,7 @@ font-size: 16px;
 position: relative;
 border-radius: 4px;
 overflow: hidden;
+background: white;
 box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.05);
 font-family:
 ui-sans-serif,
