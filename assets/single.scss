@@ -82,6 +82,23 @@ article {
         em {
             font-family: "Georgia";
         }
+        mark {
+            background: transparent;
+            position: relative;
+            font-style: italic;
+            font-family: "Georgia"
+        }
+        mark::after {
+            background: rgb(255, 249, 168);
+            position: absolute;
+            left: 0;
+            right: 0;
+            top: 50%;
+            transform: translateY(-50%);
+            height: 24px;
+            content: '';
+            z-index: -1;
+        }
     }
 
     > *:not(header):not(footer):not(:last-child) {
