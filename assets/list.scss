@@ -63,16 +63,17 @@
                 border-bottom: 1px solid;
             }
         }
-        ul:hover li a {
-            opacity: 0.4;
-        }
-        ul li:hover a {
-            opacity: 1;
-        }
     }
 
     section,
     section ul li:not(:last-child) {
         border-color: var(--mono-5);
+    }
+
+    &:hover li a {
+        opacity: 0.4;
+    }
+    li:hover a {
+        opacity: 1;
     }
 }
