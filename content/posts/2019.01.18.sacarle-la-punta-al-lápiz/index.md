@@ -18,11 +18,11 @@ Dada su situación, Mateo solo pudo comprarse un modesto lapicito de madera junt
 Brutus, por el contrario, se vió bendecido con una vasta gama de productos y un taller personal digno del mejor de los profesionales.
 
 
-Sin embargo, Brutus no estaba satisfecho: la falta de stock de la tienda de arte le había impedido adquirir [carboncillos](https://fr.wikipedia.org/wiki/Fusain). 
+Sin embargo, Brutus no estaba satisfecho: la falta de stock de la tienda de arte le había impedido adquirir [carboncillos](https://fr.wikipedia.org/wiki/Fusain).
 
 En su colección de herramientas se observaban pasteles, acuarelas, cuadernos para pasteles, cuadernos para acuarelas...Incluso pinturas al óleo!
 
-Pero el quería sí o sí sus carboncillos! Sin carboncillos no podría empezar a estudiar pues era por esta técnica que quería comenzar su aprendizaje. 
+Pero el quería sí o sí sus carboncillos! Sin carboncillos no podría empezar a estudiar pues era por esta técnica que quería comenzar su aprendizaje.
 
 Brutus decidió pues, sabiamente -_ejem, ejem..._, esperar la llegada de los carboncillos que debía hacerse en el próximo desembarco proveniente del reino de **Small Hive.**
 
@@ -32,15 +32,15 @@ Durante este tiempo, nuestro amigo Mateo **se puso a dibujar**
 
 En algunos meses había hecho ya numerosos dibujos. Mateo dibujaba tanto que su única herramienta, su fiel lápiz empezó a achiquitarse. Pasando de esto:
 
-![](crayon2.png)
+<p><a href="crayon2.png"><img src="crayon2.png" alt="Crayon 1"></a></p>
 
 ...a esto
 
-![](crayon1.png)
+<p><a href="crayon1.png"><img src="crayon1.png" alt="Crayon 2"></a></p>
 
 ...y luego
 
-![](crayon3.png)
+<p><a href="crayon3.png"><img src="crayon3.png" alt="Crayon 3"></a></p>
 
 Al mes siguiente; Mateo agotó su lápiz y con él, todas las hojas de su cuaderno..
 
@@ -133,7 +133,7 @@ Bueno... Recibió sus preciados carboncillos, pero se dió cuenta que en su cole
 **Si en cambio, los regamos pacientemente, por muy modestos que sean recogeremos sí o sí frutos jugosos**
 
 Te invito, queido/a lector(a) a no dejarte obsesionar por el perfeccionismo y las excusas.
-Te invito a sacarle punta al lápiz hasta que no queda nada y por sobretodo **a hacerlo desde el principio**, sea cual sea tu proyecto o área. 
+Te invito a sacarle punta al lápiz hasta que no queda nada y por sobretodo **a hacerlo desde el principio**, sea cual sea tu proyecto o área.
 
 Este artículo puedo servirte como ejemplo: Hay probablemente faltas de ortografía, errores de estilo, etc...Pero no pienso esperar a que lleguen esos carboncillos para publicarlo!
 
