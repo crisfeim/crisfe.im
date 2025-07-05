@@ -1,7 +1,4 @@
-<div
-  x-data="likeComponent()"
-  x-init="init()"
->
+<div class="feedback-buttons" x-data="likeComponent()"  x-init="init()">
   <button @click="add('likes')">
     👍 <span x-show="loaded" x-transition x-text="likes"></span>
   </button>
@@ -9,7 +6,12 @@
     👎 <span x-show="loaded" x-transition x-text="dislikes"></span>
   </button>
 </div>
-
+<style>
+    .feedback-buttons {
+        margin: auto;
+        width: 200px;
+    }
+</style>
 <script>
 function likeComponent() {
   return {
