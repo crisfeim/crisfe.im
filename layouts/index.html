@@ -12,5 +12,6 @@
     {{ $posts := where .Site.RegularPages "Section" "posts" }}
     {{ partial "list.html" (dict "pages" $posts "title" "Writing") }}
 </main>
+{{ partial "import/styles" (dict "name" "grid.scss") }}
 {{ partial "import/styles" (dict "name" "list.scss") }}
 {{ end }}
