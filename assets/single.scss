@@ -10,6 +10,7 @@
     }
 }
 
+/* Primitives */
 article {
     header {
         margin-bottom: 2rem;
@@ -102,6 +103,7 @@ article {
     }
 }
 
+/* Grid */
 aside {
     #TableOfContents {
         display :none;
@@ -172,5 +174,20 @@ aside {
         font-size: 0.7rem;
         margin-left: 4px;
         opacity: 0.6;
+    }
+}
+
+
+/* Custom */
+article {
+    .framed {
+      background: white;
+      padding: 1rem;
+      border-radius: 1rem;
+      box-shadow: 0 12px 32px rgba(0, 0, 0, 0.25);
+      @media (min-width: 768px) {
+          margin: 0 -8rem;
+          z-index: 10;
+      }
     }
 }
