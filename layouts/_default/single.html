@@ -15,9 +15,9 @@
 
 {{ define "main" }}
 
-{{ partial "imports/asset" (dict "name" "syntax-highlighting.css") }}
-{{ partial "imports/asset" (dict "name" "single.css") }}
-{{ partial "imports/asset" (dict "name" "list.css") }}
+{{ partial "imports/styles" (dict "name" "syntax-highlighting.css") }}
+{{ partial "imports/styles" (dict "name" "single.css") }}
+{{ partial "imports/styles" (dict "name" "list.css") }}
 {{ partial "imports/single-css" . }}
 {{ partial "imports/single-js" . }}
 
