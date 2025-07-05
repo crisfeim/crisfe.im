@@ -40,10 +40,10 @@
             <h1>{{ .Title }}</h1>
               <time>{{ .Date.Format "January 2006" }}</time>
         </header>
-        <div>
+        <section>
             {{ $mainContent :=  $mainContent | replaceRE `::(.*?)::` `<mark>$1</mark>` }}
             {{ $mainContent | safeHTML }}
-        </div>
+        </section>
         <footer>
             {{ partial "feedback-buttons" }}
             {{ if $footnotes }}

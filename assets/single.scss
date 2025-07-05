@@ -29,7 +29,7 @@ article {
         }
     }
 
-     > *:not(header):not(footer) {
+     section {
         margin-bottom: 32px;
         h2, h3, h4, h5, h6 {
             margin-top: 60px;
@@ -91,7 +91,7 @@ article {
         }
     }
 
-    > *:not(header):not(footer):not(:last-child) {
+    section > * {
       margin-bottom: 28px;
     }
 }
