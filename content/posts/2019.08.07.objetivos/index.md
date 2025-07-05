@@ -105,11 +105,9 @@ No sería esta una mejor forma de vivir el presente mientras te acercas al mismo
 
 Si decides adoptar un objetivo numérico y estimas la distancia en 10 Km, tres situaciones son posibles :
 
-⒈ Tenías razón. A y B están separados por una distancia de 10 Km. Felicitaciones!
-
-⒉ A y B están más cerca de lo que creías.
-
-⒊ A y B estás separados por una distancia mayor a la que estimaste.
+1. Tenías razón. A y B están separados por una distancia de 10 Km. Felicitaciones!
+2. A y B están más cerca de lo que creías.
+3. A y B estás separados por una distancia mayor a la que estimaste.
 
 Como habrás adivinado, la última opción es la más probable, sin embargo...
 
@@ -125,7 +123,7 @@ Y sobre todo — _y créeme_ — estarás mucho más cerca de la meta.
 
 ### Conclusión
 
-Los objetivos numéricos tienen un potencial extraordinario para cambiar tu vida a mejor y acercarte más a ese futuro que deseas. 
+Los objetivos numéricos tienen un potencial extraordinario para cambiar tu vida a mejor y acercarte más a ese futuro que deseas.
 
 Fomentan el minimalismo, la apreciación y el mindfullness.
 
@@ -133,5 +131,5 @@ Pueden igualmente ayudarte a desarrollar nuevos — _y buenos_ — hábitos.
 
 Utilizo estos principios desde hace un par de meses con muy buenos resultados. Por el momento, y para que te hagas una idea de cómo puedes implementar estos principios, te dejo una imagen con mis objetivos de este verano y su estado actual :
 
- 
+
 ![Horas promedio de despertar/acostar. El resto es acumulativo](objectifsaout.png)
