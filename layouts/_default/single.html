@@ -43,6 +43,7 @@
             {{ $mainContent :=  $mainContent | replaceRE `::(.*?)::` `<mark>$1</mark>` }}
             {{ $mainContent | safeHTML }}
         <footer>
+            {{ partial "feedback-buttons" }}
             {{ if $footnotes }}
                     {{ $footnotes | safeHTML }}
             {{ end }}
