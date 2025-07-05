@@ -6,6 +6,6 @@
         {{ partial "list.html" (dict "pages" .Pages "title" .Title) }}
 </main>
 
-{{ partial "import/styles" (dict "name" "grid.scss") }}
-{{ partial "import/styles" (dict "name" "list.scss") }}
+{{ partial "import/styles" "grid.scss" }}
+{{ partial "import/styles" "list.scss" }}
 {{ end }}

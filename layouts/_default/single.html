@@ -15,8 +15,8 @@
 
 {{ define "main" }}
 
-{{ partial "import/styles" (dict "name" "syntax.scss") }}
-{{ partial "import/styles" (dict "name" "single.scss") }}
+{{ partial "import/styles" "syntax.scss" }}
+{{ partial "import/styles" "single.scss" }}
 {{ partial "import/single-css" . }}
 {{ partial "import/single-js" . }}
 
