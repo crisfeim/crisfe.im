@@ -175,22 +175,75 @@ These are the core components of the system:
 
 I comportamentized the generation and running logic of a single run into a subsystem:
 
-```
-Subsystem.genCode(specs, feedback?) → (GeneratedCode, Stdout/Stderr)
-  → LLM.send(specs + feedback) → GeneratedCode
-  → Concatenator.concatenate(GeneratedCode, Specs) → Concatenated
-  → SwiftRunner.run(Concatenated) → Stdout/Stderr
-  → Exit
+```goat
++------------------------------------------------------------+
+|                Subsystem.genCode(specs, feedback?)         |
+|                         |                                  |
+|                         v                                  |
+|                +------------------------+                  |
+|                |   LLM.send(specs+fb)   |                  |
+|                +------------------------+                  |
+|                         |                                  |
+|                         v                                  |
+|                +---------------------+                     |
+|                |    GeneratedCode    |                     |
+|                +---------------------+                     |
+|                         |                                  |
+|                         v                                  |
+|     +----------------------------------------------+       |
+|     | Concatenator.concatenate(GeneratedCode, Spec)|       |
+|     +----------------------------------------------+       |
+|                         |                                  |
+|                         v                                  |
+|                 +-------------------+                      |
+|                 |   Concatenated    |                      |
+|                 +-------------------+                      |
+|                         |                                  |
+|                         v                                  |
+|              +-------------------------+                   |
+|              | SwiftRunner.run(...)    |                   |
+|              +-------------------------+                   |
+|                         |                                  |
+|                         v                                  |
+|                +-------------------+                       |
+|                | Stdout / Stderr   |                       |
+|                +-------------------+                       |
+|                         |                                  |
+|                         v                                  |
+|                     +--------+                             |
+|                     |  Exit  |                             |
+|                     +--------+                             |
++------------------------------------------------------------+
 ```
 
 Then the system coordinates the iterations and pesist on success:
-```
-System.genCode(inputURL, outputURL, maxIterations)
-  → Context.save(IterationResult)
-  → Iterator.iterate(maxIterations, Subsystem.genCode)
-     isSuccess
-      ? Persister.save(outputURL, IterationResult)
-      :()
+
+```goat
++--------------------------------------------------------+
+|        System.genCode(inputURL, outputURL, maxIter)    |
+|                          |                             |
+|                          v                             |
+|               +------------------------+               |
+|               | Context.save(Result)  |                |
+|               +------------------------+               |
+|                          |                             |
+|                          v                             |
+|   +----------------------------------------------+     |
+|   | Iterator.iterate(maxIter, Subsystem.genCode) |     |
+|   +----------------------------------------------+     |
+|                          |                             |
+|                 +-----------------------------+        |
+|                 |    isSuccess ?              |        |
+|                 +-----------------------------+        |
+|                   |                    |               |
+|                  Yes                   No              |
+|                   |                    |               |
+|                   v                    v               |
+|   +--------------------------+     +----------------+  |
+|   | Persister.save(outputURL,|     |      ()        |  |
+|   |     IterationResult)     |     +----------------+  |
+|   +--------------------------+                         |
++--------------------------------------------------------+
 ```
 
 Iterator encapsulates the iteration logic and returns the last result:

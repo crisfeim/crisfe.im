@@ -12,6 +12,5 @@
     {{ $posts := where .Site.RegularPages "Section" "posts" }}
     {{ partial "list.html" (dict "pages" $posts "title" "Writing") }}
 </main>
-{{ $isServer := .Site.IsServer }}
-{{ partial "imports/asset" (dict "isServer" $isServer "name" "list.css") }}
+{{ partial "imports/asset" (dict "name" "list.css") }}
 {{ end }}

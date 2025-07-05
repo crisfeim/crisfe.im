@@ -6,6 +6,5 @@
         {{ partial "list.html" (dict "pages" .Pages "title" .Title) }}
 </main>
 
-{{ $isServer := .Site.IsServer }}
-{{ partial "imports/asset" (dict "isServer" $isServer "name" "list.css") }}
+{{ partial "imports/asset" (dict "name" "list.css") }}
 {{ end }}
