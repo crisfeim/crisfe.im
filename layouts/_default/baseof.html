@@ -9,7 +9,7 @@
         <title>{{ .Title }}</title>
     </head>
 
-    {{ partial "imports/styles" (dict "name" "baseof.css") }}
-    {{ partial "imports/styles" (dict "name" "grid.css") }}
+    {{ partial "import/styles" (dict "name" "baseof.css") }}
+    {{ partial "import/styles" (dict "name" "grid.css") }}
     {{ block "main" . }} baseof.html {{ end }}
 </html>
