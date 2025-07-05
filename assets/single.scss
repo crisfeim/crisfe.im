@@ -80,6 +80,10 @@ article {
         del, sup a {
             color: var(--mono-11);
         }
+
+        sup a {
+            text-decoration: none;
+        }
         em {
             font-family: "Georgia";
         }
@@ -123,15 +127,16 @@ aside {
 }
 
 .footnotes {
+    margin-top: 28px;
     font-size: 0.75rem;
     color: var(--mono-11);
-    line-height: 1.3;
 
-    p {margin-bottom: 0.5rem;}
+    p { margin-bottom: 0.5rem; }
 
     hr {
-        border-color: var(--mono-5);
-        margin-bottom: 32px;
+       border: none;
+       border-top: 1px solid var(--mono-5);
+       margin-bottom: 8px;
     }
 
     ol {
@@ -141,7 +146,6 @@ aside {
         counter-reset: footnote-counter;
 
         li {
-            margin-bottom: 12px;
             counter-increment: footnote-counter;
             position: relative;
             padding-left: 1.2em;
@@ -151,15 +155,8 @@ aside {
             content: counter(footnote-counter) ".";
             position: absolute;
             left: 0;
-            top: 5px;
             font-size: 0.7rem;
             font-weight: 500;
-
-            p {
-                margin: 0;
-                font-size: inherit;
-                line-height: inherit;
-            }
         }
     }
 
@@ -169,7 +166,6 @@ aside {
         opacity: 0.6;
     }
 }
-
 
 /* Custom */
 article {
