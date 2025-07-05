@@ -33,3 +33,7 @@ hstack{display:flex;align-self:stretch;align-items:center;flex-direction:row}hst
       z-index: 10;
   }
 }
+
+body {
+    background: saddlebrown;
+}

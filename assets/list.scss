@@ -1,19 +1,19 @@
-.collection {
+.list {
     h3 {
         margin-bottom: 32px;
         font-weight: 500;
     }
 }
 
-.collection:has(.item:hover) .item a {
+.list:has(.item:hover) .item a {
   opacity: 0.4;
 }
 
-.collection:has(.item:hover) .item:hover a {
+.list:has(.item:hover) .item:hover a {
   opacity: 1;
 }
 
-.collection {
+.list {
     section {
         --item-padding: 16px;
         display: grid;
