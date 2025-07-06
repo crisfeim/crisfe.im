@@ -247,9 +247,9 @@ Los que mejor desempeño tuvieron fueron *Claude* y *ChatGPT*.
 
 Aún con la pérdida del proyecto original, conservo algunos resultados de codestral:
 
-{{< runnable "./results/codestral/FileImporter.swift.html">}}
-{{< runnable "./results/codestral/LineAppender.swift.html">}}
-{{< runnable "./results/codestral/PasswordGenerator.swift.html">}}
+- [FileImporter](/results/codestral/FileImporter.swift.html)
+- [LineAppender](/results/codestral/LineAppender.swift.html)
+- [PasswordGenerator](/results/codestral/PasswordGenerator.swift.html)
 
 
 ## Problemas

@@ -328,9 +328,9 @@ I did a few tests with different specifications and models and originally planne
 
 Unfortunately, I lost the results of those few tests I did and then I archived the project for a while. Though, I have found some of the outputs from *Codestral*, you'll find the output code and specs generated in this online playgrounds:
 
-{{< runnable "./results/codestral/FileImporter.swift.html">}}
-{{< runnable "./results/codestral/LineAppender.swift.html">}}
-{{< runnable "./results/codestral/PasswordGenerator.swift.html">}}
+- [FileImporter](./results/codestral/FileImporter.swift.html)
+- [LineAppender](./results/codestral/LineAppender.swift.html)
+- [PasswordGenerator](./results/codestral/PasswordGenerator.swift.html)
 
 Hit the *play* button to see the running output (no output means no running errors)
 
