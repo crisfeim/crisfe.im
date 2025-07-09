@@ -31,7 +31,9 @@ I repeat the cycle until the generated code works.
 
 The goal was to remove the dev from from the equation, specifically, from steps *(2)* and *(3)*:
 
-<img src="images/loop.gif" alt="Loop" width="300px">
+<div class="framed">
+    <img src="images/loop.gif" alt="Loop" width="300px">
+</div>
 
 The ~~fantasy~~ idea was to achieve a flow where dev work would become writing *specs*, hitting the execute button, going for coffee, enjoying life and then returning 3 hours later to find the job done.
 
@@ -65,7 +67,9 @@ This *prompt* format allows the model (🤖) to "communicate" directly with the 
 
 If the generated code is invalid or doesn't pass the test, the cycle repeats. If the code is valid, we exit the loop.
 
-<img src="images/flow.gif" alt="Flow" width="100%">
+<div class="framed">
+    <img src="images/flow.gif" alt="Flow" width="100%">
+</div>
 
 ### Prompt
 
@@ -118,7 +122,9 @@ We concatenate the generated code and unit tests into a single text string that 
 
 [^process]: *swiftc* invoked with the *Process* api. [Implementation](https://github.com/crisfeim/cli-tddbuddy/blob/main/Sources/Core/Infrastructure/SwiftRunner.swift).
 
-<img src="images/concatenation.gif" alt="Concatenation" width="200px">
+<div class="framed">
+    <img src="images/concatenation.gif" alt="Concatenation" width="200px">
+</div>
 
 ```swift
 let concatenated = generatedCode + "\n" + unitTestsSpecs
@@ -150,7 +156,9 @@ Available models are *GPT-3.5*[^llm7], *Gemini* (requires api-key) and *Llama3.2
 
 To use *Llama3.2* you'll need to [download the demo's *index.html*](demo) and serve it from a local server.
 
+<div class="framed">
 {{< fragment "demo/index.html" >}}
+</div>
 
 ## System Design
 
@@ -167,22 +175,75 @@ These are the core components of the system:
 
 I comportamentized the generation and running logic of a single run into a subsystem:
 
-```
-Subsystem.genCode(specs, feedback?) → (GeneratedCode, Stdout/Stderr)
-  → LLM.send(specs + feedback) → GeneratedCode
-  → Concatenator.concatenate(GeneratedCode, Specs) → Concatenated
-  → SwiftRunner.run(Concatenated) → Stdout/Stderr
-  → Exit
+```goat
++------------------------------------------------------------+
+|                Subsystem.genCode(specs, feedback?)         |
+|                         |                                  |
+|                         v                                  |
+|                +------------------------+                  |
+|                |   LLM.send(specs+fb)   |                  |
+|                +------------------------+                  |
+|                         |                                  |
+|                         v                                  |
+|                +---------------------+                     |
+|                |    GeneratedCode    |                     |
+|                +---------------------+                     |
+|                         |                                  |
+|                         v                                  |
+|     +----------------------------------------------+       |
+|     | Concatenator.concatenate(GeneratedCode, Spec)|       |
+|     +----------------------------------------------+       |
+|                         |                                  |
+|                         v                                  |
+|                 +-------------------+                      |
+|                 |   Concatenated    |                      |
+|                 +-------------------+                      |
+|                         |                                  |
+|                         v                                  |
+|              +-------------------------+                   |
+|              | SwiftRunner.run(...)    |                   |
+|              +-------------------------+                   |
+|                         |                                  |
+|                         v                                  |
+|                +-------------------+                       |
+|                | Stdout / Stderr   |                       |
+|                +-------------------+                       |
+|                         |                                  |
+|                         v                                  |
+|                     +--------+                             |
+|                     |  Exit  |                             |
+|                     +--------+                             |
++------------------------------------------------------------+
 ```
 
 Then the system coordinates the iterations and pesist on success:
-```
-System.genCode(inputURL, outputURL, maxIterations)
-  → Context.save(IterationResult)
-  → Iterator.iterate(maxIterations, Subsystem.genCode)
-     isSuccess
-      ? Persister.save(outputURL, IterationResult)
-      :()
+
+```goat
++--------------------------------------------------------+
+|        System.genCode(inputURL, outputURL, maxIter)    |
+|                          |                             |
+|                          v                             |
+|               +------------------------+               |
+|               | Context.save(Result)  |                |
+|               +------------------------+               |
+|                          |                             |
+|                          v                             |
+|   +----------------------------------------------+     |
+|   | Iterator.iterate(maxIter, Subsystem.genCode) |     |
+|   +----------------------------------------------+     |
+|                          |                             |
+|                 +-----------------------------+        |
+|                 |    isSuccess ?              |        |
+|                 +-----------------------------+        |
+|                   |                    |               |
+|                  Yes                   No              |
+|                   |                    |               |
+|                   v                    v               |
+|   +--------------------------+     +----------------+  |
+|   | Persister.save(outputURL,|     |      ()        |  |
+|   |     IterationResult)     |     +----------------+  |
+|   +--------------------------+                         |
++--------------------------------------------------------+
 ```
 
 Iterator encapsulates the iteration logic and returns the last result:
@@ -267,9 +328,9 @@ I did a few tests with different specifications and models and originally planne
 
 Unfortunately, I lost the results of those few tests I did and then I archived the project for a while. Though, I have found some of the outputs from *Codestral*, you'll find the output code and specs generated in this online playgrounds:
 
-{{< runnable "./results/codestral/FileImporter.swift.html">}}
-{{< runnable "./results/codestral/LineAppender.swift.html">}}
-{{< runnable "./results/codestral/PasswordGenerator.swift.html">}}
+- [FileImporter](./results/codestral/FileImporter.swift.html)
+- [LineAppender](./results/codestral/LineAppender.swift.html)
+- [PasswordGenerator](./results/codestral/PasswordGenerator.swift.html)
 
 Hit the *play* button to see the running output (no output means no running errors)
 
