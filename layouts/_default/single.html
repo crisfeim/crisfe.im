@@ -18,7 +18,6 @@
 {{ partial "import/styles" "syntax.scss" }}
 {{ partial "import/styles" "single.scss" }}
 {{ partial "import/single/css" . }}
-{{ partial "import/single/js" . }}
 
 {{ $content := .Content }}
 {{ $footnotes := "" }}
@@ -50,4 +49,7 @@
         </footer>
     </article>
 </main>
+
+
+{{ partial "import/single/js" . }}
 {{ end }}
