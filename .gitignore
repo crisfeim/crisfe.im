@@ -3,7 +3,4 @@
 .hugo_build.lock
 /resources
 /todos/list.txt
-/content/drafts/*
-/content/design/*
-/content/components/*
-/content/shortcodes/*
+/content/untracked/*
