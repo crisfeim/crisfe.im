@@ -1,3 +1,7 @@
+{{ define "meta" }}
+    {{ partial "import/styles" "components/list.scss" }}
+{{ end }}
+
 {{ define "main" }}
 <main>
     <aside>
@@ -5,6 +9,4 @@
     </aside>
         {{ partial "list.html" (dict "pages" .Pages "title" .Title) }}
 </main>
-
-{{ partial "import/styles" "components/list.scss" }}
 {{ end }}
