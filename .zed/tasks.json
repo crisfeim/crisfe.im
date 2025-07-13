@@ -1,6 +1,6 @@
 [
     {
         "label": "hugo:serve",
-        "command": "hugo server --buildDrafts"
+        "command": "hugo server --buildDrafts --disableFastRender --navigateToChanged"
     }
 ]
