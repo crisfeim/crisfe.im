@@ -35,7 +35,9 @@
     <article>
         <header>
             <h1>{{ .Title }}</h1>
-              <time>{{ .Date.Format "January 2006" }}</time>
+            {{ with .Date }}
+                <time>{{ .Format "January 2006" }}</time>
+            {{ end }}
         </header>
         <section>
             {{ $mainContent :=  $mainContent | replaceRE `::(.*?)::` `<mark>$1</mark>` }}
