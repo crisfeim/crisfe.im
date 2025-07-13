@@ -9,7 +9,7 @@
 {{- end }}
 
 <section class="list">
-    <h3>Writing</h3>
+    {{ with .title }}<h3>{{ . }}</h3>{{ end }}
   {{- range $years }}
     {{- $year := . }}
     <section>
