@@ -31,7 +31,7 @@ I repeat the cycle until the generated code works.
 
 The goal was to remove the dev from from the equation, specifically, from steps *(2)* and *(3)*:
 
-<div class="framed">
+<div>
     <img src="images/loop.gif" alt="Loop" width="300px">
 </div>
 
@@ -67,7 +67,7 @@ This *prompt* format allows the model (🤖) to "communicate" directly with the 
 
 If the generated code is invalid or doesn't pass the test, the cycle repeats. If the code is valid, we exit the loop.
 
-<div class="framed">
+<div>
     <img src="images/flow.gif" alt="Flow" width="100%">
 </div>
 
@@ -122,7 +122,7 @@ We concatenate the generated code and unit tests into a single text string that 
 
 [^process]: *swiftc* invoked with the *Process* api. [Implementation](https://github.com/crisfeim/cli-tddbuddy/blob/main/Sources/Core/Infrastructure/SwiftRunner.swift).
 
-<div class="framed">
+<div>
     <img src="images/concatenation.gif" alt="Concatenation" width="200px">
 </div>
 
@@ -156,7 +156,7 @@ Available models are *GPT-3.5*[^llm7], *Gemini* (requires api-key) and *Llama3.2
 
 To use *Llama3.2* you'll need to [download the demo's *index.html*](demo) and serve it from a local server.
 
-<div class="framed">
+<div>
 {{< fragment "demo/index.html" >}}
 </div>
 
