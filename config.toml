@@ -22,5 +22,5 @@ description = "Technical blog and projects by Cristian Rojas. AI, development, a
 [markup.goldmark.renderer]
 unsafe = true
 [markup.highlight]
-noClasses = false
-style = "solarized-light"
+noClasses = true
+style = "nord"
