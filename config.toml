@@ -23,3 +23,6 @@ unsafe = true
 [markup.highlight]
 noClasses = true
 style = "nord"
+
+[permalinks]
+writing = "/writing/:slug"
