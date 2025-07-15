@@ -48,3 +48,13 @@ p {
     background-color: rgb(255, 249, 200);
     color: black;
 }
+
+main {
+    aside {
+        a {
+            color: var(--mono-11);
+            font-size: 0.9rem;
+            text-decoration: none;
+        }
+    }
+}
