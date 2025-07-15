@@ -2,5 +2,4 @@
 /public
 .hugo_build.lock
 /resources
-/todos/list.txt
 /content/untracked/*
