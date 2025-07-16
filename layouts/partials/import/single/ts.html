@@ -1,0 +1,7 @@
+{{- $main := .Page.Resources.Get "main.ts" -}}
+{{- if $main }}
+  {{- $built := $main | js.Build (dict "format" "esm" "sourceMap" "inline") | fingerprint -}}
+  <script type="module" src="{{ $built.RelPermalink }}"></script>
+{{- else }}
+  <!-- ⚠️ No main.ts found in Page Bundle -->
+{{- end }}
