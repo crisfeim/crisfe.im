@@ -6,7 +6,16 @@ title = 'crife.im'
 [[module.mounts]]
 source = 'content'
 target = 'content'
-excludeFiles = ['**/node_modules', '**/.zed']
+excludeFiles = [
+    '**/node_modules',
+    '**/.zed',
+    '**/lib',
+    '**tests',
+    '**.lock',
+    'deno.json',
+    '**.res',
+    '**/_**',
+]
 
 [markup.tableOfContents]
 startLevel = 2
