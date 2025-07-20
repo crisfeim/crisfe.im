@@ -7,12 +7,11 @@
 {{ end }}
 
 {{ define "main" }}
-<div style="margin-top:120px">{{ .Content}}</div>
-<style>
-body {
-    background: black;
-    color: white;
-}
-</style>
+<main>
 
+    {{ $posts := where .Site.RegularPages "Section" "writing" }}
+    {{ partial "list.html" (dict "pages" $posts "title" "Writing") }}
+</main>
+{{ partial "import/styles" "components/grid.scss" }}
+{{ partial "import/styles" "components/list.scss" }}
 {{ end }}

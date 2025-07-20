@@ -1,30 +1,53 @@
 {{ define "meta" }}
-<meta property="og:title" content="{{ .Title }}" />
-<meta property="og:url" content="{{ .Permalink }}" />
-<meta property="og:description" content="{{ .Summary | plainify | truncate 300 | htmlEscape }}" />
-<meta name="description" content="{{ .Summary | plainify | truncate 150 |  htmlEscape }}" />
-<script src="https://unpkg.com/alpinejs" defer></script>
-{{ $permalink := .Permalink }}
-{{ with index .Params "og-image" }}
-    {{ with $.Resources.Get . }}
-    <meta property="og:image" content="{{ .Permalink }}" />
-   {{ end }}
-{{ end }}
-
+    <meta property="og:title" content="{{ .Title }}" />
+    <meta property="og:url" content="{{ .Permalink }}" />
+    <meta property="og:description" content="{{ .Summary | plainify | truncate 300 | htmlEscape }}" />
+    <meta name="description" content="{{ .Summary | plainify | truncate 150 |  htmlEscape }}" />
+    {{ $permalink := .Permalink }}
+    {{ with index .Params "og-image" }}
+        {{ with $.Resources.Get . }}
+            <meta property="og:image" content="{{ .Permalink }}" />
+        {{ end }}
+    {{ end }}
+    {{ partial "import/styles" "syntax.scss" }}
+    {{ partial "import/styles" "single.scss" }}
+    {{ partial "import/single/css" . }}
 {{ end }}
 
 {{ define "main" }}
-{{ $isServer := .Site.IsServer }}
+{{ $content := .Content }}
+{{ $footnotes := "" }}
+{{ $mainContent := $content }}
 
-{{ partial "asset" (dict "isServer" $isServer "name" "single.css") }}
-{{ partial "postcss" . }}
-{{ partial "postjs" . }}
+{{ $footnotesRegex := `(?s)<div class="footnotes"[^>]*>.*?</div>` }}
+{{ if findRE $footnotesRegex $content }}
+    {{ $footnotes = index (findRE $footnotesRegex $content) 0 }}
+    {{ $mainContent = replaceRE $footnotesRegex "" $content }}
+{{ end }}
+<main>
+    <aside>
+        <a href="{{ .CurrentSection.RelPermalink }}" class="index-link">↩︎</a>
+    </aside>
+    <article>
+        <header>
+            <h1>{{ .Title }}</h1>
+            {{ with .Date }}
+                <time>{{ .Format "January 2006" }}</time>
+            {{ end }}
+        </header>
+        <section>
+            {{ $mainContent :=  $mainContent | replaceRE `::(.*?)::` `<mark>$1</mark>` }}
+            {{ $mainContent | safeHTML }}
+        </section>
+        <footer>
+            {{ if $footnotes }}
+                    {{ $footnotes | safeHTML }}
+            {{ end }}
+        </footer>
+    </article>
+</main>
 
-<article>
-    <h1>{{ .Title }}</h1>
-    <time>{{ .Date.Format "January 2006" }}</time>
-    {{ partial "feedback-buttons" . }}
-    {{ .Content }}
-    {{ partial "feedback-section" . }}
-</article>
+{{ partial "import/single/js" . }}
+{{ partial "import/single/ts" . }}
+{{ partial "import/single/src" . }}
 {{ end }}

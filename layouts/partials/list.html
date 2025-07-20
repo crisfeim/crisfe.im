@@ -1,0 +1,31 @@
+{{- $pages := .pages -}}
+{{- $years := slice -}}
+
+{{- range $pages }}
+  {{- $year := .Date.Format "2006" -}}
+  {{- if not (in $years $year) }}
+    {{- $years = $years | append $year -}}
+  {{- end -}}
+{{- end }}
+
+<section class="list">
+    {{ with .title }}<h3>{{ . }}</h3>{{ end }}
+  {{- range $years }}
+    {{- $year := . }}
+    <section>
+      <time>{{ $year }}</time>
+      <ul>
+        {{- range $pages }}
+          {{- if eq (.Date.Format "2006") $year }}
+            <li>
+              <a href="{{ .RelPermalink }}">
+                <p>{{ .Title }}</p>
+                <time date="{{ .Date.Format "2006-01-02" }}">{{ .Date.Format "2/1" }}</time>
+              </a>
+            </li>
+          {{- end }}
+        {{- end }}
+      </ul>
+    </section>
+  {{- end }}
+</section>

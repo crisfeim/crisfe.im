@@ -1,0 +1,165 @@
+body {
+    max-width: 70ch;
+    margin: auto;
+}
+
+@media screen and (max-width: 768px) {
+    article {
+        > *:not(header):not(footer) {
+            pre code > span {
+                display: inline !important;
+                font-size: inherit !important;
+            }
+        }
+    }
+}
+
+/* Primitives */
+article {
+    margin-top: 64px;
+    header {
+        margin-bottom: 2rem;
+        h1 {
+            margin-bottom: 4px;
+        }
+
+        time {
+            display: block;
+            color: var(--mono-11);
+            margin-bottom: 2rem;
+            font-size: 0.9rem;
+        }
+    }
+
+     section {
+        margin-bottom: 32px;
+        h2, h3, h4, h5, h6 {
+            margin-top: 60px;
+            margin-bottom: 8px !important;
+            padding-bottom: 8px;
+            border-bottom: 1px solid var(--mono-5);
+        }
+        hr {
+            border: none;
+            background-color: var(--mono-5);
+            height: 1px;
+            margin: 32px auto !important;
+            width: 240px;
+        }
+        pre {
+            padding: 0.8rem;
+            border-radius: 0.25rem;
+            overflow-x: scroll;
+            font-size: 0.8125rem;
+            box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.05);
+            /* filter: grayscale(1); */
+        }
+        p {
+            transition: 0.3s ease color;
+        }
+        p:hover {
+          color: white;
+        }
+        p > code {
+            padding: 0.2rem;
+            border-radius: 0.25rem;
+            font-size: 0.8125rem;
+        }
+        img, video {
+            display: block;
+            margin: auto
+        }
+        blockquote {
+            padding: 0 1rem;
+            font-style: italic;
+            font-family: "Georgia";
+            color: var(--mono-11);
+            margin: 72px auto !important;
+            display: block;
+            max-width: 80%;
+            text-align: center;
+        }
+        del, sup a {
+            color: var(--mono-11);
+        }
+
+        sup a {
+            text-decoration: none;
+        }
+        em {
+            font-family: "Georgia";
+        }
+        mark {
+            background:  rgb(255, 249, 168);
+            position: relative;
+            font-style: italic;
+            font-family: "Georgia"
+        }
+    }
+
+    section > * {
+      margin-bottom: 28px;
+    }
+}
+
+/* Grid */
+aside {
+    #TableOfContents {
+        display :none;
+       ul {
+           list-style: none;
+           padding: 0;
+           li {
+               margin-bottom: 12px;
+               width: 15ch;
+               text-overflow: ellipsis;
+               overflow: hidden;
+           }
+       }
+
+       @media (min-width: 768px) {
+           display: block
+       }
+    }
+}
+
+.footnotes {
+    margin-top: 28px;
+    font-size: 0.75rem;
+    color: var(--mono-11);
+
+    p { margin-bottom: 0.5rem; }
+
+    hr {
+       border: none;
+       border-top: 1px solid var(--mono-5);
+       margin-bottom: 8px;
+    }
+
+    ol {
+        padding-left: 0;
+        margin: 0;
+        list-style: none;
+        counter-reset: footnote-counter;
+
+        li {
+            counter-increment: footnote-counter;
+            position: relative;
+            padding-left: 1.2em;
+        }
+
+        li::before {
+            content: counter(footnote-counter) ".";
+            position: absolute;
+            left: 0;
+            font-size: 0.7rem;
+            font-weight: 500;
+        }
+    }
+
+    .footnote-backref {
+        font-size: 0.7rem;
+        margin-left: 4px;
+        opacity: 0.6;
+    }
+}

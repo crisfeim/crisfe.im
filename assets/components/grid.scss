@@ -1,0 +1,35 @@
+:root {
+    --vertical-margin: 128px;
+    --width: 640px;
+}
+
+@media (min-width: 768px) {
+    body {
+        min-width: var(--width);
+        max-width: 1072px;
+        margin: var(--vertical-margin) auto;
+    }
+
+    main {
+      display: grid;
+      grid-template-columns: 192px var(--width) 192px;
+      column-gap: 24px;
+      align-items: flex-start;
+      position: relative;
+
+      aside:first-child {
+          position: sticky;
+          z-index: 1;
+          top: var(--vertical-margin);
+      }
+
+      > :only-child {
+        grid-column: 2;
+      }
+
+      *:nth-child(2) {
+        position: relative;
+        z-index: 1;
+      }
+    }
+}

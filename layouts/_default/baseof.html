@@ -1,15 +1,20 @@
-{{ $isServer := .Site.IsServer }}
 <!DOCTYPE html>
 <html lang="{{ .Site.Language.Lang }}">
     <head>
         <meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
 
+        {{ if hugo.IsServer }}
+            <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+            <meta http-equiv="Pragma" content="no-cache">
+            <meta http-equiv="Expires" content="0">
+        {{ end }}
         {{ block "meta" .}} {{ end}}
 
+
+        {{ partial "import/styles" "reset.scss" }}
+        {{ partial "import/styles" "baseof.scss" }}
         <title>{{ .Title }}</title>
     </head>
-
-    {{ partial "asset" (dict "isServer" $isServer "name" "baseof.css") }}
     {{ block "main" . }} baseof.html {{ end }}
 </html>

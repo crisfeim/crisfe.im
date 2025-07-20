@@ -1,0 +1,6 @@
+[
+    {
+        "label": "hugo:serve",
+        "command": "hugo server --navigateToChanged --noHTTPCache --disableFastRender"
+    }
+]

@@ -1,0 +1,22 @@
+{{ $batch := js.Batch "js/sources" }}
+{{ $page := . }}
+{{ range .Page.Resources.Match "src/*.ts" }}
+  {{ $file := . }}
+  {{- $ts := $page.Page.Resources.Get $file }}
+  {{ $id := strings.TrimSuffix ".ts" .Name }}
+  {{ with $batch }}
+    {{ with .Group "main" }}
+        {{ with .Script "myscript" }}
+            {{ .SetOptions (dict "resource" $ts) }}
+        {{ end }}
+    {{ end }}
+  {{ end }}
+{{ end }}
+
+{{ with $batch.Build }}
+  {{ with index .Groups "main" }}
+    {{ range . }}
+      <script type="module" src="{{ .RelPermalink }}"></script>
+    {{ end }}
+  {{ end }}
+{{ end }}

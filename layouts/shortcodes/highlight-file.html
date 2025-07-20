@@ -1,0 +1,7 @@
+{{- $path := .Get 0 -}}
+{{- $base := .Page.File.Dir -}}
+{{- $full := path.Join $base $path -}}
+{{- $content := readFile $full -}}
+{{- $ext := path.Ext $path | strings.TrimPrefix "." -}}
+
+{{- highlight $content $ext "" -}}
