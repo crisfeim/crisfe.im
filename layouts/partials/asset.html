@@ -1,4 +1,4 @@
-{{ if .isServer }}
+{{ if hugo.IsServer }}
 <style id="server">
 {{ readFile (printf "assets/%s" .name) | safeCSS }}
 </style>

@@ -1,6 +1,6 @@
 {{- $page := . -}}
 
-{{ if $page.Site.IsServer }}
+{{ if hugo.IsServer }}
   {{ $path := path.Join $page.Page.File.Dir "main.js" }}
   {{ if fileExists $path }}
     <script id="server-postcss">
