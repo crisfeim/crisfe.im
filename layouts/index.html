@@ -4,87 +4,52 @@
   <meta property="og:url" content="{{ .Permalink }}" />
   <meta property="og:description" content="{{ site.Params.description }}" />
   <meta name="description" content="{{  site.Params.description }}" />
+
 {{ end }}
 
 {{ define "main" }}
-<iphone-se>
 
     <section style="
         height: 100vh;
-        padding-top:180px;
-        max-width: 319px;
-        border-bottom: 1px solid  rgba(0,0,0,0.1);">
+        padding-top:180px;">
     <p style="font-family: Georgia, serif; font-size: 20px;">
-        <span style="color: rgba(0,0,0,1)">Cristian F. Patiño Rojas.</span> Software Engineer, focussed on architecture & <span style="color: rgba(0,0,0,1)"><em>polished interfaces</em></span>.
+        <span style="color: rgba(0,0,0,1)">Cristian F. Patiño Rojas.</span><br/> Software Engineer. Crafting architectures & <span style="color: rgba(0,0,0,1)"><em>polished interfaces</em></span>.
     </p>
 
-       <p
-           style="margin-top: 36px">I want to build products others fall in love with.</p>
-
+       <p style="margin-top: 2rem">I want to build products others fall in love with.</p>
+       <a href="#next" style="position:absolute;bottom:1.5rem;right:1.5rem">v</a>
     </section>
-    <section style="margin-top: 28px">
-        <p style="font-family: Georgia;"><em>Work</em></p>
-        <div style="margin-top: 24px;">
-            <p style="color: black">Fueled</p>
-            <p style="margin-top: 16px">Creativity for enterprise and startups of the app store goldrush. Built a design team and culture.</p>
-            <a style="margin-top: 16px; display: inline-block" href="">View project</a>
-        </div>
 
-        <div style="margin-top: 48px;">
-            <p style="color: black">Fueled</p>
-            <p style="margin-top: 16px">Creativity for enterprise and startups of the app store goldrush. Built a design team and culture.</p>
-            <a style="margin-top: 16px; display: inline-block" href="">View project</a>
-        </div>
+    <style>
+        html, body {
+            overflow-x: hidden;
+
+        }
+        h3::after {
+            content: '';
+            height: 1px;
+            background: rgba(0, 0, 0, 0.1);
+            flex-grow: 1;
+            margin-left: 1rem;
+        }
+
+        h3 {
+            position: relative;
+            display: flex;
+            align-items: center;
+        }
+
+
+    </style>
+
+
+    <section id="next" style="height: 100vh">
+        <p style="font-family: Georgia; margin-top: 2rem"><em>Things I enjoy</em></p>
+        <section style="margin-top: 4rem">
+            <h3 style="color: black">Illustration</h3>
+            <div style="">
+            <img style="margin-top: 1rem" width="100%" src="/panda.jpeg"/>
+            </div>
+        </section>
     </section>
-</iphone-se>
-
-<style>
-html {
-    font-size: 16px;
-    font-family: Arial,sans-serif;
-    line-height: 1.5;
-    -webkit-font-smoothing: antialiased;
-    letter-spacing: 0.01em;
-}
-* {
-    margin: 0;
-    box-sizing: border-box;
-}
-
-
-body {
-    display: flex;
-    background: rgba(0,0,0,0.66);
-    align-items: center;
-    justify-content: center;
-    height: 100dvh;
-    color: rgba(0,0,0,0.66);
-}
-
-a {
-   color: black;
-   border-bottom: 1px solid rgba(0,0,0,0.15);
-   text-decoration: none;
-}
-
-iphone-se {
-    display: block;
-    width: 375px;
-    height: 667px;
-    background: white;
-    padding: 28px;
-    overflow: scroll;
-    box-shadow: rgba(0, 0, 0, 0.4) 5px 5px, rgba(0, 0, 0, 0.3) 10px 10px, rgba(0, 0, 0, 0.2) 15px 15px, rgba(0, 0, 0, 0.1) 20px 20px, rgba(0, 0, 0, 0.05) 25px 25px;
-}
-
-iphone-se {
-    -ms-overflow-style: none;
-    scrollbar-width: none;
-}
-iphone-se::-webkit-scrollbar {
-    display: none;
-}
-</style>
-
-
 {{ end }}

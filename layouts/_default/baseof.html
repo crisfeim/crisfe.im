@@ -4,10 +4,9 @@
     <head>
         <meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
-
         {{ block "meta" .}} {{ end}}
-
         <title>{{ .Title }}</title>
+
     </head>
 
     {{ partial "asset" (dict "isServer" $isServer "name" "baseof.css") }}

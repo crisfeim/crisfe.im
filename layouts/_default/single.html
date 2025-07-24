@@ -15,7 +15,6 @@
 
 {{ define "main" }}
 {{ $isServer := hugo.IsServer }}
-
 {{ partial "asset" (dict "isServer" $isServer "name" "single.css") }}
 {{ partial "postcss" . }}
 {{ partial "postjs" . }}
@@ -23,8 +22,6 @@
 <article>
     <h1>{{ .Title }}</h1>
     <time>{{ .Date.Format "January 2006" }}</time>
-    {{ partial "feedback-buttons" . }}
     {{ .Content }}
-    {{ partial "feedback-section" . }}
 </article>
 {{ end }}
