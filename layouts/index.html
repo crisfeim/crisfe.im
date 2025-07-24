@@ -4,7 +4,7 @@
   <meta property="og:url" content="{{ .Permalink }}" />
   <meta property="og:description" content="{{ site.Params.description }}" />
   <meta name="description" content="{{  site.Params.description }}" />
-
+{{ partial "import/styles" "list.scss" }}
 {{ end }}
 
 {{ define "main" }}
@@ -24,7 +24,7 @@
             overflow-x: hidden;
 
         }
-        h3::after {
+        h3.heading::after {
             content: '';
             height: 1px;
             background: rgba(0, 0, 0, 0.1);
@@ -32,7 +32,7 @@
             margin-left: 1rem;
         }
 
-        h3 {
+        h3.heading {
             position: relative;
             display: flex;
             align-items: center;
@@ -45,10 +45,18 @@
     <section id="next" style="height: 100vh">
         <p style="font-family: Georgia; margin-top: 2rem"><em>Things I enjoy</em></p>
         <section style="margin-top: 4rem">
-            <h3 style="color: black">Illustration</h3>
+            <h3 style="color: black" class="heading">Illustration</h3>
             <div style="">
             <img style="margin-top: 1rem" width="100%" src="/panda.jpeg"/>
             </div>
         </section>
+    </section>
+
+    <section style="height: 100vh">
+
+
+        {{ $posts := where .Site.RegularPages "Section" "posts" }}
+           {{ partial "list.html" (dict "pages" $posts "title" "Writing") }}
+
     </section>
 {{ end }}

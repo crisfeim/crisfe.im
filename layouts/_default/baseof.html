@@ -10,6 +10,6 @@
 
     </head>
 
-    {{ partial "asset" (dict "isServer" $isServer "name" "baseof.css") }}
+    {{ partial "import/styles" "baseof.scss" }}
     {{ block "main" . }} baseof.html {{ end }}
 </html>
