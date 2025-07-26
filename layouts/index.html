@@ -19,42 +19,8 @@
        <p style="margin-top: 2rem">I want to build products others fall in love with.</p>
     </section>
 
-    <style>
-        html, body {
-            overflow-x: hidden;
-
-        }
-        h3.heading::after {
-            content: '';
-            height: 1px;
-            background: rgba(0, 0, 0, 0.1);
-            flex-grow: 1;
-            margin-left: 1rem;
-        }
-
-        h3.heading {
-            position: relative;
-            display: flex;
-            align-items: center;
-        }
-
-
-    </style>
-
-
-    <section id="next">
-        <p style="font-family: Georgia; margin-top: 2rem"><em>Things I enjoy</em></p>
-        <section style="margin-top: 4rem">
-            <h3 style="color: black" class="heading">Illustration</h3>
-            <div style="">
-            <img style="margin-top: 1rem" width="100%" src="/untracked/panda.jpeg"/>
-            </div>
-        </section>
-    </section>
-
     <section style="margin-top: 4rem">
-        {{ $posts := where .Site.RegularPages "Section" "posts" }}
-           {{ partial "list.html" (dict "pages" $posts "title" "Writing") }}
-
+        {{ $posts := where .Site.RegularPages "Section" "writing" }}
+        {{ partial "list.html" (dict "pages" $posts "title" "Writing") }}
     </section>
 {{ end }}
