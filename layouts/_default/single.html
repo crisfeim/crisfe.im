@@ -15,6 +15,7 @@
 
 {{ define "main" }}
 {{ $isServer := hugo.IsServer }}
+
 {{ partial "asset" (dict "isServer" $isServer "name" "single.css") }}
 {{ partial "postcss" . }}
 {{ partial "postjs" . }}

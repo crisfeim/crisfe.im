@@ -7,9 +7,10 @@ title = 'crife.im'
 [[module.mounts]]
 source = 'content'
 target = 'content'
-excludeFiles = ['node_modules/a.*']
-
-
+excludeFiles = [
+    '**/node_modules',
+    '**/_**',
+]
 
 [params]
 description = "Technical blog and projects by Cristian Rojas. AI, development, and custom tools."
