@@ -1,6 +1,6 @@
 [
     {
         "label": "Serve",
-        "command": "hugo server -d /tmp/hugo/@crisfe.im"
+        "command": "hugo server --ignoreCache --noHTTPCache --navigateToChanged -d /tmp/hugo/@crisfe.im"
     }
 ]
