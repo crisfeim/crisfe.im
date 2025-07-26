@@ -1,0 +1,6 @@
+[
+    {
+        "label": "Serve",
+        "command": "hugo server -d /tmp/hugo/@crisfe.im"
+    }
+]
