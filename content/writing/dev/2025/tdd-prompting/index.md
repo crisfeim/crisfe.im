@@ -1,7 +1,6 @@
 ---
 title: "Test-Driven Prompting: Making Coffee While AI Writes Your Code?"
 date: 2025-05-13
-slug: test-driven-prompting-making-coffee-while-ai-writes-your-code
 og-image: images/system.png
 ---
 

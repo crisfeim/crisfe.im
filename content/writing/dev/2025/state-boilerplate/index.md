@@ -1,7 +1,6 @@
 ---
 title: Reducing Boilerplate in UIKit State Binding
 date: 2025-06-11
-slug: reducing-boilerplate-in-uikit-state-binding
 ---
 
 ## tl;dr
