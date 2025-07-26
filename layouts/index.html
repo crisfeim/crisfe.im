@@ -42,19 +42,17 @@
     </style>
 
 
-    <section id="next" style="height: 100vh">
+    <section id="next">
         <p style="font-family: Georgia; margin-top: 2rem"><em>Things I enjoy</em></p>
         <section style="margin-top: 4rem">
             <h3 style="color: black" class="heading">Illustration</h3>
             <div style="">
-            <img style="margin-top: 1rem" width="100%" src="/panda.jpeg"/>
+            <img style="margin-top: 1rem" width="100%" src="/untracked/panda.jpeg"/>
             </div>
         </section>
     </section>
 
-    <section style="height: 100vh">
-
-
+    <section style="margin-top: 4rem">
         {{ $posts := where .Site.RegularPages "Section" "posts" }}
            {{ partial "list.html" (dict "pages" $posts "title" "Writing") }}
 

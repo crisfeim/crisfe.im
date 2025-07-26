@@ -1,3 +1,6 @@
+{{ define "meta" }}
+{{ partial "import/styles" "list.scss" }}
+{{ end }}
 {{ define "main" }}
-{{ partial "list.html" .Pagesst }}
+{{ partial "list.html" (dict "pages" .Pages "title" .Title) }}
 {{ end }}
