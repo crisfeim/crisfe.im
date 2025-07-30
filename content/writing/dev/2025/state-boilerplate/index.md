@@ -3,13 +3,6 @@ title: Reducing Boilerplate in UIKit State Binding
 date: 2025-06-11
 ---
 
-## tl;dr
-
-Tired of writing `isHidden = true` three times every time you bind view state?
-This article walks through a small refactor to reduce repetitive UIKit state-binding boilerplate — making your code clearer and easier to maintain.
-
-## Introduction
-
 Modeling the state of asynchronous screens using an enum with associated values is a useful and common pattern.
 
 It collapses multiple sources of truth into a single state object, eliminating optionals and reducing complexity:
@@ -257,10 +250,3 @@ class SomeViewController {
 These small changes not only reduce repetition and bugs, they also make your ViewControllers more declarative and less error prone.
 
 In a time where UIKit is still very much alive in many codebases, small improvements like this can make day-to-day development a bit cleaner and more maintainable.
-
-## Further reading
-
-- https://www.swiftbysundell.com/articles/modelling-state-in-swift/
-- https://www.swiftbysundell.com/tips/using-associated-enum-values-to-avoid-state-specific-optionals/
-- https://svelte.dev/blog/write-less-code
-- https://blog.jstassen.com/2023/11/naming-booleans-readable-code-with-affirmative-boolean

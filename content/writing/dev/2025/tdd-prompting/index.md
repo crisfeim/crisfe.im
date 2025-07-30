@@ -1,14 +1,8 @@
 ---
-title: "Test-Driven Prompting: Making Coffee While AI Writes Your Code?"
+title: "Test-Driven Prompting for AI Code generation"
 date: 2025-05-13
 og-image: images/system.png
 ---
-
-## tl;dr
-
-On building a system where an LLM writes code based on unit test specs, compiles it, runs it, and — if it fails — tries again until it gets it right. All without human feedback loops. This article explains the architecture, prompt setup, challenges, and some results I gathered while letting the machine suffer through trial and error.
-
-## Introduction
 
 What happens if you delegate the boring work to an AI?
 
@@ -455,16 +449,8 @@ Some directions I'd love to explore:
 
 - Integrate an actual testing framework.
 - Automatically generate tests for common structures with mocking.
-- Use design mockups as a specification and validate output with snapshot assertions.
 - Execute parallel requests with multiple models and break iteration as soon as one passes the test.
-- Dynamically adjust the prompt based on *N* consecutive failures, using another model as a refiner.
-- Incremental unit test with validated steps being commited to git so we prevent regresions and facilitate problem digestion to the model.
-- Look for opportunities to integrate this idea in daily workflows.
-- Use better models (*Claude* and *ChatGPT*).
-- Experimenting with compiler feedback preprocessing before passing it to the model to see if that actually improves speed.
-- Have a more academic aproach: Gather and present useful data for next articles (e.g.,  get the average number of iterations for a given problem per model by stressing it *N* times).
-- Experiment with different prompts.
-- Make the model format the responses [as a parsable mini-dsl or json](https://github.com/crisfeim/poc-aidriven-app/blob/main/macApp/AI_Counter/SystemPrompt.swift) to avoid unwanted explanations or codeblocks (by telling it to put them inside a field of the *json/dsl*).
+
 
 ## Links
 
