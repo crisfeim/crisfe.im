@@ -1,0 +1,23 @@
+
+.footnotes {
+    margin-top: 6rem;
+}
+.footnotes li p {
+   margin-bottom: 0;
+}
+
+a.footnote-ref,
+a.footnote-backref {
+    text-decoration: none;
+}
+
+a.footnote-ref {
+    font-family: ui-monospace;
+    color: gray;
+    @include reset-font-smoothing;
+    font-weight: 500;
+}
+
+a.footnote-ref:hover {
+    color: black;
+}

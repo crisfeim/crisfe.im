@@ -7,13 +7,18 @@ html {
     scroll-behavior: smooth;
 }
 
-h1, h2, h3, h4, h5, h6 {
-    font-size: 1rem;
+@mixin reset-font-smoothing {
     -webkit-font-smoothing: initial;
     -moz-osx-font-smoothing: initial;
+}
+
+h1, h2, h3, h4, h5, h6 {
+    font-size: 1rem;
     font-weight: normal;
+    @include reset-font-smoothing;
 }
 
 em {
-    font-family: Georgia, serif;
+    font-family: Palatino, "Book Antiqua", Georgia, serif;
+    @include reset-font-smoothing;
 }

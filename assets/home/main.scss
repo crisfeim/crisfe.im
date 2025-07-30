@@ -1,2 +1,19 @@
 @import "../baseof/main";
 @import "../components/animation";
+
+body {
+    padding-top: 6rem;
+}
+
+@font-face {
+  font-family: 'Ovo';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url(/ovo-amp.woff2) format('woff2');
+  unicode-range: U+0026;
+}
+
+.amp {
+    font-family: 'Ovo', Palatino, Georgia, serif;
+}

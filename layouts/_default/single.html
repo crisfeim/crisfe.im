@@ -10,11 +10,13 @@
 
 {{ define "main" }}
     <article>
-        <h1>{{ .Title }}</h1>
+        <h1 data-anim="0">{{ .Title }}</h1>
         {{ with .Date }}
-            <time>{{ .Format "January 2006" }}</time>
+        <time data-anim="1">{{ .Format "January 2, 2006" }}</time>
         {{ end }}
+        <section data-anim="2">
         {{ .Content }}
+        </section>
     </article>
     {{ partial "single/customizations" . }}
 {{ end }}

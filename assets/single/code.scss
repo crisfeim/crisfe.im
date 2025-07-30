@@ -1,0 +1,23 @@
+pre, code {
+  font-family: Courier, ui-monospace;
+}
+
+pre,
+p > code {
+  background:  rgb(237,237,237);
+  filter: grayscale(1);
+  font-size: 14px;
+  border-radius: 4px;
+  color: rgba(0,0,0,0.8);
+}
+
+pre {
+    overflow-x: scroll;
+    padding: 12px 16px;
+}
+
+a > code,
+li > code,
+p > code {
+    padding: 2px;
+}

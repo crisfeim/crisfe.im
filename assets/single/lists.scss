@@ -1,0 +1,36 @@
+ol,
+ul {
+    margin-block-start: 0.5rem;
+    margin-block-end: 0.5rem;
+    padding-inline-start: 1rem;
+}
+
+ol li,
+ol ol,
+ul li,
+ul ul {
+    margin-bottom: 0.5rem;
+}
+
+ul li::marker {
+  color: gray;
+}
+
+ol {
+  list-style: none;
+  counter-reset: list-counter;
+}
+
+ol li {
+  counter-increment: list-counter;
+  position: relative;
+  padding-left: 0.8rem;
+}
+
+ol li::before {
+  content: counter(list-counter) " ";
+  position: absolute;
+  left: -1rem;
+  color: gray;
+  font-family: ui-monospace;
+}

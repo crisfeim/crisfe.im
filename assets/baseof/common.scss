@@ -1,0 +1,32 @@
+
+body {
+    width: 100%;
+    max-width: 80ch;
+    margin-inline: auto;
+    padding-inline: 1rem;
+    padding-block: 3rem;
+    color: var(--text-color);
+}
+
+a {
+    text-decoration: underline;
+    text-underline-offset: 2px;
+    text-decoration-style: wavy;
+    text-decoration-color: lightgray;
+    color: var(--text-color);
+    cursor: pointer;
+}
+
+a:hover {
+    text-decoration-color: gray;
+}
+
+h1 {
+    color: var(--soft-black);
+}
+
+
+::selection {
+    color: black;
+    background: lightgray;
+}

@@ -1,5 +1,26 @@
 @import "../baseof/main";
+@import "../components/animation";
+@import "lists";
+@import "code";
+@import "blockquote";
+@import "footnotes";
+@import "spacing";
 
-pre {
-    overflow-x: scroll;
+img {
+    display: block;
+    margin-inline: auto;
+}
+
+time {
+    margin-top: 4px;
+    margin-bottom: 3rem;
+    color: rgba(0,0,0,0.5)
+}
+
+hr {
+    border: none;
+    border-top: 1px solid lightgray;
+    margin-inline: auto;
+    margin-block: 2rem;
+    width: 250px;
 }

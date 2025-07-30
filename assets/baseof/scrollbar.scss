@@ -1,0 +1,20 @@
+/* Para navegadores basados en WebKit (Chrome, Safari, Edge) */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: rgba(0, 0, 0, 0.3);
+  border-radius: 3px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+/* Para Firefox */
+* {
+  scrollbar-width: thin;              /* 'auto' | 'thin' | 'none' */
+  scrollbar-color: rgba(0, 0, 0, 0.3) transparent;
+}

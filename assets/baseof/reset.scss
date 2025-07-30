@@ -5,3 +5,8 @@
 *, *::before, *::after {
     box-sizing: border-box;
 }
+
+
+a, time {
+    display: inline-block;
+}
