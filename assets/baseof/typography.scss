@@ -22,3 +22,7 @@ em {
     font-family: Palatino, "Book Antiqua", Georgia, serif;
     @include reset-font-smoothing;
 }
+
+pre, code {
+  font-family: Courier, monospace;
+}
