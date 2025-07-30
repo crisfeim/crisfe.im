@@ -20,3 +20,11 @@
 [data-anim="3"] { animation-delay: 0.4s; }
 [data-anim="4"] { animation-delay: 0.5s; }
 [data-anim="5"] { animation-delay: 0.6s; }
+
+@media (prefers-reduced-motion: reduce) {
+  [data-anim] {
+    animation: none !important;
+    opacity: 1 !important;
+    transform: none !important;
+  }
+}
