@@ -1,17 +1,5 @@
 blockquote {
-    color: rgba(0,0,0,0.5);
-}
-
-blockquote::before {
-    content: open-quote;
-    position: absolute;
-    left: calc(-1 * 2px);
-    transform: translateX(-100%);
-    font-family: Georgia;
-}
-
-blockquote p:last-child:after {
-    content: close-quote;
-    margin-left: 2px;
-    font-family: Georgia;
+    color: #666;
+    border-left: 1px solid lightgray;
+    padding-left: 14px;
 }
