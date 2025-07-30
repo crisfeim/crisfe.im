@@ -147,9 +147,9 @@ Available models are *GPT-3.5*[^llm7], *Gemini* (requires api-key) and *Llama3.2
 
 [^llm7]: Courtesy of *llm7*
 
-To use *Llama3.2* you'll need to [download the demo's *index.html*](demo) and serve it from a local server.
+To use *Llama3.2* you'll need to [download the demo's *index.html*](demo.html) and serve it from a local server.
 
-{{< fragment "demo/index.html" >}}
+{{< fragment "demo.html" >}}
 
 ## System Design
 

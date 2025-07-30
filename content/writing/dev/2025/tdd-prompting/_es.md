@@ -142,9 +142,9 @@ Puedes usar `assertEqual` como mini-framework de testing o escribe tus propios m
 
 Puedes usar *GPT3.5* cortesía de *llm7*, *Gemini* (requiere clave) o *Llama3.2* [^llama]
 
-[^llama]: Tendrás que [descargar el *index.html* de la demo](demo) y servirlo desde un servidor local.
+[^llama]: Tendrás que [descargar el *index.html* de la demo](demo.html) y servirlo desde un servidor local.
 
-{{< fragment "demo/index.html" >}}
+{{< fragment "demo.html" >}}
 
 
 ## Diseño
