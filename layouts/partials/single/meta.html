@@ -1,0 +1,11 @@
+  <meta property="og:title" content="{{ .Title }}" />
+  <meta property="og:url" content="{{ .Permalink }}" />
+  <meta property="og:description" content="{{ .Summary | plainify | truncate 300 | htmlEscape }}" />
+  <meta name="description" content="{{ .Summary | plainify | truncate 150 |  htmlEscape }}" />
+  <script src="https://unpkg.com/alpinejs" defer></script>
+  {{ $permalink := .Permalink }}
+  {{ with index .Params "og-image" }}
+      {{ with $.Resources.Get . }}
+      <meta property="og:image" content="{{ .Permalink }}" />
+  {{ end }}
+  {{ end }}

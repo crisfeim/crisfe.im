@@ -1,6 +1,8 @@
-{{ define "meta" }}
-{{ partial "import/styles" "list.scss" }}
+{{ define "head" }}
+    {{ with resources.Get "list/main.scss" | toCSS | minify }}
+        <style>{{ .Content | safeCSS }}</style>
+    {{ end }}
 {{ end }}
 {{ define "main" }}
-{{ partial "list.html" (dict "pages" .Pages "title" .Title) }}
+    {{ partial "list.html" (dict "pages" .Pages "title" .Title) }}
 {{ end }}

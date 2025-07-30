@@ -4,12 +4,12 @@
     <head>
         <meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
-        {{ block "meta" .}} {{ end}}
+        {{ block "meta" .}}{{ end}}
+        {{ block "head" . }}{{ end }}
         <link rel="icon" type="image/png" href="./untracked/favicon.png" />
         <title>{{ .Title }}</title>
-
     </head>
-
-    {{ partial "import/styles" "baseof.scss" }}
-    {{ block "main" . }} baseof.html {{ end }}
+    <body>
+        {{ block "main" . }} baseof.html {{ end }}
+    </body>
 </html>

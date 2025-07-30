@@ -4,23 +4,17 @@
   <meta property="og:url" content="{{ .Permalink }}" />
   <meta property="og:description" content="{{ site.Params.description }}" />
   <meta name="description" content="{{  site.Params.description }}" />
-{{ partial "import/styles" "list.scss" }}
+{{ end }}
+
+{{ define "head" }}
+    {{ with resources.Get "home/main.scss" | toCSS | minify }}
+        <style>{{ .Content | safeCSS }}</style>
+    {{ end }}
 {{ end }}
 
 {{ define "main" }}
-
-    <section style="
-        height: 100vh;
-        padding-top:180px;">
-    <p style="font-family: Georgia, serif; font-size: 20px;">
-        <span style="color: rgba(0,0,0,1)">Cristian F. Patiño Rojas.</span><br/> Software Engineer. Crafting architectures & <span style="color: rgba(0,0,0,1)"><em>polished interfaces</em></span>.
-    </p>
-
-       <p style="margin-top: 2rem">I want to build products others fall in love with.</p>
-    </section>
-
-    <section style="margin-top: 4rem">
-        {{ $posts := where .Site.RegularPages "Section" "writing" }}
-        {{ partial "list.html" (dict "pages" $posts "title" "Writing") }}
+    <section>
+       <h1>Cristian Felipe Patiño Rojas</h1>Software Engineer.<br><br>Crafting architectures & <span><em>polished interfaces</em></span>.
+       <p>I want to build products others fall in love with.</p>
     </section>
 {{ end }}
