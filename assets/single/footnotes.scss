@@ -12,7 +12,7 @@ a.footnote-backref {
 }
 
 a.footnote-ref {
-    font-family: ui-monospace;
+    font-family: ui-monospace, monospace;
     color: gray;
     @include reset-font-smoothing;
     font-weight: 500;

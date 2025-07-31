@@ -1,6 +1,6 @@
 html {
     font-size: 16px;
-    font-family: Arial,sans-serif;
+    font-family: system-ui, Arial,sans-serif;
     line-height: 1.6;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
@@ -12,10 +12,11 @@ html {
     -moz-osx-font-smoothing: initial;
 }
 
+strong,
 h1, h2, h3, h4, h5, h6 {
+    font-family: -apple-system, BlinkMacSystemFont, Arial, sans-serif;
     font-size: 1rem;
-    font-weight: normal;
-    @include reset-font-smoothing;
+    font-weight: 500;
 }
 
 em {
@@ -24,5 +25,21 @@ em {
 }
 
 pre, code {
-  font-family: Courier, monospace;
+  font-family: ui-monospace, monospace, Courier;
+}
+
+@font-face {
+  font-family: 'Cedarville Cursive';
+  font-style: normal;
+  font-weight: 400;
+  src: url(/cf.woff2) format('woff2');
+}
+
+@mixin cf {
+  font-family: 'Cedarville Cursive';
+}
+
+.amp,
+.cf {
+    @include cf;
 }
