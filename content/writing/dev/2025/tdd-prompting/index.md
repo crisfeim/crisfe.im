@@ -16,9 +16,9 @@ In this article, I'll tell you how to set up an automation system with feedback 
 
 As a developer, my interactions with *AI* can be reduced to a loop:
 
-*(1)* From an initial prompt, I ask the model to generate code.<br>
-*(2)* I test it in a development environment<br>
-*(3)* If it fails, I send the error to the model to give it feedback and have it regenerate the code.
+1. From an initial prompt, I ask the model to generate code.<br>
+2. I test it in a development environment<br>
+3. If it fails, I send the error to the model to give it feedback and have it regenerate the code.
 
 I repeat the cycle until the generated code works.
 
