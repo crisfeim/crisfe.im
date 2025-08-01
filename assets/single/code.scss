@@ -1,11 +1,9 @@
 
 pre,
-p > code {
-  background:  rgb(237,237,237);
-  filter: grayscale(1);
+code {
+  background:  rgb(243,243,243);
   font-size: 13px;
   border-radius: 4px;
-  color: rgba(0,0,0,0.8);
 }
 
 pre {
@@ -16,5 +14,7 @@ pre {
 a > code,
 li > code,
 p > code {
+    background: rgb(237,237,237);
     padding: 2px 4px;
+    color: var(--soft-black);
 }
