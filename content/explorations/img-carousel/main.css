@@ -1,15 +1,6 @@
 #cf {
     display: none;
 }
-
-body, article {
-    padding: 0;
-    margin: 0;
-    font-family: system-ui, sans-serif;
-    line-height: 1.6;
-    -webkit-font-smoothing: antialiased;
-}
-
 .container p {
     max-width: 70ch;
     margin: 2rem auto;

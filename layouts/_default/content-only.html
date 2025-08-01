@@ -1,4 +1,23 @@
-{{ define "main" }}
-    {{ .Content }}
-    {{ partial "single/customizations" . }}
-{{ end }}
+<!DOCTYPE HTML>
+<html>
+    <head>
+        <title>{{ .Title }}</title>
+        <style id="reset">
+            body, article {
+                padding: 0;
+                margin: 0;
+                font-family: system-ui, sans-serif;
+                line-height: 1.6;
+                -webkit-font-smoothing: antialiased;
+            }
+
+            {{ with resources.Get "components/animation.scss" | toCSS | minify }}
+                {{ .Content | safeCSS }}
+            {{ end }}
+        </style>
+    </head>
+    <body data-anim="0">
+        {{ .Content }}
+        {{ partial "single/customizations" . }}
+    </body>
+</html>
