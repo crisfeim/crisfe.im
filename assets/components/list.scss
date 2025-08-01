@@ -24,6 +24,7 @@
 
         time {
             color: #777;
+            transition: opacity 0.2s ease;
             @include reset-font-smoothing;
         }
 
@@ -72,9 +73,11 @@
         border-color: rgba(0,0,0,0.1);
     }
 
+    &:hover time,
     &:hover li a {
         opacity: 0.4;
     }
+
     li:hover a {
         opacity: 1;
         color: black;
