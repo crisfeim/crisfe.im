@@ -11,7 +11,7 @@
     </head>
     <body>
 
-        <h1 id="cf" class="cf" data-anim="0"><a href="/">cf</a></h1>
+        <h1 id="cf" class="cf" {{ if hugo.IsProduction }}data-anim="0"{{ end }}><a href="/">cf</a></h1>
         {{ block "main" . }} baseof.html {{ end }}
     </body>
 </html>

@@ -10,15 +10,15 @@
 
 {{ define "main" }}
     <article>
-        <h1 data-anim="1">{{ .Title }}</h1>
+        <h1 {{ if hugo.IsProduction }}data-anim="1"{{ end }}>{{ .Title }}</h1>
         {{ with .Date }}
-        <time data-anim="2">{{ .Format "January 2, 2006" }}</time>
+        <time {{ if hugo.IsProduction }}data-anim="2"{{ end }}>{{ .Format "January 2, 2006" }}</time>
         {{ end }}
-        <section data-anim="3">
+        <section {{ if hugo.IsProduction }}data-anim="3"{{ end }}>
         {{ .Content }}
         </section>
     </article>
     {{ partial "single/customizations" . }}
 
-    <footer data-anim="4">✞</footer>
+    <footer {{ if hugo.IsProduction }}data-anim="4"{{ end }}>✞</footer>
 {{ end }}
