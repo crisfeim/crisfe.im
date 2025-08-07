@@ -1,0 +1,53 @@
+{{ partial "+" (dict "src" "app/list" "ctx" . )}}
+{{ partial "+" (dict "src" "app/svg/heart" "ctx" . )}}
+{{ partial "+" (dict "src" "app/svg/time" "ctx" . )}}
+
+<input type="radio" name="tabs" id="tab1-state" checked hidden>
+<input type="radio" name="tabs" id="tab2-state" hidden>
+
+<div class="typical-screen reset margin-x-auto default-margin-bottom">
+
+    <div id="screen1" class="active">
+         {{ template "list" (dict
+            "title" "🍔 Favorite recipes"
+            "items" "🍣 Sushi Rolls")}}
+    </div>
+    <div id="screen2" class="screen">
+         {{ template "list" (dict
+            "title" "🍔 Latest recipes"
+            "items" "🍗 KFC Chicken")}}
+    </div>
+    <div id="tabbar" class="tabbar">
+        <label id="tab1" for="tab1-state" class="tab">
+            <span class="icon">{{ template "heart" }}</span>
+            <span class="label">Favorites</span>
+        </label>
+        <label id="tab2" for="tab2-state" class="tab">
+            <span class="icon">{{ template "time" }}</span>
+            <span class="label">Latest</span>
+        </label>
+    </div>
+</div>
+
+<style>
+{{ define "tab-state" }}
+#tab{{.active}}-state:checked{
+    ~ .typical-screen #screen{{.active}} {
+        display: block;
+    }
+
+    ~ .typical-screen #screen{{.inactive}} {
+       display: none;
+    }
+
+    ~ .typical-screen #tabbar #tab{{.active}} svg,
+    ~ .typical-screen #tabbar #tab{{.active}} .label {
+      color: #007aff;
+      fill: #007aff;
+    }
+}
+{{ end }}
+
+{{ template "tab-state" (dict "active" 1 "inactive" 2)}}
+{{ template "tab-state" (dict "active" 2 "inactive" 1)}}
+</style>

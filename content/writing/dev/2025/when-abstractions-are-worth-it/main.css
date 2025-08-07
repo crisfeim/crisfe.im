@@ -306,14 +306,6 @@
   color: #929299;
 }
 
-.typical-screen .tabbar .tab.active .label {
-  color: #007aff;
-}
-
-.typical-screen .tabbar .tab.active .icon svg {
-  fill: #007aff;
-}
-
 .typical-screen .screen {
   display: none;
 }
