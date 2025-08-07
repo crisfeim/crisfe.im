@@ -91,18 +91,6 @@
   background:black;
 }
 
-.tabs input#tab1:checked ~ .contents #content1,
-.tabs input#tab2:checked ~ .contents #content2,
-.tabs input#tab3:checked ~ .contents #content3 {
-  display: block;
-}
-
-.tabs input#tab1:checked ~ .tab-labels label[for="tab1"],
-.tabs input#tab2:checked ~ .tab-labels label[for="tab2"],
-.tabs input#tab3:checked ~ .tab-labels label[for="tab3"] {
-    color: var(--text-color);
-}
-
 /* Typical screen */
 
 .typical-screen {
@@ -252,6 +240,7 @@
   left: 50%;
   transform: translateX(-50%);
   font-weight: 600;
+  display: none;
 }
 
 .navigation-detail {
@@ -260,10 +249,7 @@
 }
 
 .navigation-detail .content {
-  flex: 1;
-  display: flex;
-  justify-content: center;
-  align-items: center;
+  display: none;
 }
 
 /* Tabbar */

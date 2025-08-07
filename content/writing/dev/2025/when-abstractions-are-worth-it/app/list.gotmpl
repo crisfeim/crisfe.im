@@ -1,23 +1,58 @@
 {{ define "list" }}
+{{ $items := split .items "|" }}
+{{ $ns :=  printf "%d" now.UnixNano }}
+
+<input type="radio" name="nav-{{ $ns }}" id="none-{{ $ns }}" checked>
+
+{{ range $index, $item := $items }}
+    <input
+        type="radio"
+        name="nav-{{ $ns }}"
+        id="item-{{ add $index 1 }}-{{ $ns }}"
+    >
+{{ end }}
+
 <div class="typical-screen reset default-margin-bottom margin-x-auto">
+
 <div class="list">
     <p class="navigation-title">{{ .title }}</p>
     <ul>
-        {{ $items := split .items "|" }}
-        {{ range $items }}
-            <li onClick="showDetail(this)">{{ . }}</li>
+        {{ range $index, $item := $items }}
+            <label for="item-{{ add $index 1 }}-{{ $ns }}"><li>{{ $item }}</li></label>
         {{ end }}
     </ul>
 </div>
 <div class="navigation-detail">
     <div class="navigation-bar">
-    <button class="navigation-button" onclick="hideDetail(this)">
-        <span class="chevron"></span>
-        Back
-    </button>
-    <span class="title"></span>
+
+         <label class="navigation-button" for="none-{{ $ns }}"><span class="chevron"></span>
+        Back</label>
+
+    {{ range $index, $item := $items }}
+         <span class="title t-{{ add $index 1 }}-{{ $ns }}">{{ $item }}</span>
+    {{ end }}
     </div>
-    <div class="content"></div>
+    {{ range $index, $item := $items }}
+         <div class="content c-{{ add $index 1 }}-{{ $ns }}">{{ $item }}</div>
+    {{ end }}
 </div>
 </div>
+
+<style>
+{{ range $index, $item := $items }}
+
+#item-{{ add $index 1 }}-{{ $ns }}:checked   ~ .typical-screen .navigation-detail {
+    left: 0;
+    .navigation-bar .t-{{ add $index 1 }}-{{ $ns }} {
+        display: block;
+    }
+    .c-{{ add $index 1 }}-{{ $ns }} {
+        flex: 1;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+}
+{{ end }}
+</style>
 {{ end }}
