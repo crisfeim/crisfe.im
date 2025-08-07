@@ -1,0 +1,40 @@
+{{ $pg := .Page }}
+{{ $src := .Get "src" }}
+
+{{ if not (strings.Contains $src ".") }}
+  {{ $src = printf "%s.gotmpl" $src }}
+{{ end }}
+
+{{ with $pg.Resources.GetMatch $src }}
+  {{ $ctx := dict "Page" $pg }}
+
+  {{ range $key, $value := $.Params }}
+    {{ if ne $key "src" }}
+
+      {{ $isJsonFile := strings.HasSuffix $value ".json" }}
+
+      {{ if $isJsonFile }}
+        {{ with $pg.Resources.GetMatch $value }}
+          {{ $json := . | transform.Unmarshal }}
+          {{ $cleanKey := $key }}
+          {{ $ctx = merge $ctx (dict $cleanKey $json) }}
+        {{ else }}
+          {{ $ctx = merge $ctx (dict $key $value) }}
+          {{ warnf "JSON file not found: %s (referenced in %s)" $value $pg.File.Path }}
+          <p style="color: red">⚠️ JSON not found {{ $value }}</p>
+        {{ end }}
+      {{ else }}
+        {{ $ctx = merge $ctx (dict $key $value) }}
+      {{ end }}
+    {{ end }}
+  {{ end }}
+
+  {{ $hash := $.Params | jsonify | sha256 }}
+  {{ $timestamp := now.Unix }}
+  {{ $uniqueName := printf "%s-%s-%d" .Name $hash $timestamp }}
+  {{ $rendered := . | resources.ExecuteAsTemplate $uniqueName $ctx }}
+  {{ $rendered.Content | safeHTML }}
+
+{{ else }}
+  {{ errorf "Template file not found: %s (referenced in %s)" $src $pg.File.Path }}
+{{ end }}
