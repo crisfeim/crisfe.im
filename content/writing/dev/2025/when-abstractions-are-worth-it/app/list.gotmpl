@@ -1,0 +1,23 @@
+{{ define "list" }}
+<div class="typical-screen reset default-margin-bottom margin-x-auto">
+<div class="list">
+    <p class="navigation-title">{{ .title }}</p>
+    <ul>
+        {{ $items := split .items "|" }}
+        {{ range $items }}
+            <li onClick="showDetail(this)">{{ . }}</li>
+        {{ end }}
+    </ul>
+</div>
+<div class="navigation-detail">
+    <div class="navigation-bar">
+    <button class="navigation-button" onclick="hideDetail(this)">
+        <span class="chevron"></span>
+        Back
+    </button>
+    <span class="title"></span>
+    </div>
+    <div class="content"></div>
+</div>
+</div>
+{{ end }}

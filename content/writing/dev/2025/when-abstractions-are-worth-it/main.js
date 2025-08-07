@@ -21,29 +21,7 @@ function hideDetail(button) {
   list.classList.remove('shown');
 }
 
-document.querySelectorAll('.component-slot').forEach(slot => {
-  const template = document.getElementById('screen-template');
-  const clone = template.content.cloneNode(true);
-
-  const title = slot.dataset.title || 'Untitled';
-  const items = (slot.dataset.items || '').split(',').map(item => item.trim());
-
-  clone.querySelector('.navigation-title').textContent = title;
-
-  const ul = clone.querySelector('ul');
-
-  items.forEach(text => {
-    const li = document.createElement('li');
-    li.textContent = text;
-    li.onclick = () => showDetail(li);
-    ul.appendChild(li);
-  });
-
-  slot.replaceWith(clone);
-});
-
 // Tabbar logic
-
 function switchTab(el, index) {
   const tabs = document.querySelectorAll('.tabbar .tab');
   tabs.forEach(t => t.classList.remove('active'));

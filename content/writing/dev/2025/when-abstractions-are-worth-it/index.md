@@ -4,53 +4,35 @@ date: 2025-08-01
 draft: true
 ---
 
-{{< fragment "templates/app.html" >}}
-
 Here is your typical app screen — it loads data from somewhere and displays it in a list. When a user taps an item, the app navigates to some sort of detail screen:
 
-<div
-    class="component-slot"
-    data-title="Some screen"
-    data-items="Some item 1,Some item 2,Some item 3"
-></div>
+{{< gotmpl src="app/main"
+    title="Some screen"
+    items="Item 1|Item 2|Item 3"
+>}}
 
-
-This is a ubiquitous pattern, no matter the app:
+This is a ubiquitous pattern, no matter the type of app:
 
 <div class="columns">
-    <div
-        class="component-slot"
-        data-title="🍔 Recipes"
-        data-items="🍗 KFC Chicken,🍣 Sushi Rolls,🍜 Ramen"
-    ></div>
-    <div
-        class="component-slot"
-        data-title="👤 Contacts"
-        data-items="John Doe"
-    ></div>
-    <div
-        class="component-slot"
-        data-title="💰 Transactions"
-        data-items="Starbucks – $5.75,Spotify – $9.99"></div>
+{{< gotmpl src="app/main"
+    title="🍔 Recipes"
+    items="🍗 KFC Chicken|🍣 Sushi Rolls|🍜 Ramen"
+>}}
+
+{{< gotmpl src="app/main"
+    title="👤 Contacts"
+    items="John Doe"
+>}}
+
+{{< gotmpl src="app/main"
+    title="💰 Transactions"
+    items="JStarbucks – $5.75|Spotify – $9.99"
+>}}
 </div>
 
 The data could come from a remote *API* or a local database. The quickest, dirtiest way to implement this would be to fetch data directly in the view:
 
-<div class="tabs">
-  <input type="radio" name="tabset" id="tab1" checked>
-  <input type="radio" name="tabset" id="tab2">
-  <input type="radio" name="tabset" id="tab3">
-  <div class="tab-labels">
-    <label for="tab1">URLSession</label>
-    <label for="tab2">SwiftData</label>
-    <label for="tab3">CoreData</label>
-  </div>
-  <div class="contents">
-    <!-- <div class="tab-content" id="content1">< highlight-file "snippets/urlsession.swift" ></div> -->
-    <!-- <div class="tab-content" id="content2">< highlight-file "snippets/swiftdata.swift" ></div> -->
-    <!-- <div class="tab-content" id="content3">< highlight-file "snippets/coredata.swift" ></div> -->
-  </div>
-</div>
+@todo
 
 This approach ties the view with the specific data source implementation. This may seem acceptable — after all, it works. But there are cases where this tight coupling becomes a liability. Let’s look at three common scenarios where using abstraction makes a difference.
 
@@ -152,18 +134,15 @@ struct RecipeListView: View {
 }
 ```
 
-{{< fragment "components/tabbar.html" >}}
-
-
 But again, the view would be coupled with frameworks (`URLSession` and `CoreData`) and wouldn't be reusable.
 
 Maybe reusability isn't important for this view right now, but what if later on you decide to add a *favorites* feature that only fetches data from a local data source?
 
-{{< fragment "components/tabbar.html" >}}
+{{< gotmpl src="app/tabbar" >}}
 
 Abstractions allow that level of flexibility:
 
-<!-- < highlight-file "snippets/tabbar.swift" > -->
+<!--< highlight-file "snippets/tabbar.swift" >-->
 
 
 ### When infrastructure isn't implemented yet
