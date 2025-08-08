@@ -68,7 +68,8 @@
 .carousel-content {
     display: flex;
     gap: 24px;
-    padding-inline: max(1.5rem, calc((100vw - 70ch) / 2));
+    padding-right: calc(300px * 4 + 24px * 3 + 24px); /* 300 -> hardcoded (for now) item width*/
+    padding-left: max(1.5rem, calc((100vw - 70ch) / 2));
 }
 
 .carousel-content > * {
