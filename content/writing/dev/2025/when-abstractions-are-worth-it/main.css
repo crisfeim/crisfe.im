@@ -123,49 +123,62 @@
     background: white;
     border-radius: 8px;
 }
-.typical-screen .list ul li {
-    position: relative;
-    padding: 8px 16px;
-    transition: background 0.2s ease;
-    cursor: pointer;
-    z-index: 1;
-}
 
-.typical-screen .list ul li:not(:first-child)::after {
-  content: '';
-  position: absolute;
-  left: 16px;
-  right: 0;
-  top: 0;
-  height: 0.5px;
-  background-color: #D2D1D7;
-}
+.typical-screen .list {
+    ul {
+        list-style: none;
+        background: white;
+        border-radius: 8px;
 
-.typical-screen .list ul li::before {
-  transition: background 0.2s ease;
-}
+        label {
+            position: relative;
+            display: block;
 
+            li {
+                position: relative;
+                padding: 8px 16px;
+                transition: background 0.2s ease;
+                cursor: pointer;
+                z-index: 1;
+            }
 
-.typical-screen .list ul li:hover::before {
-  content: '';
-  position: absolute;
-  left: 0;
-  right: 0;
-  top: 0;
-  bottom: -1px; /* clave */
-  background: #D2D1D7; /* el color del hover */
-  border-radius: inherit;
-  z-index: -1;
-}
+            li::before {
+                transition: background 0.2s ease;
+            }
 
-.typical-screen .list ul li:first-child {
-  border-top-left-radius: 8px;
-  border-top-right-radius: 8px;
-}
+            li:hover::before {
+                content: '';
+                position: absolute;
+                left: 0;
+                right: 0;
+                top: 0;
+                bottom: -1px;
+                background: #D2D1D7;
+                border-radius: inherit;
+                z-index: -1;
+            }
+        }
 
-.typical-screen .list ul li:last-child {
-  border-bottom-left-radius: 8px;
-  border-bottom-right-radius: 8px;
+        label:not(:first-child)::after {
+            content: '';
+            position: absolute;
+            left: 16px;
+            right: 0;
+            height: 0.5px;
+            top: 0;
+            background-color: #D2D1D7;
+        }
+
+        label:first-child > li {
+            border-top-left-radius: 8px;
+            border-top-right-radius: 8px;
+        }
+
+        label:last-child > li {
+            border-bottom-left-radius: 8px;
+            border-bottom-right-radius: 8px;
+        }
+    }
 }
 
 .typical-screen .list .navigation-title {
