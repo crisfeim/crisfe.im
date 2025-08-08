@@ -1,7 +1,6 @@
 ---
 title: When abstractions are worth it
 date: 2025-08-01
-draft: true
 ---
 
 Here is your typical mobile app screen — it loads data from somewhere and displays it in a list. When a user taps an item, the app navigates to some sort of detail screen:
