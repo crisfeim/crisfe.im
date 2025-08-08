@@ -50,19 +50,29 @@
   display: revert;
 }
 
-.columns {
-  display: flex;
-  gap: 1rem;
-  overflow-x: auto;
-  padding: 0;
+/* Añade esta clase */
+.carousel-breakout {
+    width: 100vw;
+    margin-left: calc(-50vw + 50%);
+    margin-block: 2rem;
+    overflow-x: auto;
+    overflow-y: hidden;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
 }
 
-.columns > * {
+.carousel-breakout::-webkit-scrollbar {
+    display: none;
+}
+
+.carousel-content {
+    display: flex;
+    gap: 24px;
+    padding-inline: max(1.5rem, calc((100vw - 70ch) / 2));
+}
+
+.carousel-content > * {
   flex: 0 0 auto;
-}
-
-.columns > .highlight {
-    width: 300px;
 }
 
 .tabs {
@@ -96,10 +106,11 @@
 .typical-screen {
     position: relative;
     width: 300px;
-    height: 534px;
+    aspect-ratio: 1179 / 2556;
     overflow: hidden;
     background: white;
-    box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+    border: 1px solid lightgray;
+    border-radius: 32px;
 }
 
 .typical-screen > * {

@@ -12,8 +12,8 @@ Here is your typical app screen — it loads data from somewhere and displays it
 >}}
 
 This is a ubiquitous pattern, no matter the type of app:
-
-<div class="columns">
+<div class="carousel-breakout">
+<div class="carousel-content">
 {{< gotmpl src="app/main"
     title="🍔 Recipes"
     items="🍗 KFC Chicken|🍣 Sushi Rolls|🍜 Ramen"
@@ -26,8 +26,14 @@ This is a ubiquitous pattern, no matter the type of app:
 
 {{< gotmpl src="app/main"
     title="💰 Transactions"
-    items="JStarbucks – $5.75|Spotify – $9.99"
+    items="Starbucks – $5.75|Spotify – $9.99"
 >}}
+
+{{< gotmpl src="app/main"
+    title="🎵 Songs"
+    items="Let It Be|Cum On Feel the Noize"
+>}}
+</div>
 </div>
 
 The data could come from a remote *API* or a local database. The quickest, dirtiest way to implement this would be to fetch data directly in the view:
