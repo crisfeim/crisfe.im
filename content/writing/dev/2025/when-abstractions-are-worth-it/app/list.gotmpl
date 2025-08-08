@@ -38,16 +38,23 @@
 
 <style>
 {{ range $index, $item := $items }}
-#item-{{ add $index 1 }}-{{ $ns }}:checked   ~ .navigation-detail {
-    left: 0;
-    .navigation-bar .t-{{ add $index 1 }}-{{ $ns }} {
-        display: block;
+#item-{{ add $index 1 }}-{{ $ns }}:checked  {
+    ~ .navigation-detail {
+        left: 0;
+        box-shadow: rgba(17, 12, 46, 0.15) 0px 48px 100px 0px;
+        .navigation-bar .t-{{ add $index 1 }}-{{ $ns }} {
+            display: block;
+        }
+        .c-{{ add $index 1 }}-{{ $ns }} {
+            flex: 1;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
     }
-    .c-{{ add $index 1 }}-{{ $ns }} {
-        flex: 1;
-        display: flex;
-        justify-content: center;
-        align-items: center;
+
+    ~ .list {
+        left: -25%;
     }
 }
 {{ end }}

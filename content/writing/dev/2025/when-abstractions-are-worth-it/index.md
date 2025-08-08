@@ -4,7 +4,7 @@ date: 2025-08-01
 draft: true
 ---
 
-Here is your typical app screen — it loads data from somewhere and displays it in a list. When a user taps an item, the app navigates to some sort of detail screen:
+Here is your typical mobile app screen — it loads data from somewhere and displays it in a list. When a user taps an item, the app navigates to some sort of detail screen:
 
 {{< gotmpl src="app/main"
     title="Some screen"
