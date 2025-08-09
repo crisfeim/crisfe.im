@@ -19,7 +19,7 @@ This is a ubiquitous pattern, no matter the type of app:
 >}}
 
 {{< gotmpl src="app/main"
-    title="🍔 Recipes"
+    title="🔪 My Recipes"
     items="🍗 Mama's chicken|🍣 Sushi Rolls|🍜 Ramen"
 >}}
 
@@ -61,9 +61,7 @@ Let's imagine you have multiple screens in your app where you're using this appr
 </div>
 </div>
 
-What if Apple ships a new framework that replaces URLSession? Well, now you have to update potentially *N* screens.
-
-You may think this is not likely to happen and you'll be right. Though it has happened before: URLSession replaced NSURLConnection in iOS 9. Using an abstraction would protect your system if that ever happens again:
+What if Apple shipped a new framework replacing `URLSession`? You’d need to update potentially *N* screens. That might sound unlikely, but it has happened before: `URLSession` replaced `NSURLConnection` in iOS 9.
 
 ```swift
 protocol HTTPClient {
@@ -92,7 +90,9 @@ let app = makeApp(
 )
 ```
 
-You may think this is a somewhat convoluted example. Fair enough. A more realistic one, would be migrating from `Alamofire` to `URLSession` as the latest has become powerful enough to a point where no third party framework is needed for the 99% of use cases. If you decoupled your `Alamofire` logic, you should be able to make the very same update:
+You may think this is a somewhat convoluted example — and you’d be right. However, it’s a historical case that justifies the point.
+
+A more common scenario is migrating from `Alamofire` to `URLSession`. In recent years, `URLSession` has become powerful enough to cover the vast majority of use cases (around 99%) without relying on a third-party framework. If you had decoupled your `Alamofire` logic behind an abstraction, the migration would be just as simple:
 
 ```diff
 let app = makeApp(
@@ -105,7 +105,7 @@ let app = makeApp(
 
 As before, the straightforward way of implementing a fallback[^fallback] solution is placing all the logic in the view:
 
-[^fallback]: A common pattern that enhances user's offline experience.
+[^fallback]: A common pattern that enhances users' offline experience.
 
 ```swift
 struct RecipeListView: View {
@@ -139,7 +139,7 @@ Maybe reusability isn't important for this view right now, but what if later on 
 
 {{< gotmpl src="app/tabbar" >}}
 
-Decoupling through abstractions allow that level of flexibility:
+Decoupling through abstractions allows that level of flexibility:
 
 <div class="carousel-breakout">
 <div class="carousel-content">
@@ -193,4 +193,6 @@ Abstractions allow decoupling and improve flexibility, making infrastructure swi
 
 > "Don't be religious, be intentional"
 
-That said, coupling can sometimes be practical and even okay. Being aware of tradeoffs and potential liabilities, and knowing how to transition from a *simple* architecture to a more modular one as your project evolves is far more valuable than obsessing over decoupling. Decoupling shouldn't be a blindly followed dogma, but a conscious decision.
+That said, coupling can sometimes be practical and even okay. For instance, if you're building a simple prototype or a feature that's unlikely to change, starting with direct URLSession calls might be the right choice. The key is making a conscious decision: *"I'm coupling this now because X, Y, Z, and I know how to refactor it later if needed."*
+
+Being aware of tradeoffs and potential liabilities, and knowing how to transition from a simple architecture to a more modular one as your project evolves is far more valuable than obsessing over decoupling.
