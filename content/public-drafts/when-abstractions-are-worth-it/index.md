@@ -37,7 +37,13 @@ This is a ubiquitous pattern, no matter the type of app:
 
 The data could come from a remote *API* or a local database. The quickest, dirtiest way to implement this would be to fetch data directly in the view:
 
-@todo
+<div class="carousel-breakout">
+<div class="carousel-content">
+{{< highlight-file "snippets/swiftdata.swift" >}}
+{{< highlight-file "snippets/coredata.swift" >}}
+{{< highlight-file "snippets/urlsession.swift" >}}
+</div>
+</div>
 
 This approach ties the view with the specific data source implementation. This may seem acceptable — after all, it works. But there are cases where this tight coupling becomes a liability. Let’s look at three common scenarios where using abstraction makes a difference.
 

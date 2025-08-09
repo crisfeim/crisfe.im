@@ -19,4 +19,5 @@ description = "Technical blog and projects by Cristian Rojas. AI, development, a
 [markup.goldmark.renderer]
 unsafe = true
 [markup.highlight]
-codeFences = false
+codeFences = true
+style="github"
