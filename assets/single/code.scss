@@ -6,6 +6,13 @@ code {
   border-radius: 4px;
 }
 
+code {
+    text-size-adjust: 100%;
+    -ms-text-size-adjust: 100%;
+    -moz-text-size-adjust: 100%;
+    -webkit-text-size-adjust: 100%;
+}
+
 pre {
     overflow-x: scroll;
     padding: 10px 14px;
