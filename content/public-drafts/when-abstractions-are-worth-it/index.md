@@ -14,24 +14,25 @@ This is a ubiquitous pattern, no matter the type of app:
 <div class="carousel-breakout">
 <div class="carousel-content">
 {{< gotmpl src="app/main"
+    title="🎵 British oldies"
+    items="Let It Be|Bohemian Rhapsody|Cum on feel the Noize"
+>}}
+
+{{< gotmpl src="app/main"
     title="🍔 Recipes"
-    items="🍗 KFC Chicken|🍣 Sushi Rolls|🍜 Ramen"
+    items="🍗 Mama's chicken|🍣 Sushi Rolls|🍜 Ramen"
 >}}
 
 {{< gotmpl src="app/main"
     title="👤 Contacts"
-    items="John Doe"
+    items="Tim Cook"
 >}}
 
 {{< gotmpl src="app/main"
-    title="💰 Transactions"
-    items="Starbucks – $5.75|Spotify – $9.99"
+    title="💰 History"
+    items="Starbucks – $5.75 — Today|Spotify – $9.9 — Yesterday"
 >}}
 
-{{< gotmpl src="app/main"
-    title="🎵 Songs"
-    items="Let It Be|Cum On Feel the Noize"
->}}
 </div>
 </div>
 
@@ -53,34 +54,12 @@ This approach ties the view with the specific data source implementation. This m
 
 Let's imagine you have multiple screens in your app where you're using this approach. For example, in a recipe app, you might have something like this:
 
-```swift
-struct MenuList: View {
-    @State var recipes = [Recipe]()
-
-    var body: some View {
-        List(recipes) {
-            Text($0.title)
-        }
-        .task {
-            let (data, _) = try! await URLSession.shared.data(from: URL(string: "https://api.service.com/menus")!)
-            recipes = try! JSONDecoder().decode([Menu].self, from: data)
-        }
-    }
-}
-struct RecipesList: View {
-    @State var recipes = [Recipe]()
-
-    var body: some View {
-        List(recipes) {
-            Text($0.title)
-        }
-        .task {
-            let (data, _) = try! await URLSession.shared.data(from: URL(string: "https://api.service.com/recipes")!)
-            recipes = try! JSONDecoder().decode([Recipe].self, from: data)
-        }
-    }
-}
-```
+<div class="carousel-breakout">
+<div class="carousel-content">
+{{< highlight-file "snippets/menulist.swift" >}}
+{{< highlight-file "snippets/recipelist.swift" >}}
+</div>
+</div>
 
 What if Apple ships a new framework that replaces URLSession? Well, now you have to update potentially *N* screens.
 
@@ -91,15 +70,15 @@ protocol HTTPClient {
   func get(url: URL) async throws -> Data
 }
 
-func makeApp(httpClient: HTTPClient) -> RecipeApp {
-  let recipes = RecipesList(httpClient: httpClient)
-  let shoppingList = ShoppingList(httpClient: httpClient)
-  let menus = MenuView(httpClient: httpClient)
+func makeApp(httpClient: HTTPClient) -> RecipesTabbar {
+  let r = RecipesList(client: httpClient)
+  let s = ShoppingList(client: httpClient)
+  let m = MenuList(client: httpClient)
 
   return RecipesTabbar(
-    recipes: recipes,
-    shoppingList: shoppingList,
-    menus: menus
+    recipes: r,
+    shoppingList: s,
+    menus: m
   )
 }
 ```
@@ -113,11 +92,20 @@ let app = makeApp(
 )
 ```
 
+You may think this is a somewhat convoluted example. Fair enough. A more realistic one, would be migrating from `Alamofire` to `URLSession` as the latest has become powerful enough to a point where no third party framework is needed for the 99% of use cases. If you decoupled your `Alamofire` logic, you should be able to make the very same update:
+
+```diff
+let app = makeApp(
+- httpClient: AlamofireHTTPClient()
++ httpClient: URLSessionHTTPClient()
+)
+```
+
 ## When you want a secondary data source as fallback
 
-A straightforward way of implementing a fallback[^fallback] solution is placing all the logic in the view (as before):
+As before, the straightforward way of implementing a fallback[^fallback] solution is placing all the logic in the view:
 
-[^fallback]: This is a common pattern that enhances user experience by providing data to the user even when offline.
+[^fallback]: A common pattern that enhances user's offline experience.
 
 ```swift
 struct RecipeListView: View {
@@ -151,16 +139,20 @@ Maybe reusability isn't important for this view right now, but what if later on 
 
 {{< gotmpl src="app/tabbar" >}}
 
-Abstractions allow that level of flexibility:
+Decoupling through abstractions allow that level of flexibility:
 
-<!--< highlight-file "snippets/tabbar.swift" >-->
-
+<div class="carousel-breakout">
+<div class="carousel-content">
+{{< highlight-file "snippets/recipelist-decoupled.swift" >}}
+{{< highlight-file "snippets/tabbar.swift" >}}
+</div>
+</div>
 
 ### When infrastructure isn't implemented yet
 
 You're tasked with the creation of a `RecipeList`. You know the data will come from a remote *API* designed by your backend team. You need to start the development before the data *API* is ready.
 
-Abstractions allow parallel teamwork — you can build a working screen and wire it to real infrastructure later:
+Abstractions allow parallel teamwork. You can build a working screen and wire it to real infrastructure later:
 
 ```swift
 #Preview {
