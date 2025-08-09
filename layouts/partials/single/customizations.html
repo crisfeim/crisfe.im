@@ -1,29 +1,13 @@
-{{ if hugo.IsServer }}
-  {{ $path := path.Join .Page.File.Dir "main.css" }}
-  {{ if fileExists $path }}
-    <style id="custom-css">
-      {{ readFile $path | safeCSS }}
-    </style>
-  {{ end }}
+{{ with .Page.Resources.GetMatch "main.css" }}
+{{ $min := . | resources.Minify }}
+<style id="custom-css">
+    {{ $min.Content | safeCSS }}
+</style>
+{{ end }}
 
-  {{ $path := path.Join .Page.File.Dir "main.js" }}
-  {{ if fileExists $path }}
-    <script id="custom-js">
-      {{ readFile $path | safeJS }}
-    </script>
-  {{ end }}
-{{ else }}
-  {{ with .Page.Resources.GetMatch "main.css" }}
-    {{ $min := . | resources.Minify }}
-    <style id="custom-css">
-      {{ $min.Content | safeCSS }}
-    </style>
-  {{ end }}
-
-  {{ with .Page.Resources.GetMatch "main.js" }}
-    {{ $min := . | resources.Minify }}
-    <script id="custom-js">
-      {{ $min.Content | safeJS }}
-    </script>
-  {{ end }}
+{{ with .Page.Resources.GetMatch "main.js" }}
+{{ $min := . | resources.Minify }}
+<script id="custom-js">
+    {{ $min.Content | safeJS }}
+</script>
 {{ end }}
