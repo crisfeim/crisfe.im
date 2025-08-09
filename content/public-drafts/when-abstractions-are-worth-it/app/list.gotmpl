@@ -2,7 +2,7 @@
 {{ $items := split .items "|" }}
 {{ $ns :=  printf "%d" now.UnixNano }}
 
-<div class="typical-screen reset default-margin-bottom margin-x-auto" id="id-{{$ns}}">
+<div id="id-{{$ns}}">
     <input type="radio" name="nav-{{ $ns }}" id="none-{{ $ns }}" checked hidden>
     {{ range $index, $item := $items }}
         <input
@@ -43,7 +43,7 @@
         left: 0;
         box-shadow: rgba(17, 12, 46, 0.15) 0px 48px 100px 0px;
         .navigation-bar .t-{{ add $index 1 }}-{{ $ns }} {
-            display: block;
+            display: inline-block;
         }
         .c-{{ add $index 1 }}-{{ $ns }} {
             flex: 1;
