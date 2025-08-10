@@ -30,6 +30,17 @@
 </div>
 
 <style>
+.tab .label,
+.tab svg {
+    transition: color 0.3s ease, fill 0.3s ease;
+}
+
+.tab:hover .label,
+.tab:hover svg {
+   color: #007aff !important;
+   fill: #007aff !important;
+}
+
 {{ define "tab-state" }}
 #tab{{.active}}-state:checked{
     ~ .typical-screen #screen{{.active}} {
