@@ -1,8 +1,8 @@
 struct MenuList: View {
-    @State var recipes = [Recipe]()
+    @State var menus = [Menu]()
 
     var body: some View {
-        List(recipes) {
+        List(menus) {
             Text($0.title)
         }
         .task {

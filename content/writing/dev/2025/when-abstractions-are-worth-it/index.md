@@ -56,43 +56,34 @@ This approach ties the view with the specific data source implementation. This m
 
 `URLSession` is the default framework provided by *Apple* to make remote requests, and it has been here for quite some time.
 
-Let's imagine you have multiple screens in your app where you're using this approach. For example, in a recipe app, you might have something like this:
+Let's imagine you have multiple screens in your app where you're making requests directly in the view — without an abstraction layer. For example, in a recipe app, you might have something like this:
 
 <div class="carousel-breakout">
 <div class="carousel-content">
-{{< highlight-file "snippets/menulist.swift" >}}
 {{< highlight-file "snippets/recipelist.swift" >}}
+{{< highlight-file "snippets/menulist.swift" >}}
+{{< highlight-file "snippets/ingredientlist.swift" >}}
+{{< highlight-file "snippets/shoppinglist.swift" >}}
 </div>
 </div>
 
 What if Apple shipped a new framework replacing `URLSession`? You’d need to update potentially *N* screens. That might sound unlikely, but it has happened before: `URLSession` replaced `NSURLConnection` in iOS 9.
 
-```swift
-protocol HTTPClient {
-  func get(url: URL) async throws -> Data
-}
 
-func makeApp(httpClient: HTTPClient) -> RecipesTabbar {
-  let r = RecipesList(client: httpClient)
-  let s = ShoppingList(client: httpClient)
-  let m = MenuList(client: httpClient)
-
-  return RecipesTabbar(
-    recipes: r,
-    shoppingList: s,
-    menus: m
-  )
-}
-```
 
 Through abstractions and composition, updating the whole app would be as easy as changing a single line:
 
-```diff
+<div class="carousel-breakout">
+<div class="carousel-content">
+{{< highlight diff >}}
 let app = makeApp(
 - httpClient: URLConnectionHTTPClient()
 + httpClient: URLSessionHTTPClient()
 )
-```
+{{< /highlight >}}
+{{< highlight-file "snippets/makeapp.swift">}}
+</div>
+</div>
 
 You may think this is a somewhat convoluted example — and you’d be right. However, it’s a historical case that justifies the point.
 
