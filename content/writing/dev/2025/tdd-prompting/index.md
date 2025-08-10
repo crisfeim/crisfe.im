@@ -455,5 +455,5 @@ Some directions I'd love to explore:
 ## Links
 
 1. [LLM7](llm7.io)
-2. [Playground source code](https://github.com/crisfeim/crisfe.im/tree/main/content/posts/2025.05.13.tdd-ai-generator/demo)
+2. [Playground source code](https://github.com/crisfeim/typescript-tdd-prompting-ai-code-generator)
 3. [CLI source code (work in progress)](https://github.com/crisfeim/cli-tddbuddy)
