@@ -3,6 +3,10 @@ title: When abstractions are worth it
 date: 2025-08-09
 ---
 
+*Abstractions aren’t free — but sometimes they’re the difference between a painless change and a rewrite. This article examines three real-world scenarios where they prove their value, and reflects on how to approach them through intentional architectural decisions.*
+
+---
+
 Here is your typical mobile app screen — it loads data from somewhere and displays it in a list. When a user taps an item, the app navigates to some sort of detail screen:
 
 {{< gotmpl src="app/main"
