@@ -3,11 +3,9 @@
 
 <label for="toggle-size" class="img-caroussel">
 <input type="checkbox" id="toggle-size" />
-<img src="./6.jpg" loading="eager" decoding="sync" />
-<img src="./1.jpg" loading="eager" decoding="sync" />
-<img src="./2.jpg" loading="eager" decoding="sync" />
-<img src="./3.jpg" loading="eager" decoding="sync" />
-<img src="./4.jpeg" loading="eager" decoding="sync" />
+{{ range seq 1 5 }}
+    <img id="i-{{.}}" src="./{{ . }}{{ if eq . 4 }}.jpeg{{ else }}.jpg{{ end }}" loading="eager" decoding="sync" />
+{{ end }}
 </label>
 
 <p>

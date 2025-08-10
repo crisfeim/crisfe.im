@@ -85,7 +85,7 @@ let app = makeApp(
 </div>
 </div>
 
-You may think this is a somewhat convoluted example — and you’d be right. However, it’s a historical case that justifies the point.
+You may think this is a somewhat contrived example — and you’d be right. However, it’s a historical case that justifies the point.
 
 A more common scenario is migrating from `Alamofire` to `URLSession`. In recent years, `URLSession` has become powerful enough to cover the vast majority of use cases without relying on a third-party framework. If you had decoupled your `Alamofire` logic behind an abstraction, the migration would be just as simple:
 
