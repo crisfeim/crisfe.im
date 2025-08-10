@@ -48,7 +48,7 @@ The data could come from a remote *API* or a local database. The quickest, dirti
 
 This approach ties the view with the specific data source implementation. This may seem acceptable — after all, it works. But there are cases where this tight coupling becomes a liability. Let’s look at three common scenarios where using abstraction makes a difference.
 
-### When third-party infrastructure could be deprecated
+## When third-party infrastructure could be deprecated
 
 `URLSession` is the default framework provided by *Apple* to make remote requests, and it has been here for quite some time.
 
@@ -148,7 +148,7 @@ Decoupling through abstractions allows that level of flexibility:
 </div>
 </div>
 
-### When infrastructure isn't implemented yet
+## When infrastructure isn't implemented yet
 
 You're tasked with the creation of a `RecipeList`. You know the data will come from a remote *API* designed by your backend team. You need to start the development before the data *API* is ready.
 
