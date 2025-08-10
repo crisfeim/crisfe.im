@@ -107,6 +107,7 @@ struct RecipeListView: View {
     @State var recipes = [Recipe]()
     var body: some View {
         ...
+            .navigationTitle("🔪 Latest recipes")
             .task {
                 do {
                     recipes = try await loadFromURLSession()
@@ -130,7 +131,7 @@ struct RecipeListView: View {
 
 But again, the view would be coupled with frameworks (`URLSession` and `CoreData`) and wouldn't be reusable.
 
-Maybe reusability isn't important for this view right now, but what if later on you decide to add a *favorites* feature that only fetches data from a local data source?
+Maybe reusability isn’t important for this view right now, but what if later on you decide to add a *favorites* feature that only fetches data from a local data source, while also keeping the original screen?
 
 {{< gotmpl src="app/tabbar" >}}
 
