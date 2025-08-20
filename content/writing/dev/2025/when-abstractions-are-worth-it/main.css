@@ -106,12 +106,12 @@
 
 .typical-screen {
     position: relative;
-    width: 300px;
+    width: 270px;
     aspect-ratio: 320 / 650;
     overflow: hidden;
     background: white;
-    border: 1px solid lightgray;
-    border-radius: 32px;
+    border: 1px solid rgba(0,0,0,0.1);
+    border-radius: 24px;
 }
 
 .typical-screen > * {
@@ -261,7 +261,7 @@
   align-items: center;
 }
 
-.navigation-bar .title {
+.navigation-detail .navigation-bar .title {
   position: absolute;
   left: 50%;
   transform: translateX(-50%);
@@ -270,7 +270,7 @@
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
-  max-width:150px;
+  max-width:100px;
 }
 
 .navigation-detail {
