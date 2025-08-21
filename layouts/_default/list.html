@@ -4,5 +4,5 @@
     {{ end }}
 {{ end }}
 {{ define "main" }}
-    {{ partial "list.html" (dict "pages" .Pages "title" .Title) }}
+    {{ partial "list.html" (dict "pages" .Pages "title" .Title "content" .Content ) }}
 {{ end }}

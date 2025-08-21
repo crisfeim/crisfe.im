@@ -9,6 +9,7 @@
 {{- end }}
 
 <section class="list" data-anim="2">
+    {{ with .content }}<p>{{ . }}</p>{{ end }}
   {{- range $years }}
     {{- $year := . }}
     <section>
