@@ -13,7 +13,6 @@ img {
 
 time {
     margin-top: 4px;
-    margin-bottom: 3rem;
     color: #666;
 }
 
@@ -29,4 +28,8 @@ footer {
     margin-top: 10rem;
     display: flex;
     justify-content: center;
+}
+
+article > section {
+    margin-top: 3rem;
 }
