@@ -4,13 +4,15 @@ date: 2025-05-13
 og-image: images/system.png
 ---
 
-What happens if you delegate the boring work to an AI?
+*What happens if you delegate the boring work to an AI?*
 
-That was the starting point of this experiment: building a system that not only automatically generates code from specifications, but compiles it, tests it, and repeats until it gets it right — without human intervention.
+*That was the starting point of this experiment: building a system that not only automatically generates code from specifications, but compiles it, tests it, and repeats until it gets it right — without human intervention.*
 
-The idea was to turn the developer's role into writing tests, hitting the execute button, and disappearing. If the model makes mistakes, let it correct itself. If it crashes, let it get back up. If it gives up... well, let's give it a break.
+*The idea was to turn the developer's role into writing tests, hitting the execute button, and disappearing. If the model makes mistakes, let it correct itself. If it crashes, let it get back up. If it gives up... well, let's give it a break.*
 
-In this article, I'll tell you how to set up an automation system with feedback loops.
+*In this article, I'll tell you how to set up an automation system with feedback loops.*
+
+---
 
 ## Idea
 
