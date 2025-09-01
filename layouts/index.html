@@ -17,4 +17,7 @@
     <p>Crafting architectures <span class="amp">&</span> <span>polished interfaces</span>.</p>
     <p>I want to build products others fall in love with.</p>
     </section>
+
+    {{ $writing := where .Site.RegularPages "Section" "writing" }}
+    {{ partial "list.html" (dict "pages" $writing "title" "Writing" "content" "" "anim" "3" ) }}
 {{ end }}
